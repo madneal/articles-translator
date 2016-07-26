@@ -12,7 +12,8 @@
 
 遗憾的是，这个对象字面量可能会出现下面这样的情况：
 
-```var myObject = {  
+```
+var myObject = {  
 var myObject = {  
   myString: 'value 1',
   get myNumber() {
@@ -96,11 +97,13 @@ myNumbers.propertyExists('collection'); // => false
 
 As you know already, one option to access the prototype of an existing object is using the getter property `__proto__`:
 
+
     var myObject = {  
       name: 'Hello World!'
     };
     myObject.__proto__;                         // => {}  
     myObject.__proto__.isPrototypeOf(myObject); // => true  
+
 
 `myNumbers`通过一个特别的属性名称`__proto__`来使用`myProto`的原型。这个对象通过一句话就可以声明，不需要额外的函数比如`Object.create()`。
 
