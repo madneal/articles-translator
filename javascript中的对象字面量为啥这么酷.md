@@ -156,7 +156,7 @@ Javascript只允许对象或者`null`来使用`__proto__`属性。任何尝试�
 
 
 
-### 2\. Shorthand method definition
+### 2. Shorthand method definition
 
 ### 简单函数声明
 
