@@ -4,7 +4,7 @@ tex对于论文写作或者其他的一些需要拍版的写作来说，还是�
 
 ## TeX, LaTeX以及他们的用法
 
-### Tex:拍版
+### Tex:排版
 
 Tex是Donald Knuth发明的一种排版语言。排版意味着从结构性的文本到审美的一个标准。在Tex里面，你可以控制文本的根本结构，而不是像word一样，是软件阴影的帮你管理文件的结构，而紧紧给你提供一个图形化的接口。在TeX/LaTeX里面，对于布局和样式都有着默认的合理的设置但是却是可以控制的。
 
@@ -43,4 +43,8 @@ LaTeX最近通用![latex-v](http://latex.knobs-dials.com/images/888853eb390825fa
 免费的TeX软件包括通常的'teTeX'也叫做'TeX Live'对于unix系列的系统，以及对于windows系统的'MikTex'。你也可以参考下面相关的软件。
 
 你可以参考维基百科里面的(TeX)[http://en.wikipedia.org/wiki/TeX]以及(LaTeX)[http://en.wikipedia.org/wiki/LaTeX]。(TUG)[http://www.tug.org/]是近些年的一些开发工作和相关文档。
+
+## 基本的使用
+
+### 
 
