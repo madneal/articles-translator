@@ -42,7 +42,7 @@ LaTeX最近通用![latex-v](http://latex.knobs-dials.com/images/888853eb390825fa
 
 免费的TeX软件包括通常的'teTeX'也叫做'TeX Live'对于unix系列的系统，以及对于windows系统的'MikTex'。你也可以参考下面相关的软件。
 
-你可以参考维基百科里面的(TeX)[http://en.wikipedia.org/wiki/TeX]以及(LaTeX)[http://en.wikipedia.org/wiki/LaTeX]。(TUG)[http://www.tug.org/]是近些年的一些开发工作和相关文档。
+你可以参考维基百科里面的[TeX](http://en.wikipedia.org/wiki/TeX)以及(LaTeX)[http://en.wikipedia.org/wiki/LaTeX]。[TUG](http://www.tug.org/)是近些年的一些开发工作和相关文档。
 
 ## 基本的使用
 
