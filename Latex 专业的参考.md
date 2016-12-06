@@ -1,6 +1,6 @@
 # Latex 专业的参考
 
-tex对于论文写作或者其他的一些需要拍版的写作来说，还是非常有意义的。我在网上看到这个对于Latex的入门介绍还是比较全面的，[Arbitrary  reference](http://latex.knobs-dials.com) .所以将会翻译出来，供初学者学习。
+tex对于论文写作或者其他的一些需要排版的写作来说，还是非常有意义的。我在网上看到这个对于Latex的入门介绍还是比较全面的，[Arbitrary  reference](http://latex.knobs-dials.com) .所以将会翻译出来，供初学者学习。
 
 ## TeX, LaTeX以及他们的用法
 
@@ -42,7 +42,7 @@ LaTeX最近通用![latex-v](http://latex.knobs-dials.com/images/888853eb390825fa
 
 免费的TeX软件包括通常的'teTeX'也叫做'TeX Live'对于unix系列的系统，以及对于windows系统的'MikTex'。你也可以参考下面相关的软件。
 
-你可以参考维基百科里面的[TeX](http://en.wikipedia.org/wiki/TeX)以及(LaTeX)[http://en.wikipedia.org/wiki/LaTeX]。[TUG](http://www.tug.org/)是近些年的一些开发工作和相关文档。
+你可以参考维基百科里面的[TeX](http://en.wikipedia.org/wiki/TeX)以及[LaTeX](http://en.wikipedia.org/wiki/LaTeX)。[TUG](http://www.tug.org/)是近些年的一些开发工作和相关文档。
 
 ## 基本的使用
 
