@@ -176,5 +176,46 @@ I am text. Yes.
 
 ![\verb|x=x^2|](http://latex.knobs-dials.com/images/6464cb2daeb065351c0f35657bff30fa9a38f0f9.120.png)
 
+### 文档设置
+
+一个小的文档看起来是这个样子的：
+
+```latex
+\documentclass{article}
+\begin{document}
+Text
+\end{document}
+```
+
+在一些老的教材里面你可以使用`documentstyle`，这种用法是比较古老的，在LaTeX2009里面。
+
+一个更实用一点的文档可能看起来如下：
+
+```latex
+\documentclass[a4paper]{article}
+ 
+%package imports and document options go here
+\usepackage{url}   %I occasionally use URLs in footnotes, this helps.
+ 
+%useful if you use \maketitle, or want it to end up in the document file's metadata
+\title{I am Sam}
+\author{Dr. Seuss}
+\date{1960}
+ 
+ 
+%%%% the actual document %%%%
+\begin{document}
+\maketitle
+ 
+I do not like green eggs and ham.
+\end{document}
+```
+
+这个编译后就可以产生[eggs.pdf](http://latex.knobs-dials.com/eggs.pdf)
+
+在`\begin{document}`之前的命令是前言部分，里面是一些包的导入以及命令的重新定义。
+
+
+
 
 
