@@ -215,7 +215,39 @@ I do not like green eggs and ham.
 
 在`\begin{document}`之前的命令是前言部分，里面是一些包的导入以及命令的重新定义。
 
+#### 文档类
 
+文档有种类也有一个类，这是控制文档制作的基本样式，包括是否显示章类型，给你提供了这样的命令，比如`\section`。基本的文档类有：
 
+* `article`对于几页的文章
+* `proc`对于会议记录
+* `report`对于篇幅较长的报告
+* `book`书籍之类的
+* `letter`可以添加一些命令比如地址，开头，收信人，结束语等等。可以看看[.ps](http://latex.knobs-dials.com/letter.ps)以及[.pdf](http://latex.knobs-dials.com/letter.pdf)，这些都是用[.tex](http://latex.knobs-dials.com/letter.tex)生成的。
 
+注意像`\part, \chapter, \section, \subsection, \subsubsection, \paragraph, \subparagraph, \appenix`这些命令需要根据文档的类使用在其响应的文档中。
 
+有很多文档类都是默认安装的，这取决于你设置的版本或者一些其他的默认设置：
+
+* `exarticle, extreport, extbook, extletter, extproc`这些就是用来定制化的一些变量，比如让你可以改变全局字体大小。
+* `amsart, amsbook, amsproc`这些都是来自于美国数学学会。大多数是用于格式的改变，可以和相应的互换使用，具体可以参考[amslatex介绍](ftp://ftp.ams.org/pub/author-info/documentation/amslatex/instr-l.pdf)
+* 对于投影仪或者开销表你可以使用：
+  * `slides`和一些新的浏览器可以在一起正常工作，你可以做一个类似于ppt之类的展示。
+  * `beamer`
+  * `prosper`是一个基于pdfTeX的幻灯片，它具有幻灯变切换，可点击导航，动画，样式可能有一点点难看。可以在[这](http://freshmeat.net/articles/view/667/)看到一些例子。
+  * `foils`如果你已经安装[FoilTeX](http://www.ctan.org/tex-archive/help/Catalogue/entries/foiltex.html)
+* `esam`主要是针对于考试问题来做一些布局，处理打分系统，可以参考[在档类中使用exam](http://www.google.com/search?q=using+the+exam+document+class)
+* `minimal`
+* `arbitrary`
+
+#### 文档类选项
+
+每一个文档种类都会识别一组参数。每一个文档类的选项的支持情况取决于常识以及文档对于某些选项是否做过相应的更新。命令选项通常支持包括：
+
+* `10pt, 11pt, 12pt`来控制基本的字体大小。默认的是10pt。
+* `draft`是用来找那些过满的hbox。
+* 页相关的
+  * `a4paper, a5paper, b5paper, letterpaper, legalpaper`页面大小
+  * `lanscape`文档横向打印方向
+  * `twoside`是对于左右分栏风格
+  * ​
