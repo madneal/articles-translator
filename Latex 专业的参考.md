@@ -263,3 +263,7 @@ I do not like green eggs and ham.
 #### 头和尾
 
 简单的头尾控制可以使用`\pagestyle`来控制。你也可用`\pagestyle{empty}`来禁用。你可以使用`\pagestyle{headings}`，这样就可以使用实现定义的头部样式，这也取决于文档的样式。默认的样式是`\pagestyle{plain}`一些文档类提供更多的选项。
+
+这还有个页面样式，叫做`myheadings`，但是通常是用`fancyhdr`来代替，因为这样更加定制化。
+
+为了改变头部附近的间隔，你可以使用`\addtolength, \headheight`来改变，但是使用几何包可能会更简单。
