@@ -266,4 +266,4 @@ I do not like green eggs and ham.
 
 这还有个页面样式，叫做`myheadings`，但是通常是用`fancyhdr`来代替，因为这样更加定制化。
 
-为了改变头部附近的间隔，你可以使用`\addtolength, \headheight`来改变，但是使用几何包可能会更简。
+为了改变头部附近的间隔，你可以使用`\addtolength, \headheight`来改变，但是使用几何包可能更简单一点
