@@ -250,4 +250,16 @@ I do not like green eggs and ham.
   * `a4paper, a5paper, b5paper, letterpaper, legalpaper`页面大小
   * `lanscape`文档横向打印方向
   * `twoside`是对于左右分栏风格
-  * ​
+  * `openany`强制章节从右边开始，这可能会长生空页。
+* 公式相关的
+  * `fleqn`左对齐公式(\$\$fomula\$\$)
+  * `leqno`改变公式数字的对齐
+  * `centertags, tbtags`
+
+比如，如果你想要打印A5大小的小册子，你可能会使用：
+
+`\documentclass[9pt,twoside,a5paper]{extbook}`
+
+#### 头和尾
+
+简单的头尾控制可以使用`\pagestyle`来控制。你也可用`\pagestyle{empty}`来禁用。你可以使用`\pagestyle{headings}`，这样就可以使用实现定义的头部样式，这也取决于文档的样式。默认的样式是`\pagestyle{plain}`一些文档类提供更多的选项。
