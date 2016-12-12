@@ -176,7 +176,7 @@ I am text. Yes.
 
 ![\verb|x=x^2|](http://latex.knobs-dials.com/images/6464cb2daeb065351c0f35657bff30fa9a38f0f9.120.png)
 
-### 文档设置
+## 文档设置
 
 一个小的文档看起来是这个样子的：
 
@@ -215,7 +215,7 @@ I do not like green eggs and ham.
 
 在`\begin{document}`之前的命令是前言部分，里面是一些包的导入以及命令的重新定义。
 
-#### 文档类
+### 文档类
 
 文档有种类也有一个类，这是控制文档制作的基本样式，包括是否显示章类型，给你提供了这样的命令，比如`\section`。基本的文档类有：
 
@@ -240,7 +240,7 @@ I do not like green eggs and ham.
 * `minimal`
 * `arbitrary`
 
-#### 文档类选项
+### 文档类选项
 
 每一个文档种类都会识别一组参数。每一个文档类的选项的支持情况取决于常识以及文档对于某些选项是否做过相应的更新。命令选项通常支持包括：
 
@@ -260,7 +260,7 @@ I do not like green eggs and ham.
 
 `\documentclass[9pt,twoside,a5paper]{extbook}`
 
-#### 头和尾
+### 头和尾
 
 简单的头尾控制可以使用`\pagestyle`来控制。你也可用`\pagestyle{empty}`来禁用。你可以使用`\pagestyle{headings}`，这样就可以使用实现定义的头部样式，这也取决于文档的样式。默认的样式是`\pagestyle{plain}`一些文档类提供更多的选项。
 
