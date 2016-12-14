@@ -304,5 +304,99 @@ I do not like green eggs and ham.
 
 ### 行以及段落的换行
 
-段落之间可以通过\par来分隔。
+段落之间可以通过\par来分隔。通常来说你可以通过使用`\smallskip, \medskip, \bigskip, no skip`来控制段落之间的空间。但是这些有时候被滥用了，导致很多段乱很难联系起来阅读。
+
+如果你想阻止第一行的默认缩进，你可以使用`noindent`。你也需要注意到noident可能会破坏你的文档的一致性。
+
+```latex
+
+\par\noindent
+Paragraph text 1.
+ 
+Another\\ paragraph, with arbitrary linebreak to mess things up.
+ 
+\par
+Donec bibendum lacus quis risus. Mauris eget ligula vel nisi 
+ultrices dictum. Pellentesque mi augue, dictum ut, laoreet sit
+amet, nonummy ut, elit.
+\par\smallskip
+Nullam sem dui, consequat ut, cursus id, elementum vel, metus.
+In hac habitasse platea dictumst.
+\par\medskip\noindent
+Pellentesque tincidunt, libero vel lacinia luctus, nulla ante 
+tempus metus, vitae vehicula quam nisi id massa. Sed sem urna,
+luctus a, imperdiet a, porttitor quis, metus.
+\bigskip
+Etiam molestie, risus in auctor ornare, sapien eros tincidunt
+sem, eu rhoncus tortor nibh nec felis. Quisque fermentum 
+condimentum ligula.
+```
+
+![paragraph_break](http://latex.knobs-dials.com/images/c9a8fc9842f2ab68ac10a49d09e3527be4a0be3c.90.png)
+
+### 列表
+
+```latex
+Itemize:
+\begin{itemize}
+\item First
+\item second
+\item[$\dag$] Manual bullet style 
+\end{itemize}
+ 
+\hline
+ 
+Enumerate:
+\begin{enumerate}
+\item First
+\item second
+\item Nested list
+  \begin{enumerate}
+  \item First
+  \item second
+  \end{enumerate}
+\end{enumerate}
+ 
+\hline
+ 
+Description:
+\begin{description}
+\item[Theorem] ``An idea that has been demonstrated as true 
+                  or is assumed to be so demonstrable.''
+\item[Cow]      Does the `moo' thing.
+\end{description}
+```
+
+![lists](http://latex.knobs-dials.com/images/9fc75fe3f3e1263e4cec3754b01c384c1a05029e.90.png)
+
+### 常用的文本环境
+
+#### 通用的，作用范围广的环境
+
+除了定义文档最明显的`\begin{document}, \end{document}`还有很多很有趣的环境。很多环境可能有比较特别的作用，在别处可能会有更加深入的讨论。
+
+比如，`letter`就是用于信件排版，并且定义很多相关的命令。可以参考文档设置张杰。另外一个常用的环境是`slide`，这里面的内容会被分组为不同的幻灯片。
+
+#### 更简单的环境
+
+还有很多容易使用的环境，一般是和样式相关的，比如引号，摘要，诗节，无序列表，有序列表，描述等等。一个简单的例子，比如对齐：
+
+```latex
+\begin{flushleft}
+Left\\
+Text
+\end{flushleft}
+\begin{flushright}
+Right\\
+Text
+\end{flushright}
+\begin{center}
+Center\\
+Text
+\end{center}
+```
+
+![alignment](http://latex.knobs-dials.com/images/2e33f28f86bd884bc9ad550464bca54579f6f84d.90.png)
+
+*注意*：这些环境是基于`\raggedleft, \raggedright`。LaTeX里面的文本是对齐的。
 
