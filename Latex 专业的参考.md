@@ -400,3 +400,62 @@ Text
 
 *注意*：这些环境是基于`\raggedleft, \raggedright`。LaTeX里面的文本是对齐的。
 
+`quote`环境一般是对于短引用的，`quotation`可能是用于更长一点的引用。这两者的区别是引用的段落之间没有空格（它们通常还是具有缩进的）。
+
+`verse`具有特殊的格式规则。
+
+`verbatim`告诉TeX不要使用TeX来进行解释，和HTML中的<pre>标签类似。对于这个环境的使用可以参考TeX语法章节。
+
+你可以将它用于源代码，但是可能还会有更好的选择来进行语法高亮，并且或者能够更好地处理换行。如果你不想使用特多复杂的功能，你可以使用`\verbatiminput{myfile.c}`（verbatim包的一部分）。稍微复杂一点的包像`lgrind, listings`，可以参考技巧那一章节。
+
+对于`verbatim`可以将其用缩写`verb`来表示。基本上在它之后的第一个字符就是分隔符，所以你可以写`\verb|int main(void) {|`不需要担心这边还有一个花括号。
+
+`Table, lists`也是环境，但是在相应的章节会有内容。可以在这个[列表](http://www.giss.nasa.gov/latex/ltx-2.html#env)里面看到更多的环境。
+
+### 空格和连字
+
+TeX对于空格和字距调整还是比较智能的，你不需要关心它除非你要对它做一些特别的处理。线面的是文本的空格。数学模式可能是不一样的，更多的相关解释可以在数学章节获得更多信息。下面是主要的却别。
+
+[维基百科关于连字](http://en.wikipedia.org/wiki/Ligature_%28typography%29)
+
+```latex
+
+Many    spaces not useful
+Just one is enough
+Unless you~~~~~really\ \ \ \ \ must have more
+%TeX may treat a period followed by a space (and some other things)
+% as a sentence break, which is a problem around abbreviations.
+% To make sure it doesn't, \  is a common solution
+Dr. Death
+Dr.\ Death
+Ecks vs. Sever     
+Ecks vs.\ Sever 
+ 
+%Similarly, a capital at the end is assumed to not end a sentence
+% IF you care, "\@. " is strictly correct.
+A problem when you use a TLA. Or other initialisms.
+A problem when you use a TLA\@. Or other initialisms.
+ 
+c~c                             Hard~space
+c\ c                            Inter-word\ space
+c\,c                            Thin\,space (short space)
+c\;c                            Thick\;space
+c\quad c                        Quad\quad space
+c\qquad c                       Double-quad\qquad space
+c\!c                            Negative thin\!space
+a\hspace{1mm}b\hspace{-1mm}c    Arbitrary space
+ 
+Ligatures:
+ff fff fi ffi fl ffl 
+ 
+% You can avoid them with a {} (among other ways):
+shelfful 
+shelf{}ful
+```
+
+![spacing](http://latex.knobs-dials.com/images/be3897a116b5fd6ba6796141dab783f16fe9016d.90.png)
+
+### 引号和连接号
+
+
+
