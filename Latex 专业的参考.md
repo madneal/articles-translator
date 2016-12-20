@@ -457,5 +457,101 @@ shelf{}ful
 
 ### 引号和连接号
 
+引号经常是成对出现的。连接号有好几种，尽管我应该理解出每一种对应的是哪一种目的。
+
+```latex
+`single quote'
+``double quotes''
+"dumb quotes" 
+ 
+%Nesting using just a separating space (like `` `) is possible,
+% but may insert too much space to your liking.
+`` `Things', you say?''
+%You could use a thinspace instead:
+``\,`Things', you say?''
+ 
+%German low quotes
+% Only available with particular packages; babel is simplest
+%  (specific language support packages may also help)
+%  and there may be specific alias commands.
+\glqq foo\grqq ~~ \grqq bar\glqq  %aliases may be "` and "'
+\glq foo\grq ~~ \grq bar\glq
+% You can cheat and use them outside their intended left/right
+%  positions, but the spacing shows in the single quotes.
+ 
+% french guillemets:
+\flqq bar\frqq    %aliases may be "< and ">
+\flq bar\frq
+ 
+inter-word dash                (hyphen) 
+page range dash, 10--26        (en dash)
+punctuation dash---like this   (em dash)
+minus: $42 - 1$                (minus)
+```
+
+![quote](http://latex.knobs-dials.com/images/45a493019afb59acf9a89f6b2e1c4be4c2b40752.100.png)
+
+ 有些语言环境可能会对这些做重新定义。Babel的荷兰语将`\"`作为一个分音符，但是``pinyin`包吧`和‘作为重音符和变音符。
+
+### 字体：变化和大小
+
+#### 变化
+
+*注意：这个列表并不完整*
+
+```latex
+--- Form/Shape:
+\textup{Upright shape}
+\textit{Italic shape}
+\textsl{Slanted shape}
+\textsc{Smallcaps shape}
+ 
+--- Series:
+\textmd{Medium series}
+\textbf{Bold series}
+ 
+--- Families:
+\textrm{Roman family}
+\textsf{Sans Serif family}
+\texttt{Typewriter family}
+ 
+Shorthand:
+{\it Italics}, {\em Emphasis}, \\
+{\bf Boldface}, {\sc SmallCaps}
+```
+
+![font variation](http://latex.knobs-dials.com/images/adc424ad74c4dd8112b9c964de4e909cb2dbe63a.120.png)
+
+结合起来是允许的，但是在每一个类别下只能选择一种。大多数都会使用LaTeX2e里面的简写。比如对于斜体，`emph`往往用的更多，因为`\\emph{emphasized text with \\emph{nested emph}}`会让花括号里面的emph不会以斜体的格式出现。
+
+#### 文本大小
+
+```latex
+
+{\tiny word}
+{\scriptsize word}
+{\footnotesize word}
+{\small word}
+---
+{\normalsize word}
+---
+{\large word}
+{\Large word}
+{\LARGE word}
+---
+{\huge word}
+{\Huge word}
+```
+
+![font size](http://latex.knobs-dials.com/images/b65c2df372a4f7ae26ddb75fc35ddb392e819a87.90.png)
+
+### 字体：字体设置
+
+#### 不同的字体
+
+在技术上来说可以对任何字体在TeX里面都是可以转化的，但这通常不常用并且可能会引发一些错误。你最好还是看一下那些已经安装的包。
+
+可能最有趣的包是PSNFSS，即'PostScri New Font Selecting System'。在这个包里面，你可以选择使用'Base 35'
+
 
 
