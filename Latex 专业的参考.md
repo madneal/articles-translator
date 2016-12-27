@@ -551,7 +551,13 @@ Shorthand:
 
 在技术上来说可以对任何字体在TeX里面都是可以转化的，但这通常不常用并且可能会引发一些错误。你最好还是看一下那些已经安装的包。
 
-可能最有趣的包是PSNFSS，即'PostScri New Font Selecting System'。在这个包里面，你可以选择使用'Base 35'
+可能最有趣的包是PSNFSS，即'PostScri New Font Selecting System'。在这个包里面，你可以选择使用'Base 35'。
+
+有很多包可以帮助你切换一个或者多个字体，有一些是PSNFSS的一部分，有的不是，有的现在已经是废弃的了。
+
+## 表格
+
+基本表格
 
 
 
