@@ -1,70 +1,36 @@
-```
 # HEAD
 
-A list of everything that could go in the `<head>` of your document
+在你的文档里面`<head>`标签里面所有的元素
 
-## Table of Contents
+## 目录
 
-- [Recommended Minimum](#recommended-minimum)
-- [Elements](#elements)
-- [Meta](#meta)
-  - [Meta: Not Recommended](#meta-not-recommended)
-- [Link](#link)
-  - [Link: Not Recommended](#link-not-recommended)
-  - [Favicons](#favicons)
-- [Social](#social)
-  - [Facebook / Open Graph](#facebook--open-graph)
-  - [Facebook / Instant Articles](#facebook--instant-articles)
-  - [Twitter](#twitter)
-  - [Google+ / Schema.org](#google--schemaorg)
-  - [OEmbed](#oembed)
-- [Browsers / Platforms](#browsers--platforms)
-  - [Apple iOS](#apple-ios)
-  - [Apple Safari](#apple-safari)
-  - [Google Android](#google-android)
-  - [Google Chrome](#google-chrome)
-  - [Microsoft Internet Explorer](#microsoft-internet-explorer)
-  - [Microsoft Internet Explorer: Legacy, Do Not Use!](#microsoft-internet-explorer-legacy-do-not-use)
-- [Browsers (Chinese)](#browsers-chinese)
-  - [360 Browser](#360-browser)
-  - [QQ Mobile Browser](#qq-mobile-browser)
-  - [UC Mobile Browser](#uc-mobile-browser)
-- [App Links](#app-links)
-- [Notes](#notes)
-  - [Performance](#performance)
-- [Other Resources](#other-resources)
-- [Related Projects](#related-projects)
-- [Other Formats](#other-formats)
-- [Translations](#translations)
-- [Contributing](#contributing)
-- [Author](#author)
-- [License](#license)
+### 推荐的最小化设置
 
-## Recommended Minimum
+下面的是网站最基本，最少的标签配置：
 
 Below are the essential tags for basic, minimalist websites:
 
-​```html
+```
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<!-- 上面的三个标签必须放在head标签的最前面，其他的标签都放在后面 -->
 <title>Page Title</title>
-​```
+```
 
-## Elements
+### 元素
 
-​``` html
-<!-- Document Title -->
+```
+<!-- 文档标题 -->
 <title>Page Title</title>
 
-<!-- Base URL to use for all relative URLs contained within the document -->
+<!-- 在这个文档之内包含的相对路径的基本路径 -->
 <base href="https://example.com/page.html">
 
-<!-- External CSS -->
+<!-- 外部CSS -->
 <link rel="stylesheet" href="styles.css">
 
-<!-- In-document CSS -->
+<!-- 文档内CSS -->
 <style>
   /* ... */
 </style>
@@ -72,36 +38,35 @@ Below are the essential tags for basic, minimalist websites:
 <!-- JavaScript -->
 <script src="script.js"></script>
 <noscript><!--no JS alternative--></noscript>
-​```
+```
 
 ## Meta
 
-​``` html
-<meta charset="utf-8"> <!-- set character encoding for the document -->
+```
+<meta charset="utf-8"> <!-- 设置文档的字符编码 -->
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 
-<!-- Allows control over where resources are loaded from -->
+<!-- 在资源载入的地方可以允许控制 -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'">
-<!-- Place as early in the document as possible -->
-<!-- Only applies to content below this tag -->
+<!-- 尽可能早地把标签放在文档中 -->
+<!-- 仅仅应用下面的这些标签 -->
 
-<!-- Name of web application (only should be used if the website is used as an app) -->
+<!-- 如果网站是作为一个app来使用的话，设置app名称 -->
 <meta name="application-name" content="Application Name">
 
-<!-- Short description of the page (limit to 150 characters) -->
-<!-- In *some* situations this description is used as a part of the snippet shown in the search results. -->
+<!-- 页面的短描述(至多150个字符) -->
+<!-- 在某些情况下，描述会作为搜索结果的显示文字-->
 <meta name="description" content="A description of the page">
 
-<!-- Control the behavior of search engine crawling and indexing -->
+<!-- 控制搜索引擎爬虫和索引的行为 -->
 <meta name="robots" content="index,follow,noodp"><!-- All Search Engines -->
 <meta name="googlebot" content="index,follow"><!-- Google Specific -->
 
-<!-- Tells Google not to show the sitelinks search box -->
+<!-- 告诉谷歌不要再搜索框里面显示网站链接-->
 <meta name="google" content="nositelinkssearchbox">
 
-<!-- Tells Google not to provide a translation for this page -->
+<!-- 告诉谷歌不要翻译这个页面 -->
 <meta name="google" content="notranslate">
 
 <!-- Verify ownership for Google Search Console -->
@@ -144,7 +109,7 @@ Below are the essential tags for basic, minimalist websites:
 <meta name="geo.position" content="latitude;longitude">
 <meta name="geo.region" content="country[-state]"><!-- Country code (ISO 3166-1): mandatory, state code (ISO 3166-2): optional; eg. content="US" / content="US-NY" -->
 <meta name="geo.placename" content="city/town"><!-- eg. content="New York City" -->
-​```
+```
 
 - [Meta tags that Google understands](https://support.google.com/webmasters/answer/79812?hl=en)
 - [WHATWG Wiki: MetaExtensions](https://wiki.whatwg.org/wiki/MetaExtensions)
@@ -152,9 +117,10 @@ Below are the essential tags for basic, minimalist websites:
 - [Geotagging on Wikipedia](https://en.wikipedia.org/wiki/Geotagging#HTML_pages)
 
 ### Meta: Not Recommended
+
 Below are the meta attributes which are not recommended for use as they had low adoption rate, or have been deprecated:
 
-​```html
+```
 <!-- Used to declare the document language, but not well supported. Better to use <html lang=""> -->
 <meta name="language" content="en">
 
@@ -207,11 +173,11 @@ Below are the meta attributes which are not recommended for use as they had low 
 <meta http-equiv="Expires" content="0">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Cache-Control" content="no-cache">
-​```
+```
 
 ## Link
 
-​``` html
+```
 <!-- Helps prevent duplicate content issues -->
 <link rel="canonical" href="https://example.com/2010/06/9-things-to-do-before-entering-social-media.html">
 
@@ -288,21 +254,22 @@ Below are the meta attributes which are not recommended for use as they had low 
 <link rel="prerender" href="https://example.com/">
 <link rel="preload" href="image.png" as="image">
 <!-- More info: https://css-tricks.com/prefetching-preloading-prebrowsing/ -->
-​```
+```
 
 ### Link: Not Recommended
+
 Below are the link relations which are not recommended for use:
 
-​```html
+```
 <link rel="shortcut icon" href="path/to/favicon.ico">
 
 <!-- Not useful, proprietary and buggy, see https://groups.google.com/a/chromium.org/forum/#!msg/blink-dev/Y_2eFRh9BOs/gULYapoRBwAJ -->
 <link rel="subresource" href="styles.css">
-​```
+```
 
 ### Favicons
 
-​``` html
+```
 <!-- For IE 10 and below -->
 <!-- No link, just place a file called favicon.ico in the root directory -->
 
@@ -313,7 +280,7 @@ Below are the link relations which are not recommended for use:
 <link rel="icon" href="path/to/favicon-62.png" sizes="62x62" type="image/png">
 <link rel="icon" href="path/to/favicon-192.png" sizes="192x192" type="image/png">
 <!-- More info: https://bitsofco.de/all-about-favicons-and-touch-icons/ -->
-​```
+```
 
 - [All About Favicons (And Touch Icons)](https://bitsofco.de/all-about-favicons-and-touch-icons/)
 - [Favicon Cheat Sheet](https://github.com/audreyr/favicon-cheat-sheet)
@@ -322,7 +289,7 @@ Below are the link relations which are not recommended for use:
 
 ### Facebook / Open Graph
 
-​``` html
+```
 <meta property="fb:app_id" content="123456789">
 <meta property="og:url" content="https://example.com/page.html">
 <meta property="og:type" content="website">
@@ -334,14 +301,14 @@ Below are the link relations which are not recommended for use:
 <meta property="article:author" content="">
 <!-- Facebook: https://developers.facebook.com/docs/sharing/webmasters#markup -->
 <!-- Open Graph: http://ogp.me/ -->
-​```
+```
 
 - [Facebook Open Graph Markup](https://developers.facebook.com/docs/sharing/webmasters#markup)
 - [Open Graph protocol](http://ogp.me/)
 
 ### Facebook / Instant Articles
 
-​``` html
+```
 <meta charset="utf-8">
 <meta property="op:markup_version" content="v1.0">
 
@@ -350,14 +317,14 @@ Below are the link relations which are not recommended for use:
 
 <!-- The style to be used for this article -->
 <meta property="fb:article_style" content="myarticlestyle">
-​```
+```
 
 - [Facebook Instant Articles: Creating Articles](https://developers.facebook.com/docs/instant-articles/guides/articlecreate)
 - [Instant Articles: Format Reference](https://developers.facebook.com/docs/instant-articles/reference)
 
 ### Twitter
 
-​``` html
+```
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@site_account">
 <meta name="twitter:creator" content="@individual_account">
@@ -367,38 +334,38 @@ Below are the link relations which are not recommended for use:
 <meta name="twitter:image" content="https://example.com/image.jpg">
 <!-- More info: https://dev.twitter.com/cards/getting-started -->
 <!-- Validate: https://dev.twitter.com/docs/cards/validation/validator -->
-​```
+```
 
 - [Twitter Cards: Getting Started Guide](https://dev.twitter.com/cards/getting-started)
 - [Twitter Card Validator](https://dev.twitter.com/docs/cards/validation/validator)
 
 ### Google+ / Schema.org
 
-​``` html
+```
 <link href="https://plus.google.com/+YourPage" rel="publisher">
 <meta itemprop="name" content="Content Title">
 <meta itemprop="description" content="Content description less than 200 characters">
 <meta itemprop="image" content="https://example.com/image.jpg">
-​```
+```
 
 ### Pinterest
 
-Pinterest lets you prevent people from saving things from your website, according [to their help center](https://help.pinterest.com/en/articles/prevent-people-saving-things-pinterest-your-site). The `description` is optional.
+Pinterest lets you prevent people from saving things from your website, according [to their help center](https://help.pinterest.com/en/articles/prevent-people-saving-things-pinterest-your-site). The `description` is optional.
 
-​``` html
+```
 <meta name="pinterest" content="nopin" description="Sorry, you can't save from my website!">
-​```
+```
 
 ### OEmbed
 
-​``` html
+```
 <link rel="alternate" type="application/json+oembed"
   href="http://example.com/services/oembed?url=http%3A%2F%2Fexample.com%2Ffoo%2F&amp;format=json"
   title="oEmbed Profile: JSON">
 <link rel="alternate" type="text/xml+oembed"
   href="http://example.com/services/oembed?url=http%3A%2F%2Fexample.com%2Ffoo%2F&amp;format=xml"
   title="oEmbed Profile: XML">
-​```
+```
 
 - [oEmbed format](http://oembed.com/)
 
@@ -406,7 +373,7 @@ Pinterest lets you prevent people from saving things from your website, accordin
 
 ### Apple iOS
 
-​``` html
+```
 <!-- Smart App Banner -->
 <meta name="apple-itunes-app" content="app-id=APP_ID,affiliate-data=AFFILIATE_ID,app-argument=SOME_TEXT">
 
@@ -437,20 +404,20 @@ Pinterest lets you prevent people from saving things from your website, accordin
 <!-- iOS app deep linking -->
 <meta name="apple-itunes-app" content="app-id=APP-ID, app-argument=http/url-sample.com">
 <link rel="alternate" href="ios-app://APP-ID/http/url-sample.com">
-​```
+```
 
 - [Apple Meta Tags](https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html)
 
 ### Apple Safari
 
-​```html
+```
 <!-- Pinned Site -->
 <link rel="mask-icon" href="path/to/icon.svg" color="red">
-​```
+```
 
 ### Google Android
 
-​``` html
+```
 <meta name="theme-color" content="#E64545">
 
 <!-- Add to home screen -->
@@ -460,21 +427,22 @@ Pinterest lets you prevent people from saving things from your website, accordin
 <!-- Android app deep linking -->
 <meta name="google-play-app" content="app-id=package-name">
 <link rel="alternate" href="android-app://package-name/http/url-sample.com">
-​```
+```
 
 ### Google Chrome
 
-​``` html
+```
 <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/APP_ID">
 
 <!-- Disable translation prompt -->
 <meta name="google" value="notranslate">
-​```
+```
+
 ### Google Chrome Mobile (Android Only)
 
 Since Chrome 31, you can set up your web app to "app mode" like Safari.
 
-​``` html
+```
 <!-- Link to a manifest and define the manifest metadata. -->
 <!-- The example of manifest.json could be found in the link below. -->
 <link rel="manifest" href="manifest.json">
@@ -488,13 +456,13 @@ Since Chrome 31, you can set up your web app to "app mode" like Safari.
 <!-- Formats with Apple prefix will be deprecated. -->
 <link rel="apple-touch-icon" sizes="128x128" href="niceicon.png">
 <link rel="apple-touch-icon-precomposed" sizes="128x128" href="niceicon.png">
-​```
+```
 
 [Google Developer](https://developer.chrome.com/multidevice/android/installtohomescreen)
 
 ### Microsoft Internet Explorer
 
-​``` html
+```
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 <meta http-equiv="cleartype" content="on">
 <meta name="skype_toolbar" content="skype_toolbar_parser_compatible">
@@ -523,11 +491,11 @@ Since Chrome 31, you can set up your web app to "app mode" like Safari.
 <meta name="msapplication-TileColor" content="#FF3300">
 <meta name="msapplication-TileImage" content="path/to/tileimage.jpg">
 <meta name="msapplication-window" content="width=1024;height=768">
-​```
+```
 
 ### Microsoft Internet Explorer: Legacy, Do Not Use!
 
-​``` html
+```
 <!-- Disable the image toolbar when you mouse over images in IE 6 (https://msdn.microsoft.com/en-us/library/ms532986(v=vs.85).aspx) -->
 <meta http-equiv="imagetoolbar" content="no">
 
@@ -542,11 +510,11 @@ Since Chrome 31, you can set up your web app to "app mode" like Safari.
 <meta http-equiv="Page-Exit" content="revealtrans(duration=3,transition=12)">
 <meta http-equiv="Site-Enter" content="revealtrans(duration=2,transition=2)">
 <meta http-equiv="Site-Exit" content="revealtrans(duration=3,transition=12)">
-​```
+```
 
 ## App Links
 
-​``` html
+```
 <!-- iOS -->
 <meta property="al:ios:url" content="applinks://docs">
 <meta property="al:ios:app_store_id" content="12345">
@@ -558,7 +526,7 @@ Since Chrome 31, you can set up your web app to "app mode" like Safari.
 <!-- Web Fallback -->
 <meta property="al:web:url" content="http://applinks.org/documentation">
 <!-- More info: http://applinks.org/documentation/ -->
-​```
+```
 
 - [App Links Docs](http://applinks.org/documentation/)
 
@@ -566,25 +534,25 @@ Since Chrome 31, you can set up your web app to "app mode" like Safari.
 
 ### 360 Browser
 
-​``` html
+```
 <!-- select rendering engine in order -->
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
-​```
+```
 
 ### QQ Mobile Browser
 
-​``` html
+```
 <!-- Locks the screen into the specified orientation -->
 <meta name="x5-orientation" content="landscape/portrait">
 <!-- Display this page in fullscreen -->
 <meta name="x5-fullscreen" content="true">
 <!-- Page will be displayed in "application mode"(fullscreen,etc.) -->
 <meta name="x5-page-mode" content="app">
-​```
+```
 
 ### UC Mobile Browser
 
-​``` html
+```
 <!-- Locks the screen into the specified orientation -->
 <meta name="screen-orientation" content="landscape/portrait">
 <!-- Display this page in fullscreen -->
@@ -599,20 +567,21 @@ Since Chrome 31, you can set up your web app to "app mode" like Safari.
 <meta name="layoutmode" content="fitscreen">
 <!-- Disable the UC browser's feature of "scaling font up when there are many words in this page" -->
 <meta name="wap-font-scale" content="no">
-​```
+```
 
 - [UC Browser Docs](http://www.uc.cn/download/UCBrowser_U3_API.doc)
 
 ## Notes
 
 ### Performance
-Moving the `href` attribute to the beginning of an element improves compression when GZIP is enabled, because the `href` attribute is used in `a`, `base` and `link` tags.
+
+Moving the `href` attribute to the beginning of an element improves compression when GZIP is enabled, because the `href`attribute is used in `a`, `base` and `link` tags.
 
 Example:
 
-​``` html
+```
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
-​```
+```
 
 ## Other Resources
 
@@ -621,10 +590,10 @@ Example:
 
 ## Related Projects
 
-- [Atom HTML Head Snippets](https://github.com/joshbuchea/atom-html-head-snippets) - Atom package for `HEAD` snippets
-- [Sublime Text HTML Head Snippets](https://github.com/marcobiedermann/sublime-head-snippets) - Sublime Text package for `HEAD` snippets
-- [head-it](https://github.com/hemanth/head-it) - CLI interface for `HEAD` snippets
-- [vue-head](https://github.com/ktquez/vue-head) - Manipulating the meta information of the `HEAD` tag for Vue.js
+- [Atom HTML Head Snippets](https://github.com/joshbuchea/atom-html-head-snippets) - Atom package for `HEAD` snippets
+- [Sublime Text HTML Head Snippets](https://github.com/marcobiedermann/sublime-head-snippets) - Sublime Text package for `HEAD` snippets
+- [head-it](https://github.com/hemanth/head-it) - CLI interface for `HEAD` snippets
+- [vue-head](https://github.com/ktquez/vue-head) - Manipulating the meta information of the `HEAD` tag for Vue.js
 
 ## Other Formats
 
@@ -651,15 +620,14 @@ Please follow these steps for pull requests:
 
 ### Contributors
 
-Check out all the super awesome [contributors](https://github.com/joshbuchea/HEAD/graphs/contributors).
+Check out all the super awesome [contributors](https://github.com/joshbuchea/HEAD/graphs/contributors).
 
 ## Author
 
-**[Josh Buchea](http://joshbuchea.com/)**
+**Josh Buchea**
 
 ## License
 
-[![CC0](http://i.creativecommons.org/p/zero/1.0/88x31.png)](http://creativecommons.org/publicdomain/zero/1.0/)
+[![CC0](https://camo.githubusercontent.com/c5160f944848828fa33126d9a697e9abe43ea98f/687474703a2f2f692e6372656174697665636f6d6d6f6e732e6f72672f702f7a65726f2f312e302f38387833312e706e67)](http://creativecommons.org/publicdomain/zero/1.0/)
 
-To the extent possible under law, [Josh Buchea](http://joshbuchea.com) has waived all copyright and related or neighboring rights to this work.
-```
+To the extent possible under law, [Josh Buchea](http://joshbuchea.com/) has waived all copyright and related or neighboring rights to this work.
