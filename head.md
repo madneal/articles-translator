@@ -69,24 +69,24 @@ Below are the essential tags for basic, minimalist websites:
 <!-- 告诉谷歌不要翻译这个页面 -->
 <meta name="google" content="notranslate">
 
-<!-- Verify ownership for Google Search Console -->
+<!-- 对于谷歌搜索验证所有权 -->
 <meta name="google-site-verification" content="verification_token">
 
-<!-- Used to name software used to build the website (i.e. - WordPress, Dreamweaver) -->
+<!-- 在构架网站的时候对软件进行命名 (比如 - WordPress, Dreamweaver) -->
 <meta name="generator" content="program">
 
-<!-- Short description of your site's subject -->
+<!-- 网站主题的短描述 -->
 <meta name="subject" content="your website's subject">
 
-<!-- Very short (10 words or less) description. Primarily for academic papers -->
+<!-- 非常短的描述（不多于10个单词）。基本上是对于学术论文 -->
 <meta name="abstract" content="">
 
-<!-- Full domain name or web address -->
+<!-- 域名全称或者网站地址 -->
 <meta name="url" content="https://example.com/">
 
 <meta name="directory" content="submission">
 
-<!-- Gives a general age rating based on sites content -->
+<!-- 根据网站内容给出一个通用的年龄打分 -->
 <meta name="rating" content="General">
 
 <!-- Allows control over how referrer information is passed -->
