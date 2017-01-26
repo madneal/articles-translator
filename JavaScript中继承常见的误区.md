@@ -4,7 +4,9 @@
 
 [neal1991](https://github.com/neal1991)
 
-**WAT? [**wat**] — **interjection:A sound a programmer makes when something violates the principle of least astonishment by astonishing them with counter-intuitive behavior.
+**什么？— **感叹语:A sound a programmer makes when something violates the principle of least astonishment by astonishing them with counter-intuitive behavior.
+
+一个好的程序员
 
 ```javascript
 > .1 + .2
