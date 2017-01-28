@@ -6,7 +6,9 @@
 
 **什么？— **感叹语:A sound a programmer makes when something violates the principle of least astonishment by astonishing them with counter-intuitive behavior.
 
-一个好的程序员
+一个好的程序员的产生是当
+
+
 
 ```javascript
 > .1 + .2
