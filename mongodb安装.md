@@ -288,7 +288,7 @@ net stop MongoDB
 
 ### 打开管理员命令行提示符[¶](#id5 "Permalink to this headline")
 
-按下Win键，输入cmd.exe，接着按下Ctrl + Shift + Enter来运行以管理员身份运行明航提示符。
+按下Win键，输入cmd.exe，接着按下Ctrl + Shift + Enter来运行以管理员身份运行命令行提示符。
 
 在管理员命令行提示符里面运行以下步骤。
 
