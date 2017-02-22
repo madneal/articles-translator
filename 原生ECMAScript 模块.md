@@ -1,49 +1,58 @@
 In the previous article
 [Native ECMAScript modules: the new features and differences from Webpack modules](https://blog.hospodarets.com/native-ecmascript-modules-new-features)
 we understood the differences between ES modules and their implementation in bundlers/compilers like Webpack/Babel.
+
+在之前的文章[原生ECMAScript 模块：新特点以及与Webpack模块的区别](https://blog.hospodarets.com/native-ecmascript-modules-new-features)，我们弄明白了ES模块和它们在bundlers/compilers(比如Webpack/Babel)实现的区别。
+
 So far we found couple gotchas and know how to use the `import``export` declarations and
-which caveats we may have using them in JS.
+到目前为止我们已经发现了几个问题，并且直到如何使用`import``export` 声明并且这些问题警告我们可能已经在JS中使用了这些。
 
-But JavaScript went asynchronous many years ago, and it is a good practice is to use non-blocking Promise-based syntax
-for modern Web applications.
-ECMAScript modules are static by default: you have to define static import/exports on the top level
-of the module. It is very helpful to apply JS engine optimizations
-but doesn’t allow developers to apply the best practices of asynchronous module loading.
+But JavaScript went asynchronous many years ago, and it is a good practice is to use non-blocking Promise-based syntax for modern Web applications. ECMAScript modules are static by default: you have to define static import/exports on the top level of the module. It is very helpful to apply JS engine optimizations but doesn’t allow developers to apply the best practices of asynchronous module loading.
 
-Meet the dynamic `import()` operator, which adds the missed functionality and follows the best practices of
-Promise-based API.
+但是JavaScript在异步方面已经发展多年，这是一个是对现代Web应用程序使用基于Promise的非阻塞语法的很好的做法。 默认情况下，ECMAScript模块是静态的：您必须在模块的顶层定义静态导入/导出。 应用JS引擎优化非常有用，但其不允许开发人员应用异步模块加载的最佳实践。
 
-# The proposal and the spec
+Meet the dynamic `import()` operator, which adds the missed functionality and follows the best practices of Promise-based API.
 
-As often, everything started from an idea.
-The idea of dynamic import was [introduced and processed](https://github.com/whatwg/loader/issues/149)
+为了满足动态import()操作符，增加了思念已久的功能，并遵循基于Promise的API的最佳实践。
+
+# 建议和规范
+
+As often, everything started from an idea.The idea of dynamic import was [introduced and processed](https://github.com/whatwg/loader/issues/149)
 by [Domenic Denicola](https://twitter.com/domenic) and the module-loading community.
 
-Currently, we have a [spec draft](https://tc39.github.io/proposal-dynamic-import/)
-which is on Stage 3 of the [TC39 process](https://tc39.github.io/process-document/).
+通常，一切事物都是从一个想法开始的。动态导入的想法是 [Domenic Denicola](https://twitter.com/domenic) 和module-loading社区介绍并且推进的。
 
-It means, that before it is finished (Stage 4), a couple of implementations are required
-plus additional gathering and addressing of the feedback from the implementations and users.
+Currently, we have a [spec draft](https://tc39.github.io/proposal-dynamic-import/) which is on Stage 3 of the [TC39 process](https://tc39.github.io/process-document/).
 
-And it could be you, as the dynamic `import()` [is shipped](https://bugs.webkit.org/show_bug.cgi?id=165724)
-OOB in [Webkit Nightly](https://webkit.org/downloads/).
-You can download, start using and test it ([here is a simple demo](https://plnkr.co/edit/XZB9GaIBOatuNwFiTVCS?p=preview)).
+目前，我们有一个[规范草案](https://tc39.github.io/proposal-dynamic-import/)，在[TC39过程的第3阶段](https://tc39.github.io/process-document/)。
+
+It means, that before it is finished (Stage 4), a couple of implementations are required plus additional gathering and addressing of the feedback from the implementations and users.
+
+这意味着在阶段4完成之前，还需要收集一些实现以及来自于用户的反馈。
+
+And it could be you, as the dynamic `import()` [is shipped](https://bugs.webkit.org/show_bug.cgi?id=165724) OOB in [Webkit Nightly](https://webkit.org/downloads/). You can download, start using and test it ([here is a simple demo](https://plnkr.co/edit/XZB9GaIBOatuNwFiTVCS?p=preview)).
+
+您也可能就是用户之一，因为动态`import`可以在 [Webkit Nightly](https://webkit.org/downloads/)中运行[OOB](ttps://bugs.webkit.org/show_bug.cgi?id=165724)。你可以下载，开始使用并且测试（这是一个简单的[demo](https://plnkr.co/edit/XZB9GaIBOatuNwFiTVCS?p=preview)）。
 
 Your feedback regarding the dynamic import can be appreciated and you can provide it either via
-[the proposal issue tracker](https://github.com/tc39/proposal-dynamic-import/issues)
-or comment the [WHATWG proposal](https://github.com/whatwg/loader/issues/149).
+[the proposal issue tracker](https://github.com/tc39/proposal-dynamic-import/issues)or comment the [WHATWG proposal](https://github.com/whatwg/loader/issues/149).
 
-# Syntax
+我们将会感谢您对于动态导入的反馈，您可以通过[提案issue跟踪器](https://github.com/tc39/proposal-dynamic-import/issues)或者在[WHATWG提案](https://github.com/whatwg/loader/issues/149)上评论。
+
+# 语法
 
 The syntax is straightforward:
+
+语法非常直接：
 
 ```
 `import("./specifier.js"); // returns a Promise`
 
 ```
 
-Here is the list of examples of switching from the static to the dynamic imports
-(you can try it [on the demo](https://plnkr.co/edit/jzQkC5GeB7ecmGaoCPDS?p=preview)):
+Here is the list of examples of switching from the static to the dynamic imports(you can try it [on the demo](https://plnkr.co/edit/jzQkC5GeB7ecmGaoCPDS?p=preview)):
+
+下面是从静态导入向动态导入切换例子的列表（你可以在[demo](https://plnkr.co/edit/jzQkC5GeB7ecmGaoCPDS?p=preview)上进行尝试）：
 
 ```
 // STATIC
@@ -74,17 +83,20 @@ import('./c.js').then(({c})=>{
 `'isDynamic'` is passed to make the difference how the function in the module was called.
 Here is the Dev Console screenshot:
 
+`'isDynamic'` 被传递过来区别于在模块中调用函数。下面是DEV控制台截图：
+
 ![](http://p0.qhimg.com/t013f701dac1e956ac1.png)
 
-Let’s analyze it.
-The first surprise- despite we imported `a.js` twice it was invoked only once.
-As you may remember, it’s a
-[feature of ES modules](https://blog.hospodarets.com/native-ecmascript-modules-new-features#modules-are-singletons)
-, as they are singletons and are invoked only once
+Let’s analyze it. The first surprise- despite we imported `a.js` twice it was invoked only once.
+As you may remember, it’s a [feature of ES modules](https://blog.hospodarets.com/native-ecmascript-modules-new-features#modules-are-singletons), as they are singletons and are invoked only once
+
+让我们一起来分析以下。第一个惊喜-尽管我们两次导入了`a.js`，但是它仅仅被调用了一次。你可能记得，这是[ES模块的特性](https://blog.hospodarets.com/native-ecmascript-modules-new-features#modules-are-singletons)，因为它们是单例的，只会被调用一次。
 
 Secondary, dynamic imports were invoked before the static.
 and that is because I included the dynamic `import()` calls in a classic script in my HTML
 (yes, you can use dynamic imports in classic scripts as well, not only in module ones!):
+
+另外，动态导入在静态导入之前被调用。 这是因为我在我的HTML中包含了经典脚本中的动态`import()`调用（是的，你也可以在经典脚本中使用动态导入，不仅仅是在模块中！）：
 
 ```
 `<script type="module" src="static.js">`</script>
@@ -100,48 +112,60 @@ That’s why the `dynamic` script was executed first.
 The ability to use `import()` in classic scripts gives you the key to whole
 the native ES modules from the classic JS ones- you can load and work with them from anywhere.
 
+我们知道，`type =“module”`的[脚本默认延迟加载](https://blog.hospodarets.com/native-ecmascript-modules-the-first-overview#how-the-browser-loads-and-executes-the-modules)，直到DOM解析完毕，然后按顺序调用。 这就是为什么动态脚本首先被执行的原因。 在经典脚本中使用`import()`的能力为您提供了来自经典JS的整个本地ES模块的关键 - 您可以从任何地方加载和使用它们。
+
 And the third difference:
 the dynamically imported scripts are executed not in the order they appear in the code.
 Though the static `import` guarantees you to execute the scripts in the order.
 You have to know this feature, as each dynamic import lives by its own and is not connected to/doesn’t wait for
 others to be finished.
 
+第三个区别：动态导入的脚本不按它们在代码中出现的顺序执行。 虽然静态导入保证您按顺序执行脚本。 你必须知道这个特性，因为每个动态导入都是由它自己生成的，并且和其他的完成没有关系同时也不会等待其他的完成。
+
 Let’s summarize the **takeaways**:
 
-*   **dynamic `import()` provides Promise-based API**
+让我们总结以下：
 
-*   **`import()` follows the ES modules rules: singleton, specifiers, CORS etc.**
+*   **动态的 `import()` 提供一个基于Promise的API**
 
-*   **`import()` can be used in both classic and module scripts**
+*   **`import()` 遵循ES模块规则：singleton，说明符，CORS等.**
 
-*   **the order of used `import()` in the code doesn’t have anything in common with the order they are resolved**
+*   **`import()` 可以在经典脚本和模块脚本中使用**
 
-# Script execution and the context
+*   **在代码中使用的`import()`的顺序与它们被解析的顺序没有什么共同之处**
+
+# 脚本执行以及上下文
 
 As we already stated, you can call the `import()` from both classic and module scripts.
 But how it’s executed as a module or just in the global context?
 
+正如我们已经说明的，您可以从经典和模块脚本调用`import()`。 但是它如何作为一个模块或只是在全局上下文中执行？
+
 As you may expect, the dynamic import executes a script as a module, providing its own context which is different from the global.
+
+正如你所期望的，动态导入将脚本作为模块执行，提供与全局不同的上下文。
 
 We can test it:
 
+我们可以测试一下：
+
 ```
 // imported.js
-console.log(`imported.js "this" reference is: ${this}`);
-
+console.log(imported.js "this" reference is: ${this});
 ```
 
 “this” reference is pointing to a global object if a script is executed in its context. 
 So let’s just execute our example from a [classic script](https://plnkr.co/edit/pHoD7S9kXicUvvpsLoEz?p=preview)
 and from a [module one](https://plnkr.co/edit/mHB6R5khaRcUHVbAgWWe?p=preview):
 
-```
+如果在其上下文中执行脚本，“this”引用指向一个全局对象。 所以让我们从一个[经典脚本](https://plnkr.co/edit/pHoD7S9kXicUvvpsLoEz?p=preview)和一个[模块](https://plnkr.co/edit/mHB6R5khaRcUHVbAgWWe?p=preview)执行我们的例子：
+
+```html
 <!--module.js-->
-`<script type="module" src="module.js">`</script>
+<script type="module" src="module.js"></script>
 
 <!--classic.js-->
-`<script src="classic.js">`</script>
-
+<script src="classic.js"></script>
 ```
 
 ```
@@ -154,15 +178,21 @@ import('./imported.js').then(()=>{
 
 Here is the console output, which shows that in both cases the `imported.js` is executed not in the global context:
 
+下面是控制台输出，显示在这两种情况下，`imported.js`不是在全局上下文中执行：
+
 ![](http://p0.qhimg.com/t010f5ea82cc34c4f22.png)
 
 which means, the `import()` executes the scripts as modules, which actually aligns with the syntax, where in the `then()` function
 we can work with the exports from the modules (like `module.default` etc.).
 
-# Additional features
+这意味着，`import()`将脚本作为模块执行，这实际上与语法一致，在`then`函数中，我们可以使用模块的输出（如`module.default`等）。
+
+# 额外特性
 
 An additional feature you can get from the dynamic import operator is that
 you finally can use it not only on the top level of the script. For instance:
+
+您可以从动态导入操作符获得的一个附加功能是，您最终可以不仅在脚本的顶层使用它。 例如：
 
 ```
 function loadUserPage(){
@@ -176,21 +206,26 @@ loadUserPage();
 Which gives you ability to use the lazy loading or import additional features on demand
 (e.g. on user actions):
 
-```
-// load a script and use it on user actions
+这使您能够使用延迟加载或按需导入其他功能（例如关于用户操作）：
+
+```javascript
+// 加载脚本并且相应用户操作
 FBshareBtn.on('click', ()=>{
     import('/fb-sharing').then((FBshare)=>{
         FBshare.do();
     });
 });
-
 ```
 
 We already know that the `import()` script will be loaded only once,
 which is just an additional advantage for this example.
 
+我们已经知道`import()`脚本只会被加载一次，这只是这个例子的一个额外的优点。
+
 Even better, the nonstatic nature of the dynamic import allows you to pass the template strings
 and construct it depending on your needs, for example ([demo](https://plnkr.co/edit/R05qU5jhPRW6Hqt47xGQ?p=preview)):
+
+更好的是，动态导入的非静态性质允许您传递模板字符串并根据您的需要构建它，例如（[demo](https://plnkr.co/edit/R05qU5jhPRW6Hqt47xGQ?p=preview)）：
 
 ```
 const locale = 'en';
@@ -207,6 +242,10 @@ As you already noticed, the default import is available under the `module.defaul
 
 And, of course, you can do the conditional loading:
 
+正如您已经注意到的，默认导入在module.default属性下可用。
+
+当然，你可以做条件加载：
+
 ```
 if(user.loggedIn){
     import('user-widget.js');
@@ -214,15 +253,15 @@ if(user.loggedIn){
 
 ```
 
-**Takeaways:**
+**注意**
 
-*   **you can use dynamic import for lazy or conditional loading and in user-depending action**
+*   **您可以使用动态导入进行延迟或条件加载以及依赖用户的操作**
 
-*   **dynamic `import()` can be used anywhere in your scripts**
+*   **动态的`import()` 可以在脚本的任何地方使用**
 
-*   **`import()` takes string literals and you can construct the specifier depending on your needs**
+*   **`import()`接受字符串文字，你可以根据你的需要构造说明符**
 
-## Promise API advantages
+## Promise API 优点
 
 So the dynamic import uses JS Promise API.
 What advantages does it give us?
@@ -230,6 +269,10 @@ What advantages does it give us?
 First of all, we can load multiple scripts dynamically in parallel.
 Let’s rework our [initial example](https://plnkr.co/edit/jzQkC5GeB7ecmGaoCPDS?p=preview)
 to trigger and catch the loading of multiple scripts:
+
+所以动态导入使用JS Promise API。 它给我们什么好处？
+
+首先，我们可以并行地动态加载多个脚本。 让我们重做我们的[初始示例](https://plnkr.co/edit/jzQkC5GeB7ecmGaoCPDS?p=preview)来触发和捕获多个脚本的加载：
 
 ```
 Promise.all([
@@ -514,5 +557,5 @@ Here are the additional links for you:
 *   [import() spec draft](https://tc39.github.io/proposal-dynamic-import/)
 
 *   [node-es-module-loader](https://www.npmjs.com/package/node-es-module-loader)
-      and [systemjs](https://github.com/systemjs/systemjs) by [Guy Bedford](https://twitter.com/guybedford)
-    ​              
+          and [systemjs](https://github.com/systemjs/systemjs) by [Guy Bedford](https://twitter.com/guybedford)
+        ​              
