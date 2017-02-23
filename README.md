@@ -9,4 +9,5 @@ Translate the distinct technical blogs. Any good article, please issue.
 * [head标签里面的一切](https://github.com/neal1991/articles-translator/blob/master/head)
 * [在Windows安装MongoDB社区版](https://github.com/neal1991/articles-translator/blob/master/mongodb%E5%AE%89%E8%A3%85.md)
 * [原生模块加载](https://github.com/neal1991/articles-translator/blob/master/%E5%8E%9F%E7%94%9F%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD.md)
+* [原生ECMAScript 模块](https://github.com/neal1991/articles-translator/blob/master/%E5%8E%9F%E7%94%9FECMAScript%20%E6%A8%A1%E5%9D%97.md)
 
