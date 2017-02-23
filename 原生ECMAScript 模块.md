@@ -293,10 +293,16 @@ Promise.all([
 I used [JavaScript destructuring](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 to avoid something like `const _b = b.default;` in my script.
 
+我使用JavaScript解构避免在我的脚本出现像`const _b = b.default` 。
+
 There is also the [Promise.race](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise/race)
 method, which checks which Promise is resolved or rejected first (faster).
 
+还有`Promise.race`方法，它检查哪个Promise被首先（更快）resolved或reject。
+
 In the case of `import()` we can use it e.g. to check [which CDN works faster](https://plnkr.co/edit/wmU3Se9JuMlhblaVu1Oo?p=preview):
+
+我们可以使用`import()`来检查[哪个CDN速度更快](https://plnkr.co/edit/wmU3Se9JuMlhblaVu1Oo?p=preview)：
 
 ```
 const CDNs = [
@@ -325,9 +331,13 @@ Promise.race([
 And here is the console output after a couple of reloads, which shows that the method shows
 which CDN-loaded the file faster (notice, `import()`s load and execute the both files, in this case, registering jQuery):
 
+这里是几个重新加载后的控制台输出，这显示方法的结果。其中CDN加载文件更快（通知，`import()`加载和执行这两个文件，在这种情况下，注册jQuery）：
+
 ![](http://p0.qhimg.com/t01fc95cf3aea1b0a40.png)
 
 Of course, it may be a bit strange method, just wanted to show you, that you can use all the power of Promises-based API.
+
+当然，它可能有点奇怪的方法，只是想告诉你，你可以使用基于Promises的API的所有能力。
 
 And finally, let’s get a bit of the syntax sugar.
 [ECMAScript async/await feature is also Promise-based](http://www.2ality.com/2016/10/async-function-tips.html),
@@ -335,7 +345,9 @@ which means you can easily reuse dynamic imports with it.
 So let’s try to have a syntax similar to static imports, but with all the power of the dynamic `import()`
 ([demo](https://plnkr.co/edit/cL07FqPLWqKWjEizTe2b?p=info)):
 
-```
+最后，让我们得到一点语法糖。 [ECMAScript async/await特性](http://www.2ality.com/2016/10/async-function-tips.html)也是基于Promise的，这意味着您可以轻松地使用动态导入。 因此，让我们尝试使用与静态导入类似的语法，但具有动态`import()`（[demo](https://plnkr.co/edit/cL07FqPLWqKWjEizTe2b?p=info)）的所有功能：
+
+```javascript
 // utils_en.js
 const test = (isDynamic) => {
   let prefix;
@@ -352,10 +364,9 @@ const test = (isDynamic) => {
 };
 
 export {test};
-
 ```
 
-```
+```javascript
 // STATIC
 import {test} from './utils_en.js'; // no dynamic locale
 test();
@@ -367,36 +378,40 @@ test();
   const {test} = await import(`./utils_${locale}.js`);
   test('isDynamic');
 })();
-
 ```
 
-**Takeaways:**
+**注意**
 
-*   **use `Promise.all` to load modules in parallel**
+*   **使用`Promise.all`并行加载模块**
 
-*   **all Promise API power is available for the `import()` operator usages**
+*   **所有的Promise API 对于 `import()` 操作符都是可用的**
 
-*   **you can use the dynamic import with async/await**
+*   **您可以通过async/await来动态导入**
 
-## Promise API caveats
+## Promise API 警告
 
 There is an additional caveat from Promises nature we always have to remember- the error handling.
 If there is any error in static import with the specifier or in module graph or even during the execution-
 the error is thrown automatically.
 
+我们总是要记住Promise本质中一个额外的警告 - 错误处理。 如果使用说明符或在模块图中或者在执行期间的静态导入中存在任何错误，则会自动抛出错误。
+
 In the case of the Promises, you either should provide a second function to `then()` method,
 or catch errors in the `catch()` construction, otherwise your app never will know about it.
 
+在使用Promises的时候，你应该为`then()`方法提供第二个函数，或者在`catch()`中捕获错误，否则你的应用程序永远不会知道错误。
+
 Here is a [demo of importing a nonexisting script](https://plnkr.co/edit/18ZYVtBwCX9cacKqMuLq?p=preview):
 
-```
+下面是一个导入了不存在脚本的[demo](https://plnkr.co/edit/18ZYVtBwCX9cacKqMuLq?p=preview)：
+
+```javascript
  import (`./non-existing.js`)
     .then(console.log)
    .catch((err) => {
      console.log(err.message); // "Importing a module script failed."
      // apply some logic, e.g. show a feedback for the user
    });
-
 ```
 
 Since the recent time, the browsers/Node.js didn’t provide you any information if some of
@@ -404,30 +419,37 @@ your Promises was rejected and you didn’t handle that.
 So the community introduced the ability to have a global handler,
 without which you have errors in browser console, or in the case of Node.js application is terminated with a non-zero code.
 
+从最近开始，如果你没有处理你的被reject的Promise，浏览器或者Node.js不会提供任何信息。 因此，社区引入了具有全局处理程序的能力，如果没有它，您在浏览器控制台中有错误，或者在Node.js应用程序都会以非零代码中止运行。
+
 Here how you can add the global unhandled Promises listener:
 
-```
+下面是如何添加全局未处理Promises监听：
+
+```javascript
 window.addEventListener("unhandledrejection", (event)=> {
   console.warn(`WARNING: Unhandled promise rejection. Reason: ${event.reason}`);
   console.warn(event);
 });
 // process.on('unhandledRejection'... in case of Node.js
-
 ```
 
-# Caveats
+# 警告
 
 Let’s discuss the relative paths in the `import()` specifier.
 As you may expect, it is relative to the file, from which it is called.
 It may lead to the caveats when you want to import a module from a different folder
 and a method to do it is in some third location (e.g. a  `utils` folder or similar).
 
+让我们讨论`import()`说明符中的相对路径。 正如你所期望的，它是相对于文件，从它被调用时。 当您要从不同的文件夹导入模块以及在第三个位置（例如`utils`文件夹或类似文件夹）执行此操作的方法时，可能会导致警告。
+
 Let’s consider the following folder structure and the code:
+
+让我们看一下下面的文件结构和代码：
 
 ![](http://p0.qhimg.com/t0124ba395654942d8f.png)
 
 ```
-// utils.js - is used to load a dependency
+// utils.js - 用于加载依赖
 export const loadDependency = (src) => {
     return import(src)
         .then((module) => {
@@ -436,14 +458,13 @@ export const loadDependency = (src) => {
         })
 };
 
-// inner.js - the main file we will use to test the passed import() path
+// inner.js - 主文件将被用来测试传递的import()路径
 import {loadDependency} from '../utils.js';
 
 loadDependency('../dependency.js');
-// Failed to load resource, as import() is called in ../dependency.js
+// 加载资源失败,因为import()是在 ../dependency.js中调用
 
-loadDependency('./dependency.js');// Successfully loaded
-
+loadDependency('./dependency.js');// 成功加载
 ```
 
 [Demo](https://blog.hospodarets.com/demos/native-ecmascript-modules-dynamic-import/) 
@@ -454,13 +475,17 @@ so always keep in mind this fact to avoid unexpected bugs.
 Regarding the debugging- the good of all this, that finally, you can play with ES modules in browsers DevTools console,
 as `import()` is available from anywhere, but there is still [a bug](https://bugs.webkit.org/show_bug.cgi?id=165724#c19) and work in progress, till you can try this in Webkit
 
-**Takeaways:**
+正如demo所演示的那样，`import()`说明符总是相对于调用它的文件，因此记住这点从而避免意想不到的bug。
 
-*   **`import()` specifier is always related to the file its called**
+关于调试-好处是你终于可以在浏览器开发工具控制台中使用ES模块，因为`import()`在任何地方都是可用的，但是在`Webkit`以外的地方，还是有一个bug。
 
-*   **you can use dynamic imports in DevTools console (useful for debugging)**
+**注意：:**
 
-# Support and polyfills
+*   **`import()` 说明符总是相对于调用它的文件**
+
+*   **你可以在浏览器开发工具控制台使用动态导入 (对于调试很有帮助)**
+
+# 支持和polyfills
 
 For now, `import()` has little browser support.
 [Node.js is considering adding this feature](https://medium.com/@jasnell/an-update-on-es6-modules-in-node-js-42c958b890c#.e4eyz1aew)
@@ -469,7 +494,11 @@ which may look something like `require.import()`.
 To detect if it’s supported in a particular browser or Node.js, run the following code
 or try [the demo](https://plnkr.co/edit/pgsxdd6hE7uzQY9dHCwz?p=preview):
 
-```
+现在，`import()`几乎没有浏览器支持。 [Node.js正在考虑添加这个功能](https://medium.com/@jasnell/an-update-on-es6-modules-in-node-js-42c958b890c#.e4eyz1aew)，可能看起来像`require.import()`。
+
+要检测它是否在特定浏览器或Node.js中受支持，请运行以下代码或尝试[demo](https://plnkr.co/edit/pgsxdd6hE7uzQY9dHCwz?p=preview)：
+
+```javascript
 let dynamicImportSupported = false;
 try{
  Function('import("")');
@@ -477,7 +506,6 @@ try{
 }catch(err){};
 
 console.log(dynamicImportSupported);
-
 ```
 
 Regarding the polyfills, module-loading community prepared an
@@ -557,5 +585,5 @@ Here are the additional links for you:
 *   [import() spec draft](https://tc39.github.io/proposal-dynamic-import/)
 
 *   [node-es-module-loader](https://www.npmjs.com/package/node-es-module-loader)
-          and [systemjs](https://github.com/systemjs/systemjs) by [Guy Bedford](https://twitter.com/guybedford)
-        ​              
+            and [systemjs](https://github.com/systemjs/systemjs) by [Guy Bedford](https://twitter.com/guybedford)
+          ​              
