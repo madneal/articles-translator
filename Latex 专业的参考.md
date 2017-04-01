@@ -582,22 +582,66 @@ b{width}  段罗列垂直居底对齐
 *注意：*
 
 * `p{}`和`\parbox`很像，Parbox，`p{}`,`m{}`,以及`b{}`是一种方式来在单元格中换行。minipage环境是另外一个情况。在不知道表格以及其样式就开始一个新的盒子，如果你希望对齐的话，你可以使用\raggedright。
-
 * `@{},>{},<{}`
 
   * 你可以移除单元格左右的padding，比如`|@{}1@{}|`
   * 你也可以通过插入`@{\hspace{lin}}`来添加水平padding
   * 或者使用橡皮筋宽度，通过在列的前面加入`@{\extracolsep{\fill}}`。这个看起来对于列宽是起作用的。这个在你使用tabilar*/tabularx表格的时候有用。
   * 你可以让列强行使用数学模式来解释，比如`>{$}c<{$}1`
+* 你可以定义新的列的类型，比如创建一个左对齐的数学模式L，使用`\newcolumntype{L}{>{$}1<{$}}`。
 
-* 你可以定义新的列的类型，比如创建一个左对齐的数学模式L，使用`\newcolumntype{L}{>{$}1<{$}}`.
 
-  使用`
+使用`\hline`可以在任地方插入水平线。
 
-* ​
+### 基本表格
 
-  ​
+#### tabular and tabular*
 
+语法是`\begin{tabular}{pos}{cols}`，pos是htbp-style浮动位置，经常会忽略。基本的表格设置命令包括：
+
+```latex
+\begin{tabular}{lc|r}
+\hline\hline
+ rabbit  &   12  &  sold    \\
+ frog    &  3.5  &  pending \\
+\cline{2-3}
+       & 15.5  
+nd{tabular}
+```
+
+![latext-table](http://latex.knobs-dials.com/images/9008548791f40f37c02d0d4b9b128906dbf803e1.90.png)
+
+
+
+`tabular*`和`tabular`类似，但是还是需要表格的目标宽度。语法如下：
+
+`\begin{tabular*}{width}{pos}{cols}`
+
+使用可用的文本、列、页宽度的一部分通常很有用：
+
+例如：`0.85\textwidth, \linewindth`
+
+#### 对于
+
+```latex
+\hline % 你可以使用两个来获取双线
+\cline{1-2} % 意味着从列1到列2
+\vline % 经常不需要设置，因为全列也运行得很好
+```
+
+更多信息参考hhline包。
+
+### 嵌套表格
+
+
+
+
+
+
+
+###  
+
+​
 
 
 
