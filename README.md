@@ -1,5 +1,5 @@
 # articles-translator
-Translate the distinct technical blogs. Any good article, please issue.
+Translate the distinct technical blogs. Any good article, please issue.[@neal](mailto:bing@stu.ecnu.edu.cn)
 
 * [Bootstrap_considered_harmful](https://github.com/neal1991/articles-translator/blob/master/Bootstrap_considered_harmful.md)
 * [javascript中的对象字面量为啥这么酷](https://github.com/neal1991/articles-translator/blob/master/javascript%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%AD%97%E9%9D%A2%E9%87%8F%E4%B8%BA%E5%95%A5%E8%BF%99%E4%B9%88%E9%85%B7.md)
