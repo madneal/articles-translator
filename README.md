@@ -11,4 +11,5 @@ Translate the distinct technical blogs. Any good article, please issue.[@neal](m
 * [原生模块加载](https://github.com/neal1991/articles-translator/blob/master/%E5%8E%9F%E7%94%9F%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD.md)
 * [原生ECMAScript 模块](https://github.com/neal1991/articles-translator/blob/master/%E5%8E%9F%E7%94%9FECMAScript%20%E6%A8%A1%E5%9D%97.md)
 * [10个开发新手应该熟悉的github仓库](https://github.com/neal1991/articles-translator/blob/master/10%E4%B8%AA%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E5%BA%94%E8%AF%A5%E7%86%9F%E6%82%89%E7%9A%84github%E4%BB%93%E5%BA%93.md)
+* [JavaScript中Async/Await优于Promise的6个原因](https://github.com/neal1991/articles-translator/blob/master/Javascript%E4%B8%ADAsync-Await%E4%BC%98%E4%BA%8EPromise%E7%9A%846%E4%B8%AA%E5%8E%9F%E5%9B%A0.md)
 
