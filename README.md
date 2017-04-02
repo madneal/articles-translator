@@ -14,8 +14,6 @@ Translate the distinct technical blogs. Any good article, please issue.[@neal](m
 * [JavaScript中Async/Await优于Promise的6个原因](https://github.com/neal1991/articles-translator/blob/master/Javascript%E4%B8%ADAsync-Await%E4%BC%98%E4%BA%8EPromise%E7%9A%846%E4%B8%AA%E5%8E%9F%E5%9B%A0.md)
 
 
-------
-
 # MIT License
 
 Copyright (c) 2017 Neal Caffery
