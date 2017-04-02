@@ -13,3 +13,27 @@ Translate the distinct technical blogs. Any good article, please issue.[@neal](m
 * [10个开发新手应该熟悉的github仓库](https://github.com/neal1991/articles-translator/blob/master/10%E4%B8%AA%E5%BC%80%E5%8F%91%E6%96%B0%E6%89%8B%E5%BA%94%E8%AF%A5%E7%86%9F%E6%82%89%E7%9A%84github%E4%BB%93%E5%BA%93.md)
 * [JavaScript中Async/Await优于Promise的6个原因](https://github.com/neal1991/articles-translator/blob/master/Javascript%E4%B8%ADAsync-Await%E4%BC%98%E4%BA%8EPromise%E7%9A%846%E4%B8%AA%E5%8E%9F%E5%9B%A0.md)
 
+
+------
+
+# MIT License
+
+Copyright (c) 2017 Neal Caffery
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
