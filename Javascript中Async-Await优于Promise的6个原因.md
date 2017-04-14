@@ -47,12 +47,12 @@ makeRequest()
 2. 上面也指出了我们不能在我们代码的最高层级使用await，因为它不是在`async`函数之内的。
 
 ```javascript
-// 浙江不会再最高层次工作
+// 这将不会在最高层次工作
 // await makeRequest()
 
 // 这将会工作
 makeRequest().then((result) => {
-  // 做什么
+  // 做一些事
 })
 ```
 
@@ -77,7 +77,7 @@ const makeRequest = () => {
       		const data = JSON.parse(result)
             console.log(data)
     	})
-    	// 取消下面的注视来处理异步错误
+    	// 取消下面的注释来处理异步错误
     	// .catch((err) => {
         // 	console.log(err) 
        //})
@@ -109,7 +109,7 @@ const makeRequest = async() => {
 const makeRequest = () => {
   return getJSON()
   	.then(data => {
-      if (data.neddAnotherRequest) {
+      if (data.needAnotherRequest) {
         return makeAnotherRequest(data)
         	.then(moreData => {
               console.log(moreData)
@@ -130,7 +130,7 @@ const makeRequest = () => {
 ```javascript
 const makeRequest = async() => {
   const data = await getJSON()
-  if (data.needsAnotherRequest) {
+  if (data.needAnotherRequest) {
     const moreData = await makeAnotherRequest(data)
     console.log(moreData)
     return moreData
