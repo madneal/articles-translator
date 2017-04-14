@@ -72,6 +72,26 @@ Wayponints通过计算很多元素不同的高度，宽度以及位置来决定�
 
 我们开始推动在Twitter Lite上使用较少的带宽，通过和多个团队合作，我们能够在[CDN](https://en.wikipedia.org/wiki/Content_delivery_network)上获得新的更小尺寸的图片。事实证明，通过减小图片的大小，我们只会渲染我们需要展示的（在尺寸和质量方面），我们发现不仅可以减少带宽的使用，而且我们能够提升再浏览器中的性能，特别是在滚动带有大量图片Tweet的timeline的时候。
 
+为了确定的更好的较小图片的性能，我们可以在Chrome开发者工具里面观察光栅timeline。在我们减小图片尺寸之前，对于一张图片的解码需要300ms甚至之上，如下图所示。这是图片下载之后的处理时间，但是是在它在页面展示之前。
+
+当你滚动页面的时候，并且你的目标是60帧/秒的渲染标准时候，我们希望在16.777ms之内尽可能块地处理（1帧）。将一张图片渲染到试图就需要将近18帧，这也太多了。另外需要注意timeline的一点是：你可以看到这个主要的timeline一直都是阻塞的直到图片完成解码（如空白所示）。这意味着我们在这有一个相当大的性能瓶颈！
+
+![image](https://cloud.githubusercontent.com/assets/12164075/25031311/97df4c52-20fe-11e7-9300-9745f9ab096e.png)
+
+![image1](https://cloud.githubusercontent.com/assets/12164075/25046025/b74caedc-2161-11e7-90dd-ea87f609bd05.png)
+
+现在，在我们减少我们图片尺寸之后，我们观测到仅仅需要一帧就可以解码我们最大的图片。
+
+## 优化React
+
+### 使用shouldComponentUpdate方法
+
+对于优化React应用性能一个最常见的建议就是使用[shouldComponentUpdate方法](https://facebook.github.io/react/docs/optimizing-performance.html#shouldcomponentupdate-in-action)。我们尽可能在任何时候都做到这个一点，但是有时候有些东西总是会被遗漏。
+
+
+
+
+
 
 
 
