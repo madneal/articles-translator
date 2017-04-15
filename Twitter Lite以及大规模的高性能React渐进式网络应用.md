@@ -199,7 +199,7 @@ const DeferredTimeline = deferComponentRender(HomeTimeline);
 render(<DeferredTimeline />);
 ```
 
-!quick](https://cloud.githubusercontent.com/assets/12164075/25061012/c30c7ca2-21de-11e7-9b84-7bbcb0e02dbc.gif)
+![quick](https://cloud.githubusercontent.com/assets/12164075/25061012/c30c7ca2-21de-11e7-9b84-7bbcb0e02dbc.gif)
 
 ## 优化Redux
 
