@@ -160,7 +160,7 @@ const HeartIcon = (props = {}) => (
 
 事实证明安装和卸载大型组件树（比如Tweet的timeline）在React中是非常耗时的。
 
-至少，我们希望去除掉这种点击导航栏之后没有相应的感觉。为此，我们创建了；额一个小型的高阶组件：
+至少，我们希望去除掉这种点击导航栏之后没有响应的感觉。为此，我们创建了一个小型的高阶组件：
 
 ```javascript
 import hoistStatics from 'hoist-non-react-statics';
