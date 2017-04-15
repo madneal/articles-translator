@@ -10,7 +10,7 @@
 
 > *让我们一起来了解世界最大的React.js PWA,  [Twitter Lite](https://mobile.twitter.com/)之中常见的和不太常见的性能瓶颈。*
 
-创建一个快速的web应用包含很多方面，包括：时间花费在什么地方，理解其发生的原因并且应用潜在的解决方案。不幸的是，从来就没有一个快速的修复方法。性能是一个持续的问题，涉及到需要对需要提高的内容的持续观察和检测。再Twitter Lite中，我们在很多方面进行了一些小的提升：从出事加载时间搭配React组件的渲染（以及避免再次渲染）到图像的加载等等。大多数的变化往往是非常小的，当时所有的变化叠加在一起让我们开发出了最大的以及最快的[渐进式web应用](https://developers.google.com/web/progressive-web-apps/)。
+创建一个快速的web应用包含很多方面，包括：时间花费在什么地方，理解其发生的原因并且应用潜在的解决方案。不幸的是，从来就没有一个快速的修复方法。性能是一个持续的问题，涉及到需要对需要提高的内容的持续观察和检测。在Twitter Lite中，我们在很多方面进行了一些小的提升：从初始加载时间搭配React组件的渲染（以及避免再次渲染）到图像的加载等等。大多数的变化往往是非常小的，当所有的变化叠加在一起让我们开发出了最大的以及最快的[渐进式web应用](https://developers.google.com/web/progressive-web-apps/)。
 
 ![timeline](https://cdn-images-1.medium.com/max/1375/1*6f1XFtCP9Ki04onTv-QEHw.png)
 
