@@ -3,6 +3,10 @@
 > 原文：[Twitter Lite and High Performance React Progressive Web Apps at Scale](https://medium.com/@paularmstrong/twitter-lite-and-high-performance-react-progressive-web-apps-at-scale-d28a00e780a3)
 >
 > 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 > *让我们一起来了解事件最大的React.js PWA,  [Twitter Lite](https://mobile.twitter.com/)之中常见的和不太常见的性能瓶颈。*
 
@@ -227,7 +231,7 @@ render(<DeferredTimeline />);
 
 ![action](https://cloud.githubusercontent.com/assets/12164075/25061599/c03abddc-21ec-11e7-92f8-bbceb774bc55.png)
 
-![1-XBFV8VKRE16bSrBixvBc7g](C:\Users\neal1\project\articles-translator\image\1-XBFV8VKRE16bSrBixvBc7g.png)
+![action1](https://cloud.githubusercontent.com/assets/12164075/25061913/2b8f4d5e-21f3-11e7-883a-25af266eb6e1.png)
 
 ## Service Workers
 
@@ -243,9 +247,33 @@ render(<DeferredTimeline />);
 
 因此这对用户意味着什么？几乎是马上就可以加载应用，即使再在我们部署新版本之后！
 
+![deploy](https://cloud.githubusercontent.com/assets/12164075/25061915/5305fe00-21f3-11e7-9368-00573e76f967.png)![1-r51dWgMIwA8-jFKno0_RcQ.png](https://ooo.0o0.ooo/2017/04/15/58f1d99c2f24f.png)
 
+在上面展示的（上面的）是没有使用ServiceWorker预先缓存资源，当前view中每一个资源都会强制从网络中加载如果返回应用的时候。在3G的网络环境下差不多需要6秒的时间来完成加载。然而，当资源被ServiceWorker预先缓存之后（下面的），同样在3G网络环境下只需要1.5秒就可以完成页面的加载。75%的提升！
 
+### 延迟ServiceWorker注册
 
+在很多应用中，在页面加载的时候立即注册ServiceWorker是安全的：
+
+```javascript
+<script>
+window.navigator.serviceWorker.register('/sw.js');
+</script>
+```
+
+当我们发送尽可能多的数据到浏览器来渲染一个看起来比较完整的页面，但是在Twitter Lite情况不一定就是这样的。我们可能不会发送足够的数据，或者你打开的页面不会支持数据从服务器全部获取。因为这种或者那种的很多限制，我们需要在初始页面加载之后立刻发送一些API请求。
+
+正常情况，这不会是一个问题。然而，如果浏览器还没有安装当前版本的ServiceWorker，我们需要让它安装，随之而来就是对于JS，CSS以及图片资源预缓存的50个请求。
+
+当我们使用简单的方法来立即注册ServiceWorker的时候，我们可以看到网络连接发生在浏览器中，达到了并行请求的限制（上面的）。
+
+![1-jLT8J20RRfKY_oxcsAiswQ.png](https://ooo.0o0.ooo/2017/04/15/58f1d9e6a3d09.png)
+
+![1-poli81EjMdim8__g1HMioQ.png](https://ooo.0o0.ooo/2017/04/15/58f1da4a07318.png)
+
+通过延迟ServiceWorker的注册直到我们完成了额外的API，CSS以及图片资源的请求，我们可以让页面完成渲染并且是响应式的，在下面的截图可以看到（下面的）。
+
+总的来说，这是我们在[Twitter Lite](https://mobile.twitter.com/)的开发过程中的众多性能提升的列表。当然还会有更多的事情，我们希望能够继续分享我们发现的问题，以及我们克服问题所做的工作。关于事实以及耕作React以及PWA的更多状态，可以在Twitter上关注[我](https://mobile.twitter.com/paularmstrong)以及[我的团队](https://mobile.twitter.com/paularmstrong/lists/twitter-lite/members)。
 
 
 
