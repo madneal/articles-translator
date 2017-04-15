@@ -88,6 +88,28 @@ Wayponints通过计算很多元素不同的高度，宽度以及位置来决定�
 
 对于优化React应用性能一个最常见的建议就是使用[shouldComponentUpdate方法](https://facebook.github.io/react/docs/optimizing-performance.html#shouldcomponentupdate-in-action)。我们尽可能在任何时候都做到这个一点，但是有时候有些东西总是会被遗漏。
 
+![example](https://cloud.githubusercontent.com/assets/12164075/25047300/8306b65c-2168-11e7-91ac-8615e1f4bcd0.gif)
+
+上图中的一个组件总是会进行更新：在主屏timeline的时候点击爱心图标去赞一篇Tweet的时候，任何一个在屏幕上的`Conversation`组件都会重新渲染。在这个动画例子中，你可以看到浏览器需要对被绿色盒子注明的地方进行重绘。因为我们针对的是Tweet下面的整个`Conversation`组件来进行更新action。
+
+如下，你可以看到两个这个action的帧图。上面的没有使用`shouldComponentUpdate`，我们可以看到的它的整个树都被更新和重新渲染，只不过是为了改变屏幕上某个地方的爱心的颜色。在添加`shouldComponentUpdate`（下图）之后，我们阻止了整个树进行更新并且避免了浪费0.1秒来运行不需要的处理。
+
+![shouldComponentUpdate](https://cloud.githubusercontent.com/assets/12164075/25060357/a363ba66-21cd-11e7-92cb-604cd3e7d7cf.png)
+
+![shouldComponentUpdate1](https://cloud.githubusercontent.com/assets/12164075/25060361/dbf3a9a4-21cd-11e7-844e-5281bfb844f8.png)
+
+### 避免不必要的工作直到componentDidMount
+
+这种变化可能看起来是个人都会直到，但是在开发Twitter Lite这样的大型应用的时候，很容易忘记这种小事。
+
+我们发现在我们代码中的很多地方，为了对`componentWillMount`[React周期方法](https://facebook.github.io/react/docs/react-component.html#componentwillmount)进行分析，我们花费大量的时间计算。每一次我们做这个的时候，都会或多或少地阻塞组件的渲染.20ms或者90ms，这些时间很快就累加到一起。最初，我们尝试在tweets被渲染之前（timeline如下）记录哪些是在`componentWillMount`组件中被渲染到我们的数据分析服务中。
+
+
+
+
+
+
+
 
 
 
