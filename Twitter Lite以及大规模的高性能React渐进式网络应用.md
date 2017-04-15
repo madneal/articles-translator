@@ -80,7 +80,7 @@ Wayponints通过计算很多元素不同的高度，宽度以及位置来决定�
 
 当你滚动页面的时候，并且你的目标是60帧/秒的渲染标准时候，我们希望在16.777ms之内尽可能块地处理（1帧）。将一张图片渲染到试图就需要将近18帧，这也太多了。另外需要注意timeline的一点是：你可以看到这个主要的timeline一直都是阻塞的直到图片完成解码（如空白所示）。这意味着我们在这有一个相当大的性能瓶颈！
 
-![image](https://cloud.githubusercontent.com/assets/12164075/25031311/97df4c52-20fe-11e7-9300-9745f9ab096e.png)
+![image](https://cloud.githubusercontent.com/assets/12164075/25045860/e1feedbc-2160-11e7-833e-efd8c9705ad5.png)
 
 ![image1](https://cloud.githubusercontent.com/assets/12164075/25046025/b74caedc-2161-11e7-90dd-ea87f609bd05.png)
 
@@ -104,7 +104,7 @@ Wayponints通过计算很多元素不同的高度，宽度以及位置来决定�
 
 ### 避免不必要的工作直到componentDidMount
 
-这种变化可能看起来是个人都会直到，但是在开发Twitter Lite这样的大型应用的时候，很容易忘记这种小事。
+这种变化可能看起来是个人都会知道，但是在开发Twitter Lite这样的大型应用的时候，很容易忘记这种小事。
 
 我们发现在我们代码中的很多地方，为了对`componentWillMount`[React周期方法](https://facebook.github.io/react/docs/react-component.html#componentwillmount)进行分析，我们花费大量的时间计算。每一次我们做这个的时候，都会或多或少地阻塞组件的渲染.20ms或者90ms，这些时间很快就累加到一起。最初，我们尝试在tweets被渲染之前（timeline如下）记录哪些是在`componentWillMount`组件中被渲染到我们的数据分析服务中。
 
