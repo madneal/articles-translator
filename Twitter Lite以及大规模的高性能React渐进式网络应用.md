@@ -211,6 +211,42 @@ render(<DeferredTimeline />);
 
 ![redux](https://cloud.githubusercontent.com/assets/12164075/25061021/27c236a0-21df-11e7-9292-d44509b0301f.png)
 
+![qucik](https://cloud.githubusercontent.com/assets/12164075/25061377/6e9fba9a-21e7-11e7-8244-ff223a701bbf.png)
+
+通过移除每一次按键下更新主Redux state的Tweet草稿state并且在本地保留Redux组件的状态，可以将开销减少50%。
+
+### 将批量Actions合并成一个Dispatch
+
+在Twitter Lite中，我们使用[react-redux](http://redux.js.org/docs/basics/UsageWithReact.html) 配合[redux](http://redux.js.org/)来订阅我们组件的数据状态变化。我们通过使用 [Normalizr](https://github.com/paularmstrong/normalizr) 以及 [combineReducers](http://redux.js.org/docs/api/combineReducers.html)将大型的store来进行分割从而对我们的数据进一步优化。这些都工作的很好，避免了数据重复并且保持我们的store足够小。然而，每一次我们拿到新的数据的时候，我们必须分发多个action为了将它添加到合适的store中。
+
+通过react-redux，这意味分派每个action都会导致我们连接的组件（成为容器）重新计算更改并且可能重新渲染。
+
+尽管我们使用了一个自定义的middleware，还有其它的[批量middleware](https://www.npmjs.com/package/redux-batch-enhancer)。选择一个适合你的，或者你自己写一个。
+
+说明使用批量action好处的最好方式是使用Chrome React Perf拓展。在初始加载之后，我们在后台pre-cache并且计算围堵的DM。当这种情况发生的时候，我们添加了很多不同的实体（会话，用户，消息条目等等）。如果没有批量action的时候（下面的），你可以看到我们渲染组件的时间相对于批量action时候的时间对比是~16ms对~8ms。
+
+![action](https://cloud.githubusercontent.com/assets/12164075/25061599/c03abddc-21ec-11e7-92f8-bbceb774bc55.png)
+
+![1-XBFV8VKRE16bSrBixvBc7g](C:\Users\neal1\project\articles-translator\image\1-XBFV8VKRE16bSrBixvBc7g.png)
+
+## Service Workers
+
+尽管Service Worker并没有在所有的浏览器得到支持，但是它还是Twitter Lite中非常重要的一个部分。当Service Worker被支持的时候，我们用它做推送，预先缓存应用资源以及其它。不幸的是，作为一个想当新的技术，还有很多性能提升方面的东西需要学习。
+
+### 预先缓存资源
+
+和大多数产品一样，Twitter Lite还远远没有完成。我们仍然在积极地开发它，添加新特性并且修复BUG以及让它运行得更快。这意味着我们经常需要部署新版本的JavaScript资源。
+
+不幸的是，这对于返回应用的用户来说是一个负担，因为他们需要重新下载一大堆脚本文件仅仅是为了浏览一个Tweet。
+
+在ServiceWorker被支持的浏览器中，worker能够在你返回之前自己在后台自动更新，下载并且缓存任何改变的文件，我们从中获益。
+
+因此这对用户意味着什么？几乎是马上就可以加载应用，即使再在我们部署新版本之后！
+
+
+
+
+
 
 
 
