@@ -90,13 +90,13 @@ Wayponints通过计算很多元素不同的高度，宽度以及位置来决定�
 
 ### 使用shouldComponentUpdate方法
 
-对于优化React应用性能一个最常见的建议就是使用[shouldComponentUpdate方法](https://facebook.github.io/react/docs/optimizing-performance.html#shouldcomponentupdate-in-action)。我们尽可能在任何时候都做到这个一点，但是有时候有些东西总是会被遗漏。
+对于优化React应用性能一个最常见的建议就是使用[shouldCompoentUpdate方法](https://facebook.github.io/react/docs/optimizing-performance.html#shouldcomponentupdate-in-action)。我们尽可能在任何时候都做到这个一点，但是有时候有些东西总是会被遗漏。
 
 ![example](https://cloud.githubusercontent.com/assets/12164075/25047300/8306b65c-2168-11e7-91ac-8615e1f4bcd0.gif)
 
 上图中的一个组件总是会进行更新：在主屏timeline的时候点击爱心图标去赞一篇Tweet的时候，任何一个在屏幕上的`Conversation`组件都会重新渲染。在这个动画例子中，你可以看到浏览器需要对被绿色盒子注明的地方进行重绘。因为我们针对的是Tweet下面的整个`Conversation`组件来进行更新action。
 
-如下，你可以看到两个这个action的帧图。上面的没有使用`shouldComponentUpdate`，我们可以看到的它的整个树都被更新和重新渲染，只不过是为了改变屏幕上某个地方的爱心的颜色。在添加`shouldComponentUpdate`（下图）之后，我们阻止了整个树进行更新并且避免了浪费0.1秒来运行不需要的处理。
+如下，你可以看到两个关于action的帧图。上面的没有使用`shouldComponentUpdate`，我们可以看到的它的整个树都被更新和重新渲染，只不过是为了改变屏幕上某个地方的爱心的颜色。在添加`shouldComponentUpdate`（下图）之后，我们阻止了整个树进行更新并且避免了浪费0.1秒来运行不需要的处理。
 
 ![shouldComponentUpdate](https://cloud.githubusercontent.com/assets/12164075/25060357/a363ba66-21cd-11e7-92cb-604cd3e7d7cf.png)
 
@@ -134,7 +134,7 @@ const HeartIcon = (props) => React.createElement('svg', {
 
 ![svg1](https://cloud.githubusercontent.com/assets/12164075/25060705/940e4b0e-21d6-11e7-805f-a6333dd6eb1b.png)
 
-在分析上面地帧图之后，我们最初的代码（上面的）显示需要20ms的时间在一个慢的设备上安装这个action，即Tweet底部的SVG图标。虽然这看起来差别不是很多，但是我们知道我们需要马上渲染，所有这些都在滚动无限的tweet的timeline，我们意识到这会非常的浪费时间。
+在分析上面的帧图之后，我们最初的代码（上面的）显示需要20ms的时间在一个慢的设备上安装这个action，即Tweet底部的SVG图标。虽然这看起来差别不是很多，但是我们知道我们需要马上渲染，所有这些都在滚动无限的tweet的timeline，我们意识到这会非常的浪费时间。
 
 自从React v15增加了对于大多数SVG属性的支持，我们想在前面来看一下如果我们避免使用`dangerouslySetInnnerHTML`会发生什么。看经过处理后的帧图（下面的），我们在每一次安装和渲染这些图标的时候可以节约60%。
 
