@@ -1,4 +1,4 @@
-# articles-translator :11:
+# articles-translator :memo:
 Translate the distinct technical blogs. Any good article, please issue.[@neal](mailto:bing@stu.ecnu.edu.cn)
 
 * [Bootstrap_considered_harmful](https://github.com/neal1991/articles-translator/blob/master/Bootstrap_considered_harmful.md)
