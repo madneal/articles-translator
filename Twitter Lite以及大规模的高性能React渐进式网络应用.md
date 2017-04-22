@@ -10,7 +10,7 @@
 
 > *让我们一起来了解世界最大的React.js PWA,  [Twitter Lite](https://mobile.twitter.com/)之中常见的和不太常见的性能瓶颈。*
 
-创建一个快速的web应用包含很多方面，包括：时间花费在什么地方，理解其发生的原因并且应用潜在的解决方案。不幸的是，从来就没有一个快速的修复方法。性能是一个持续的问题，涉及到需要对需要提高的内容的持续观察和检测。在Twitter Lite中，我们在很多方面进行了一些小的提升：从初始加载时间搭配React组件的渲染（以及避免再次渲染）到图像的加载等等。大多数的变化往往是非常小的，当所有的变化叠加在一起让我们开发出了最大的以及最快的[渐进式web应用](https://developers.google.com/web/progressive-web-apps/)。
+创建一个快速的web应用包含很多方面，包括：时间花费在什么地方，理解其发生的原因并且应用潜在的解决方案。不幸的是，从来就没有一个快速的修复方法。性能是一个持续的问题，涉及到对需要提高的内容的持续观察和检测。在Twitter Lite中，我们在很多方面进行了一些小的提升：从初始加载时间搭配React组件的渲染（以及避免再次渲染）到图像的加载等等。大多数的变化往往是非常小的，当所有的变化叠加在一起让我们开发出了最大的以及最快的[渐进式web应用](https://developers.google.com/web/progressive-web-apps/)。
 
 ![timeline](https://cdn-images-1.medium.com/max/1375/1*6f1XFtCP9Ki04onTv-QEHw.png)
 
@@ -40,7 +40,7 @@ const plugins = [
 ];
 ```
 
-> 添加细粒度，基于路由的代码分割。为了加快初始化和主页timeline渲染，app的整体大小可能会更大，文件会在sesiion期间内按需分块在40个代码块之中。--[Nicolas Gallagher](https://medium.com/@necolas)
+> 添加细粒度，基于路由的代码分割。为了加快初始化和主页timeline渲染，app的整体大小可能会更大，文件会在session期间内按需分块在40个代码块之中。--[Nicolas Gallagher](https://medium.com/@necolas)
 
 ![bad](https://cloud.githubusercontent.com/assets/12164075/25030441/8f688324-20f7-11e7-8ea0-28c8a664cd17.png)
 
@@ -54,15 +54,15 @@ const plugins = [
 
 ## 避免函数导致的Jank
 
-在我们[无限滚动的timeline](http://itsze.ro/blog/2017/04/09/infinite-list-and-react.html)的众多迭代中，我们使用不同的方式来计算你的滚动位置和方向，从而决定我们是否需要API来展示更多的Tweet。直到最近，我们使用了[react-waypoint](https://github.com/brigade/react-waypoint)，这在我们项目中工作的很好。然而，为了尽可能追求我们app的主要基础组件之一的最佳性能，他的速度还不足够快。
+在我们[无限滚动的timeline](http://itsze.ro/blog/2017/04/09/infinite-list-and-react.html)的众多迭代中，我们使用不同的方式来计算你的滚动位置和方向，从而决定我们是否需要API来展示更多的Tweet。直到最近，我们使用了[react-waypoint](https://github.com/brigade/react-waypoint)，这在我们项目中工作的很好。然而，为了尽可能追求我们app的主要基础组件之一的最佳性能，它的速度还不足够快。
 
 Wayponints通过计算很多元素不同的高度，宽度以及位置来决定你现在的滚动位置，以及你距离终点的距离，以及你滚动的方向。所有的这些信息都是有用的，但是因为它是在在每一次滚动事件发生的，因此这是有代价的：带来的计算会造成很多的jank。
 
 但是首先，我们必须明白这意味着什么，如果开发者工具告诉我们这里有一个"jank"。
 
-*大多的设备屏幕每秒会刷新60次。如果有动画或者转换运行，或者用户正在滚动页面，浏览器需要匹配设备的刷新率，并为每个屏幕刷新添加一个新的图片或者帧。*
+大多的设备屏幕每秒会刷新60次。如果有动画或者转换运行，或者用户正在滚动页面，浏览器需要匹配设备的刷新率，并为每个屏幕刷新添加一个新的图片或者帧。
 
-*这些帧中每一帧花费的时间都超过16ms（1秒/60=16.66ms)。然而，实际上浏览器还有其他的工作，所以所有的工作需要在10ms之内完成。当你不能满足这个要求的话，帧率就会下降，内容在屏幕上的显示就会断断续续。这通常成为jank，它对用户体验会造成负面的影响。--* [Paul Lewis 关于渲染性能](https://developers.google.com/web/fundamentals/performance/rendering/)
+这些帧中每一帧花费的时间都超过16ms（1秒/60=16.66ms)。然而，实际上浏览器还有其他的工作，所以所有的工作需要在10ms之内完成。当你不能满足这个要求的话，帧率就会下降，内容在屏幕上的显示就会断断续续。这通常成为jank，它对用户体验会造成负面的影响。-- [Paul Lewis 关于渲染性能](https://developers.google.com/web/fundamentals/performance/rendering/)
 
 之后，我们开发了一个名为VirtualScroller的新的无限滚动的组件。有了这个新的组件，我们确切知道在任何给定时间，什么片段的Tweet被渲染到时间轴上，从而避免在视觉呈现上导致的昂贵的计算。
 
