@@ -19,11 +19,9 @@ Service worker正是被开发用于解决web平台上经常出现的问题和疑
 * 缺乏可以利用很多提出功能的上下文执行。
 
 
-* An inability to explain (in the [Extensible Web Manifesto](https://extensiblewebmanifesto.org/) sense) HTTP caching and high-level HTTP interactions like the HTML5 AppCache
-* Difficulty in building offline-first web applications in a natural way
-* The lack of a background execution context which many proposed capabilities could make use of
-
 We also note that the long lineage of declarative-only solutions ([Google Gears](https://gears.google.com), [Dojo Offline](http://www.sitepen.com/blog/category/dojo-offline/), and [HTML5 AppCache](http://alistapart.com/article/application-cache-is-a-douchebag)) have failed to deliver on their promise. Each successive declarative-only approach failed in many of the same ways, so the service worker effort has taken a different design approach: a largely-imperative system that puts developers firmly in control.
+
+我们也注意到了
 
 The service worker is like a [shared worker](https://html.spec.whatwg.org/multipage/workers.html#sharedworker) in that it:
 
