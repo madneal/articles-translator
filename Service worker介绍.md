@@ -10,8 +10,6 @@
 
 ## 那么它是什么？
 
-Service workers are being developed to answer frequent questions and concerns about the web platform, including:
-
 Service worker正是被开发用于解决web平台上经常出现的问题和疑虑，包括：
 
 * 无法解释（[Extensible Web Manifesto](https://extensiblewebmanifesto.org/) 中）的HTTP缓存以及高级HTTP交互比如HTML5 AppCache。
@@ -21,29 +19,36 @@ Service worker正是被开发用于解决web平台上经常出现的问题和疑
 
 We also note that the long lineage of declarative-only solutions ([Google Gears](https://gears.google.com), [Dojo Offline](http://www.sitepen.com/blog/category/dojo-offline/), and [HTML5 AppCache](http://alistapart.com/article/application-cache-is-a-douchebag)) have failed to deliver on their promise. Each successive declarative-only approach failed in many of the same ways, so the service worker effort has taken a different design approach: a largely-imperative system that puts developers firmly in control.
 
-我们也注意到了
+我们也注意到了声明解决方案([Google Gears](https://gears.google.com), [Dojo Offline](http://www.sitepen.com/blog/category/dojo-offline/)以及[HTML5 AppCache](http://alistapart.com/article/application-cache-is-a-douchebag)都没能实现他们的承诺。每个连续的仅有声明的方法都以相同的方式失败了，所以service worker采取了一个不同的设计方法：一个可以用开发者牢牢把控的重要系统：
 
-The service worker is like a [shared worker](https://html.spec.whatwg.org/multipage/workers.html#sharedworker) in that it:
+Service worker就好像它的内部有一个有一个[shared worker](https://html.spec.whatwg.org/multipage/workers.html#sharedworker) ：
 
-* Runs in its own global script context (usually in its own thread)
-* Isn’t tied to a particular page
-* Has no DOM access
+* 在它自己的全局脚本上下文中运行（通常是在它自己的线程中）
+* 不会和特定的页面绑定
+* 不能够访问DOM
 
-Unlike a shared worker, it:
+不像shared worker，它：
 
-* Can run without any page at all
-* Can terminate when it isn’t in use, and run again when needed (i.e., it’s event-driven)
-* Has a defined upgrade model
-* Is HTTPS only (more on that in a bit)
+* 即使没有页面也能够运行
+* 如果不使用的话可以终止，还可以再次运行当需要的时候（比如，他不是事件驱动的）
+* 拥有一个定义的升级模式
+* 只允许HTTPS（更多的是在这一点上）
 
 We can use service workers:
 
 * To make sites work [faster and/or offline](https://www.youtube.com/watch?v=px-J9Ghvcx4) using network intercepting
 * As a basis for other ‘background’ features such as [push messaging](http://updates.html5rocks.com/2015/03/push-notificatons-on-the-open-web) and [background synchronization](https://github.com/slightlyoff/BackgroundSync/blob/master/explainer.md)
 
-## Getting started
+我们可以利用service workers：
+
+* 利用网络拦截可以让让网站[更快以及/或者支持离线使用](https://www.youtube.com/watch?v=px-J9Ghvcx4)
+* 作为其它'background'功能的基础比如[消息推送](http://updates.html5rocks.com/2015/03/push-notificatons-on-the-open-web)以及[后台同步](https://github.com/slightlyoff/BackgroundSync/blob/master/explainer.md)
+
+## 开始
 
 First you need to register for a service worker:
+
+首先你需要注册一个service worker:
 
 ```js
 if ('serviceWorker' in navigator) {
@@ -57,29 +62,37 @@ if ('serviceWorker' in navigator) {
 
 In this example, `/my-app/sw.js` is the location of the service worker script, and it controls pages whose URL begins with `/my-app/`.
 
+在这个例子中，`/my-app/sw.js`就是service worker脚本的位置，并且它控制那些页面的URL以`/my-app/`开头。
+
+`.register`返回一个promise。如果你以前没接触过promise的话，可以看看[HTML5Rocks article](http://www.html5rocks.com/en/tutorials/es6/promises/)。
+
 `.register` returns a promise. If you’re new to promises, check out the [HTML5Rocks article](http://www.html5rocks.com/en/tutorials/es6/promises/).
 
 Some restrictions:
 
-* The registering page must have been served securely (HTTPS without cert errors)
-* The service worker script must be on the same origin as the page, although you can import scripts from other origins using [`importScripts`](https://html.spec.whatwg.org/multipage/workers.html#apis-available-to-workers:dom-workerglobalscope-importscripts)
-* …as must the scope
+一些限制：
 
-### HTTPS only you say?
+* 注册页面必须安全地提供（没有证书错误的HTTPS）
+* service worker和页面必须同源，尽管你可使用 [`importScripts`](https://html.spec.whatwg.org/multipage/workers.html#apis-available-to-workers:dom-workerglobalscope-importscripts)去导入其它地方的脚本
 
-Using service workers you can hijack connections, respond differently, & filter responses. Powerful stuff. While you would use these powers for good, a man-in-the-middle might not. To avoid this, you can only register for service workers on pages served over HTTPS, so we know the service worker the browser receives hasn’t been tampered with during its journey through the network.
 
-GitHub Pages are served over HTTPS, so they’re a great place to host demos.
+* 作为必须的范围
 
-## Initial lifecycle
+### 只有你说HTTPS？
 
-Your worker script goes through three stages when you call `.register`:
+使用service worker，你可以劫持请求，进行不同的响应，并且过滤响应。这些功能都很强大。尽管你可以将这些能力用在好的地方，但是中间人可能不会。为了避免这一点，你只能在HTTPS上提供的页面上注册service worker，所以我们知道浏览器接收的service worker没有在网络种没有被篡改。
+
+Github Pages是由HTTPS提供服务的，所以是一个绝佳的展示demo的地方。
+
+## 初始生命周期
+
+当你调用`.register`之后，你的service worker会经历三个阶段
 
 1. Download
 2. Install
 3. Activate
 
-You can use events to interact with `install` and `activate`:
+你可以使用事件和`install`以及`activate`进行交互：
 
 ```js
 self.addEventListener('install', function(event) {
@@ -93,19 +106,25 @@ self.addEventListener('activate', function(event) {
 });
 ```
 
-You can pass a promise to `event.waitUntil` to extend the installation process. Once `activate` fires, your service worker can control pages!
+你可以向`event.waitUntill`传递一个promise从而来继承这个过程。一旦`activate`事件被触发了，你的service worker就可以控制页面了！
 
-## So I’m controlling pages now?
+## 那么我现在可以控制页面了？
 
-Well, not quite. A document will pick a service worker to be its controller when it navigates, so the document you called `.register` from isn’t being controlled, because there wasn’t a service worker there when it first loaded.
+额，不完全是。当documen浏览时，它会选择一个service worker作为它的控制器，因此你使用`.register`注册的document并不是被控制的，因为那并不是service worker首次加载的地方。
 
 If you refresh the document, it’ll be under the service worker’s control. You can check `navigator.serviceWorker.controller` to see which service worker is in control, or `null` if there isn’t one. Note: when you’re updating from one service worker to another, things work a little differently. We’ll get into that in the “Updating” section.
 
+如果你刷新document，它将会是在service worker的控制之下。你可以通过`navigator.serviceWorker.controller`来看一下是哪个service worker在进行控制，如果没有的话结果就会是`null`。
+
+注意：当你从一个service worker更新到另外一个的时候，可能会有一点点不一点。我们会进入“Updating"阶段。
+
 If you shift+reload a document, it’ll always load without a controller, which is handy for testing quick CSS & JS changes.
 
-Documents tend to live their whole life with a particular service worker, or none at all. However, a service worker can call `self.skipWaiting()` ([spec](https://w3c.github.io/ServiceWorker/#service-worker-global-scope-skipwaiting)) to do an immediate takeover of all pages within scope.
+如果使用shift来重载网页的话，加载就会有控制器了，这样做是为了测试CSS以及JS变化。
 
-## Network intercepting
+Document通常是和一个service worker存在于整个声明周期，或者根本就没有service worker。然而，service worker可以调用`self.skipWaiting()`([spec](https://w3c.github.io/ServiceWorker/#service-worker-global-scope-skipwaiting)) 来立刻接管范围内的所有页面。
+
+## 网络截获
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -115,10 +134,12 @@ self.addEventListener('fetch', function(event) {
 
 You get fetch events for:
 
-* Navigations within your service worker’s scope
-* Any requests triggered by those pages, even if they’re to another origin
+你可以利用fetch事件：
 
-This means you get to hear about requests for the page itself, the CSS, JS, images, XHR, beacons… all of it. The exceptions are:
+* 在你的service worker作用域下浏览
+* 任何被这些页面触发的请求，甚至是对其他源的请求
+
+这意味着你可以监听所有对于这个页面的请求，CSS,JS，图片，XHR，图标等等所有。
 
 * iframes & `<object>`s – these will pick their own controller based on their resource URL
 * Service workers – requests to fetch/update a service worker don’t go through the service worker
