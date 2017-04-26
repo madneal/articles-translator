@@ -1,6 +1,6 @@
 # Service worker介绍
 
-> 原文：[Twitter Lite and High Performance React Progressive Web Apps at Scale](https://medium.com/@paularmstrong/twitter-lite-and-high-performance-react-progressive-web-apps-at-scale-d28a00e780a3)
+> 原文：[Service workers explained](https://github.com/w3c/ServiceWorker/blob/master/explainer.md)
 >
 > 译者：[neal1991](https://github.com/neal1991)
 >
@@ -17,8 +17,6 @@ Service worker正是被开发用于解决web平台上经常出现的问题和疑
 * 缺乏可以利用很多提出功能的上下文执行。
 
 
-We also note that the long lineage of declarative-only solutions ([Google Gears](https://gears.google.com), [Dojo Offline](http://www.sitepen.com/blog/category/dojo-offline/), and [HTML5 AppCache](http://alistapart.com/article/application-cache-is-a-douchebag)) have failed to deliver on their promise. Each successive declarative-only approach failed in many of the same ways, so the service worker effort has taken a different design approach: a largely-imperative system that puts developers firmly in control.
-
 我们也注意到了声明解决方案([Google Gears](https://gears.google.com), [Dojo Offline](http://www.sitepen.com/blog/category/dojo-offline/)以及[HTML5 AppCache](http://alistapart.com/article/application-cache-is-a-douchebag)都没能实现他们的承诺。每个连续的仅有声明的方法都以相同的方式失败了，所以service worker采取了一个不同的设计方法：一个可以用开发者牢牢把控的重要系统：
 
 Service worker就好像它的内部有一个有一个[shared worker](https://html.spec.whatwg.org/multipage/workers.html#sharedworker) ：
@@ -33,11 +31,6 @@ Service worker就好像它的内部有一个有一个[shared worker](https://htm
 * 如果不使用的话可以终止，还可以再次运行当需要的时候（比如，他不是事件驱动的）
 * 拥有一个定义的升级模式
 * 只允许HTTPS（更多的是在这一点上）
-
-We can use service workers:
-
-* To make sites work [faster and/or offline](https://www.youtube.com/watch?v=px-J9Ghvcx4) using network intercepting
-* As a basis for other ‘background’ features such as [push messaging](http://updates.html5rocks.com/2015/03/push-notificatons-on-the-open-web) and [background synchronization](https://github.com/slightlyoff/BackgroundSync/blob/master/explainer.md)
 
 我们可以利用service workers：
 
@@ -65,10 +58,6 @@ In this example, `/my-app/sw.js` is the location of the service worker script, a
 在这个例子中，`/my-app/sw.js`就是service worker脚本的位置，并且它控制那些页面的URL以`/my-app/`开头。
 
 `.register`返回一个promise。如果你以前没接触过promise的话，可以看看[HTML5Rocks article](http://www.html5rocks.com/en/tutorials/es6/promises/)。
-
-`.register` returns a promise. If you’re new to promises, check out the [HTML5Rocks article](http://www.html5rocks.com/en/tutorials/es6/promises/).
-
-Some restrictions:
 
 一些限制：
 
@@ -112,8 +101,6 @@ self.addEventListener('activate', function(event) {
 
 额，不完全是。当documen浏览时，它会选择一个service worker作为它的控制器，因此你使用`.register`注册的document并不是被控制的，因为那并不是service worker首次加载的地方。
 
-If you refresh the document, it’ll be under the service worker’s control. You can check `navigator.serviceWorker.controller` to see which service worker is in control, or `null` if there isn’t one. Note: when you’re updating from one service worker to another, things work a little differently. We’ll get into that in the “Updating” section.
-
 如果你刷新document，它将会是在service worker的控制之下。你可以通过`navigator.serviceWorker.controller`来看一下是哪个service worker在进行控制，如果没有的话结果就会是`null`。
 
 注意：当你从一个service worker更新到另外一个的时候，可能会有一点点不一点。我们会进入“Updating"阶段。
@@ -131,8 +118,6 @@ self.addEventListener('fetch', function(event) {
   console.log(event.request);
 });
 ```
-
-You get fetch events for:
 
 你可以利用fetch事件：
 
@@ -155,7 +140,7 @@ self.addEventListener('fetch', function(event) {
 
 [这是一个 demo](https://jakearchibald.github.io/isserviceworkerready/demos/manual-response/).
 
-`.respondWith` takes a `Response` object or a promise that resolves to one. We’re creating a manual response above. The `Response` object comes from the [Fetch Spec](https://fetch.spec.whatwg.org/#response-class). Also in the spec is the `fetch()` method, which returns a promise for a response, meaning you can get your response from elsewhere:
+`.repondWith`使用一个`Reponse`对象或者一个解析后的promise。上面我们是在创建一个手工的response。这个`Reponse`对象来自于 [Fetch Spec](https://fetch.spec.whatwg.org/#response-class).。在这个规范里面同样也存在着`fetch()`方法，它会返回一个promise作为响应，这意味着你可以在任何地方获取你的响应。
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -169,9 +154,9 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-In the above, I’m capturing requests that end in `.jpg` and instead responding with a Google doodle. `fetch()` requests are [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing) by default, but by setting `no-cors` I can use the response even if it doesn’t have CORS access headers (although I can’t access the content with JavaScript). [Here’s a demo of that](https://jakearchibald.github.io/isserviceworkerready/demos/img-rewrite/).
+在上面，我捕获了以`.jpg`结尾的请求并且将Google doodle作为响应。`fetch()`请求默认是 [CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)，但是通过设置`no-cors`我可用使用这个响应，即使他不能跨域访问headers（尽管我们不能利用JavaScript访问内容）。[这是demo](https://jakearchibald.github.io/isserviceworkerready/demos/img-rewrite/).
 
-Promises let you fall back from one method to another:
+Promise能够让你从一个方法返回到另外一个方法：
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -183,17 +168,17 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-The service worker comes with a cache API, making it easy to store responses for reuse later. More on that shortly, but first…
+Service worker是带有一个cache API，使得以后可以方便的存储响应以便重用。不久之后，但是第一点
 
-## Updating a service worker
+## 更新一个service worker
 
-The lifecycle of a service worker is based on Chrome’s update model: do as much as possible in the background, don’t disrupt the user, complete the update when the current version closes.
+Service worker的生命周期是建立在Chrome的更新模型上的：在后台尽可能多地做，不要打扰用户，当当前版本关闭的时候完成更新。
 
-Whenever you navigate to a page within scope of your service worker, the browser checks for updates in the background. If the script is byte-different, it’s considered to be a new version, and installed (note: only the script is checked, not external `importScripts`). However, the old version remains in control over pages until all tabs using it are gone (unless `.replace()` is called during install). Then the old version is garbage collected and the new version takes over.
+无论何时你在你的service worker作用域内浏览页面，浏览器都会在后台检查更新。如果这个脚本是字节不同的，那么它就会被认为是一个新的版本，并且被安装（注意：只有这个脚本被检查，而不是外部的`importScripts`）。然而，老版本的会持续对页面的控制直到所有使用它的tab都被关闭了（除非在install的过程中调用`.replace()`）。接着这个老版本的就会被回收从而新的版本开始接管。
 
-This avoids the problem of two versions of a site running at the same time, in different tabs. Our current strategy for this is [“cross fingers, hope it doesn’t happen”](https://twitter.com/jaffathecake/status/502779501936652289).
+这样做是为了避免同时运行两个版本的service worker在不同的tab中。我们当前的策略是： [“cross fingers, hope it doesn’t happen”](https://twitter.com/jaffathecake/status/502779501936652289).
 
-Note: Updates obey the freshness headers of the worker script (such as `max-age`), unless the `max-age` is greater than 24 hours, in which case it is capped to 24 hours.
+注意：更新遵顼header中worker脚本的新鲜度（比如`max-age`），除非`max-age`大于24个小时，否则最多只能保持24个小时。
 
 
 ```js
@@ -215,13 +200,15 @@ self.addEventListener('activate', function(event) {
 
 Here’s [how that looks in practice](https://www.youtube.com/watch?v=VEshtDMHYyA).
 
-Unfortunately refreshing a single tab isn’t enough to allow an old worker to be collected and a new one take over. Browsers make the next page request before unloading the current page, so there isn’t a moment when current active worker can be released.
+[下面是实践中的实现](https://www.youtube.com/watch?v=VEshtDMHYyA)：
 
-The easiest way at the moment is to close & reopen the tab (cmd+w, then cmd+shift+t on Mac), or shift+reload then normal reload.
+不幸的是，刷新一个tab不足够收集到旧的woker兵器让新的进行接管。浏览期在上传当前页面之前向下一个页面发送请求，所以不存在当前active worker被释放。
 
-## The cache
+最简单的方法是关闭然后重新打开这个tab（cmd+w，然后cmd+shift+t Mac），或者shift+reload然后就是正常的重新加载了。
 
-Service worker comes with a [caching API](https://w3c.github.io/ServiceWorker/#cache-objects), letting you create stores of responses keyed by request.
+## 缓存
+
+Service worker带有一个[caching API](https://w3c.github.io/ServiceWorker/#cache-objects)能够让你产生由请求作为键值的store。
 
 ```js
 self.addEventListener('install', function(event) {
@@ -249,19 +236,21 @@ self.addEventListener('fetch', function(event) {
 
 Matching within the cache is similar to the browser cache. Method, URL and `vary` headers are taken into account, but freshness headers are ignored. Things are only removed from caches when you remove them.
 
-You can add individual items to the cache with `cache.put(request, response)`, including ones you’ve created yourself. You can also control matching, [discounting things](https://w3c.github.io/ServiceWorker/#cache-query-options-dictionary) such as query string, methods, and vary headers.
+在缓存之内匹配类似于浏览器的缓存。方法，URL以及`vary`header都被考虑在内，但是header的新鲜度被忽略了。缓存的东西只有在你手动移除的时候才生效。
 
-## Other service worker–related specifications
+你可以通过`cache.put(request, response)`向缓存中添加独立的条目，包括你自己产生的。你也可以控制匹配，[忽略其它的](https://w3c.github.io/ServiceWorker/#cache-query-options-dictionary)，比如查询字符串，方法以及vary header。
 
-Since service workers can spin up in time for events, they’ve opened up the possibility for other features that happen occasionally in the background, even when the page isn’t open. Such as:
+## 其它service worker相关的标准
+
+由于service worker可以及时地调动事件，及时未打开页面，也可以在后台偶尔调用其它功能：
 
 * [Push](http://w3c.github.io/push-api/)
 * [Background sync](https://github.com/slightlyoff/BackgroundSync)
 * [Geofencing](https://github.com/slightlyoff/Geofencing)
 
-## Conclusions
+## 总结
 
-This document only scratches the surface of what service workers enable, and isn’t an exhaustive list of all of the available APIs available to controlled pages or service worker instances. Nor does it cover emergent practices for authoring, composing, and upgrading applications architected to use service workers. It is, hopefully, a guide to understanding the promise of service workers and the rich promise of offline-by-default web applications that are URL friendly and scalable.
+这份文档只是简要地介绍了service worker的能力，并不是售空页面或者service worker实例的所有的可用的API。也不涉及创作，修改以及更新应用程序的service worker。通过这个，希望能够引导你理解service worker中的promise以及对于URL友好的以及可伸缩的默认支持离线使用的web应用的丰富的promise。
 
 ## Acknowledgments
 
