@@ -141,11 +141,11 @@ You get fetch events for:
 
 这意味着你可以监听所有对于这个页面的请求，CSS,JS，图片，XHR，图标等等所有。
 
-* iframes & `<object>`s – these will pick their own controller based on their resource URL
-* Service workers – requests to fetch/update a service worker don’t go through the service worker
-* Requests triggered within a service worker – you’d get a loop otherwise
+* iframes & `<object>`--这些将根据它们的资源URL选择其控制器
+* Service workers - 对于service worker的fetch/update请求不会通过service worker
+* 请求是在service worker之内出发的 - 否则你会获得一个循环
 
-The `request` object gives you information about the request such as its URL, method & headers. But the really fun bit, is you can hijack it and respond differently:
+`request`对象会给你关于这个request的信息，比如它的URL，方法以及头部。但是最有趣的是，他可以劫持请求并且给出不同的响应。
 
 ```js
 self.addEventListener('fetch', function(event) {
@@ -153,7 +153,7 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-[Here’s a live demo](https://jakearchibald.github.io/isserviceworkerready/demos/manual-response/).
+[这是一个 demo](https://jakearchibald.github.io/isserviceworkerready/demos/manual-response/).
 
 `.respondWith` takes a `Response` object or a promise that resolves to one. We’re creating a manual response above. The `Response` object comes from the [Fetch Spec](https://fetch.spec.whatwg.org/#response-class). Also in the spec is the `fetch()` method, which returns a promise for a response, meaning you can get your response from elsewhere:
 
