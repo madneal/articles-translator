@@ -39,8 +39,6 @@ Service worker就好像它的内部有一个有一个[shared worker](https://htm
 
 ## 开始
 
-First you need to register for a service worker:
-
 首先你需要注册一个service worker:
 
 ```js
@@ -52,8 +50,6 @@ if ('serviceWorker' in navigator) {
   });
 }
 ```
-
-In this example, `/my-app/sw.js` is the location of the service worker script, and it controls pages whose URL begins with `/my-app/`.
 
 在这个例子中，`/my-app/sw.js`就是service worker脚本的位置，并且它控制那些页面的URL以`/my-app/`开头。
 
@@ -104,8 +100,6 @@ self.addEventListener('activate', function(event) {
 如果你刷新document，它将会是在service worker的控制之下。你可以通过`navigator.serviceWorker.controller`来看一下是哪个service worker在进行控制，如果没有的话结果就会是`null`。
 
 注意：当你从一个service worker更新到另外一个的时候，可能会有一点点不一点。我们会进入“Updating"阶段。
-
-If you shift+reload a document, it’ll always load without a controller, which is handy for testing quick CSS & JS changes.
 
 如果使用shift来重载网页的话，加载就会有控制器了，这样做是为了测试CSS以及JS变化。
 
@@ -233,8 +227,6 @@ self.addEventListener('fetch', function(event) {
   );
 });
 ```
-
-Matching within the cache is similar to the browser cache. Method, URL and `vary` headers are taken into account, but freshness headers are ignored. Things are only removed from caches when you remove them.
 
 在缓存之内匹配类似于浏览器的缓存。方法，URL以及`vary`header都被考虑在内，但是header的新鲜度被忽略了。缓存的东西只有在你手动移除的时候才生效。
 
