@@ -95,7 +95,7 @@ self.addEventListener('activate', function(event) {
 
 ## 那么我现在可以控制页面了？
 
-额，不完全是。当documen浏览时，它会选择一个service worker作为它的控制器，因此你使用`.register`注册的document并不是被控制的，因为那并不是service worker首次加载的地方。
+额，不完全是。当document浏览时，它会选择一个service worker作为它的控制器，因此你使用`.register`注册的document并不是被控制的，因为那并不是service worker首次加载的地方。
 
 如果你刷新document，它将会是在service worker的控制之下。你可以通过`navigator.serviceWorker.controller`来看一下是哪个service worker在进行控制，如果没有的话结果就会是`null`。
 
@@ -191,8 +191,6 @@ self.addEventListener('activate', function(event) {
   )
 });
 ```
-
-Here’s [how that looks in practice](https://www.youtube.com/watch?v=VEshtDMHYyA).
 
 [下面是实践中的实现](https://www.youtube.com/watch?v=VEshtDMHYyA)：
 
