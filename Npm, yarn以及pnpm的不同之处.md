@@ -49,3 +49,51 @@
 可以通过`npm config set save-exact true`命令来关闭在包的版本前添加`^`的默认行为，但这个只会锁住高层次的依赖。因为i每一个引入的包都有它们自己的`package.json`文件，在这里面的依赖可能包含了`^`，没有办法通过`package.json`来保证嵌套的内容。
 
 为了解决这个问题，npm提供了一个[shrinkwrap](https://docs.npmjs.com/cli/shrinkwrap)命令。这个命令能够生成一个`npm-shrinkwrap.json`文件，对于所有的包以及嵌套的依赖规定了明确的版本。
+
+这也就是说，即使是通过`npm-shrinkwrap.json`这个文件，npm也只是锁住了包的版本而不是包的内容。即使[npm现在阻止用户多次发布相同版本的包](http://blog.npmjs.org/post/77758351673/no-more-npm-publish-f)，`npm`管理依然有权利强制更新某些包。
+
+下面是 [shrinkwrap](https://docs.npmjs.com/cli/shrinkwrap)文档页面的引用：
+
+>如果你希望锁定包内包含的指定字节，例如你有百分之百的信心能够重新发布或者构建，那么你应该将你的依赖检查到媛代码控制中，或者追求其它的某种能够验证内容而不是版本的机制。
+
+`npm version 2`过去式对于每个包内所有引入的依赖全部都安装。如果已有一个项目，这个项目引入项目A，项目A引入项目B，项目B引入项目从，那么这个所有依赖的结构树看起来会是下面这样：
+
+```
+node_modules
+- package-A
+-- node_modules
+--- package-B
+----- node_modules
+------ package-C
+-------- some-really-really-really-long-file-name-in-package-c.js
+```
+
+这个结构可能会变得相当长。这可能仅仅是基于Unix系统上面的一个烦恼，在Windows上已经有很多破解程序能够解决文件路径超过260个字符的问题。
+
+`npm version 3`通过展平依赖树来解决这个问题，因此这3个项目的结构看起来会是这个样子的：
+
+```
+node_modules
+- package-A
+- package-B
+- package-C
+-- some-file-name-in-package-c.js
+```
+
+这个变化的结果就是改变了一写长文件的文件路径从 `./node_modules/package-A/node_modules/package-B/node-modules/some-file-name-in-package-c.js` 变化为 `./node_modules/some-file-name-in-package-c.js`。
+
+你可以从[这](https://docs.npmjs.com/how-npm-works/npm3)了解更多关于NPM 3依赖的解决方案。
+
+这个方法的一个缺点是`npm`现在必须要遍历所有的项目依赖从而决定如何展平`node_modules`文件夹。`npm`被强制为所有使用过的模块建立依赖树，这样做的代价会很大。这也是[导致`npm install`安装速度变慢的原因之一](https://github.com/npm/npm/issues/8826)。（请看文末的更新）。
+
+因为我没有仔细关注过`npm`的变化，我猜想NPM速度变慢的原因是我每次运行`npm install`的时候都需要从网上下载所有东西。
+
+事实证明，我是错的，并且`npm`**确实**是具有本地缓存的，在其中保存了所有下载包的压缩文件。可以通过`npm cache ls`命令来查村本地缓存的内容。通过本地缓存可以加快安装速度。
+
+总而言之，`npm`是一个成熟的，稳定的并且乐于使用的包管理器。
+
+## yarn
+
+[Yarn](https://github.com/yarnpkg/yarn) 是在2016年10月份发布的并且在Github上迅速获取了24K+star。作为对比，[npm](https://github.com/npm/npm) 仅仅只有12K+ star。这个项目具有高资质的开发者比如Sebastian McKenzie ([Babel.js](https://babeljs.io/)) 以及 Yehuda Katz ([Ember.js](https://www.emberjs.com/), [Rust](https://www.rust-lang.org/en-US/), [Bundler](http://bundler.io/) 等等)。
+
+从我目前收集的来看，yarn的最初目的是
