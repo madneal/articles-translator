@@ -19,3 +19,89 @@
 我没有深入web开发直到我开始我现在的工作。是的，我了解一些HTML以及CSS，并且我曾经上过大学的web开发课。然而，我对这些并不是很感兴趣知道我在工作领域使用这些技能。
 
 在我的工作中，我们所有的应用都是使用App Engine来构建的。我们使用Python版本，Jinja2是我们的模板语言，Knockout.js是我们的前端代码。之后对于在App Engine中开发我觉得很舒适。我熟悉它，我已经到了可以相对快速，轻松地将新应用程序整合在一起的地步。
+
+现在，回到SPAs。在2016的夏天，我开始从事于  [Roll Up Tracker](https://www.rolluptracker.com/)。Roll Up Tracker是一种Angular2的web-app，它能够让你追踪你在Tim Hortons举办的Rim To Win赛季中的胜利和损失。自然的，当我开始这个项目的时候我决定将它托管在App Engine中。这可能有一点奇怪，利用一个完整的App Engine项目来服务仅仅一些HTML以及JavaScript。然而，我是基于后台是Python，数据库使用的是Google Cloud Database这一事实来做出决定的。因此利用这个托管前端是有意义的。
+
+实现方式非常直接。
+
+1. 为前端文件添加一些规则，以及后端的规则全部添加到你的`app.yaml`中。
+2. 创建一个通配符路由到一个处理程序之中，只为`index.html`提供服务。
+3. 在你的通配符之上创建你的API路由从而能够首先匹配。
+
+```
+# app.yaml
+- url: /assets/(.*)
+  static_files: dist/assets/\1
+  upload: dist/assets/.*
+
+- url: /(.*\.(js|map))$
+  static_files: dist/\1
+  upload: dist/(.*\.(js|map))
+
+- url: .*
+  script: main.app
+  secure: always
+```
+
+```python
+class MainHandler(BaseHandler):
+
+    def get(self, *args, **kwargs):
+        context = {}
+        self.response.write(template.render(os.path.join(TEMPLATE_DIR, 'index.html'), context))
+```
+
+这就是它了！现在开始看第二个
+
+## Google App Engine Flex
+
+哦，App Engine Flex！听起来酷炫吊炸天。它首先，的确是这样的。
+
+我曾经利用Vue.js创建一个叫做[Scrobblin' With Friends](https://scrobblin-friends.appspot.com/)的非常小的SPA，从而能够将Last.fm带回到我的生活中。它是一个简单的app，允许你登录你的Last.fm的用户名，它展示了所有你关注的朋友。它是一个迷你的app，几乎是没有后台的。它所做的所有事情就是拿到一个用户名，大概每隔10秒调用一个API接着展示一些数据。他的确不需要采取一个App Engine项目。
+
+然后我发现了Flex，我们发现它们具有一个Node.js环境。它非常容易创建：
+
+1. 仅有2行的`app.yml`：`runtime: node.js`以及`env: flex`
+2. 具有`start`脚本的`package.json`
+3. 一个简单的express服务
+
+```javascript
+// server.js
+var express = require('express');
+var app = express();
+
+const PORT = process.env.PORT || 8080;
+
+app.get('/static/*', function(request, response){
+     console.log('static file request : ' + request.params[0]);
+     response.sendFile( __dirname + '/static/' + request.params[0]);
+});
+
+app.get('*', function(request, response) {
+    response.sendFile(__dirname + '/index.html');
+});
+
+app.listen(PORT);
+```
+
+我很快就完成了配置并且完成了部署，并且运行的很好。直到我这个月收到了我的账单。
+
+标准App Engine和Flex环境之间最重要的区别就是在Flex环境中你的项目永远不会消失。在标准环境中，如果没有人访问你的网站，你就不需要支付。即使你占用了一点点流量，它们也很慷慨的对此免费。我没有想到的是，在Flex中就没有免费的午餐了。在我注意到的几天之间，我已经积累了30美元的账单。
+
+我认为如果你愿意花足够预算来进行托管的话，那么Flex将会是一个可行的方法。这并不是我所提及的项目之一。因此返回到我曾经使用的标准的App Engine。
+
+## 3.now
+
+如果你还没有听说过 [now](https://zeit.co/now)，那么**现在**你就应该去看一看。它真的很酷。在你的电脑安装之后，你只需要在你的命令行中输入`now`，接着你的应用就可以在web上访问。
+
+你只需要提供带有`start`脚本的`package.json`文件。`now`将会帮你完成剩余的工作。
+
+就和它所提供的酷的部署过程一样，也有一些我的确不喜欢的方面。
+
+1. 免费的版本只能为你的项目提供一些杂乱的URL，例如coolproject-glkqdjsslm.now.sh。通常如果我没有为托管付费的话我介意使用一些奇怪的URL，但是问题每次你部署的时候，你获得一个新的URL，你基本不可能免费托管一个别人能够使用的应用。
+2. 他们的最便宜的付费套餐，为你提供1000次部署每个月（而不是20次），私有的代码库，更多的是14.99美元每个月的。这远远超过了我愿意为那些简单项目提供的预算。
+
+## 4. GitHub Pages
+
+
+
