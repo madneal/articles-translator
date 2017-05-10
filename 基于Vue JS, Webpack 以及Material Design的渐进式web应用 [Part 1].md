@@ -1,3 +1,13 @@
+# 基于Vue JS, Webpack 以及Material Design的渐进式web应用 [Part 1]
+
+原文：[基于Vue JS, Webpack 以及Material Design的渐进式web应用 [Part 1]](https://blog.sicara.com/a-progressive-web-application-with-vue-js-webpack-material-design-part-1-c243e2e6e402)
+
+译者：[neal1991](https://github.com/neal1991)
+
+welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+
+LICENSE: [MIT](https://opensource.org/licenses/MIT)
+
 渐进式web应用是大势所趋。越来越多的大公司开始使用这些技术（比如推特：https://mobile.twitter.com/）。
 
 想象你可以在地铁中浏览一个web应用，这个应用能够向用户推送通知并且提供实时的数据，以及提供类似于app的浏览，这些就是PWA的大致的能力。
