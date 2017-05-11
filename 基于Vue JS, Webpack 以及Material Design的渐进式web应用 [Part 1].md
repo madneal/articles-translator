@@ -12,9 +12,9 @@
 
 渐进式web应用是大势所趋。越来越多的大公司开始使用这些技术（比如推特：https://mobile.twitter.com/）。
 
-想象你可以在地铁中浏览一个web应用，这个应用能够向用户推送通知并且提供实时的数据，以及提供类似于app的浏览，这些就是PWA的大致的能力。
+想象你可以在地铁中浏览一个web应用，这个应用能够向用户推送通知并且提供实时的数据，以及类似于app的浏览，这些就是PWA的大致能力。
 
-渐进式web应用（PWA）是一个web应用能够提供给用户一种类似于app的体验。PWA得益于现代web科技创新（Service Workers, Native APIS, JS famework）以及提升的web应用质量标准。
+渐进式web应用（PWA）是一个web应用能够，提供给用户一种类似于app的体验。PWA得益于现代web科技创新（Service Workers, Native APIS, JS famework）以及提升的web应用质量标准。
 
 ![](http://p0.qhimg.com/t0167435df73cd96e04.png)
 
@@ -74,7 +74,7 @@
 
 *   [Service Worker](https://developers.google.com/web/fundamentals/getting-started/primers/service-workers)：处理离线模式并且保持数据更新
 
-*   [Webpack](https://webpack.github.io/) & [Vue-loader](https://github.com/vuejs/vue-loader)：构建我们的应用，提供热加载 build our application, provides hot reload, ES2016 and pre-processors.
+*   [Webpack](https://webpack.github.io/) & [Vue-loader](https://github.com/vuejs/vue-loader)：构建我们的应用，提供热加载， ES2016 以及 pre-processors.
 
 让我们开始part 1！
 
@@ -87,22 +87,19 @@
 我们打算利用[Vue-cli](https://github.com/vuejs/vue-cli)来创建我们的应用：
 
 ```
-`npm install -g vue-cli`
-
+npm install -g vue-cli
 ```
 
 Vue-cli自带一些模板。我们将会选择webpack模板。[Webpack](https://webpack.github.io/)是一个对于Javascript应用的现代模块打包工具，它能够处理并且构建我们的资源。Vue-cli将使用Webpack，vue-loader（热加载！），JS linter以及测试套件来创建一个虚拟的VueJS应用。
 
 ```
-`vue init webpack cropchat`
-
+vue init webpack cropchat
 ```
 
 你可能会问一些问题。下面是我使用过的配置：
 
 ```
-`This will install Vue 2.x version of the template.`
-
+This will install Vue 2.x version of the template.
 ```
 
 ```
@@ -124,8 +121,7 @@ Vue-cli自带一些模板。我们将会选择webpack模板。[Webpack](https://
 ```
 
 ```
- `vue-cli · Generated "cropchat".`
-
+ vue-cli · Generated "cropchat".
 ```
 
 这个过程会创建一个包含以下子文件夹的项目文件夹：
@@ -157,7 +153,7 @@ npm run dev
 
 PWA的最大优点之一就是容易安装并且分享。让我们别再等待了！
 
-为了这样做，我们需要添加一个manifest.json文件并且在index.html文件中进行声明。
+为了这样做，我们需要添加一个manifest.json文件，并且在index.html文件中进行声明。
 
 `pwa-manifest-webpack-plugin`能够让我们在应用构建的时候生成文件：
 
