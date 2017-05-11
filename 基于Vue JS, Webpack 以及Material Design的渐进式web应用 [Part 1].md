@@ -14,7 +14,7 @@
 
 想象你可以在地铁中浏览一个web应用，这个应用能够向用户推送通知并且提供实时的数据，以及类似于app的浏览，这些就是PWA的大致能力。
 
-渐进式web应用（PWA）是一个web应用能够，提供给用户一种类似于app的体验。PWA得益于现代web科技创新（Service Workers, Native APIS, JS famework）以及提升的web应用质量标准。
+渐进式web应用（PWA）是一个web应用能够，提供给用户一种类似于app的体验。PWA得益于现代web科技创新（Service Workers, Native APIS, JS frameworks），并且提升的web应用质量标准。
 
 ![](http://p0.qhimg.com/t0167435df73cd96e04.png)
 
