@@ -2,7 +2,11 @@
 
 >原文：[The 10 GitHub repos new developers mention the most](https://medium.freecodecamp.com/the-10-github-repos-people-mention-the-most-in-freecodecamps-main-chat-room-189750600fa4)
 >
->译者：[neal1991](https://github.com/neal1991/)
+>译者：[neal1991](https://github.com/neal1991)
+>
+>welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+>LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 ![github](https://cdn-images-1.medium.com/max/2000/1*QUPbzsIyIs3QLx6LjGlgPw.jpeg)
 
