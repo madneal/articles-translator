@@ -2,7 +2,11 @@
 
 > 原文：[6 Reasons Why JavaScript’s Async/Await Blows Promises Away (Tutorial)](https://hackernoon.com/6-reasons-why-javascripts-async-await-blows-promises-away-tutorial-c7ec10518dd9)
 >
-> 译者：[neal1991](https://github.com/neal1991/)
+> 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 你可能期待已久，Node从7.6版本就是开始支持async/await了。如果你还到现在还没有尝试，下面是一些你应该立刻采用它的带有例子的理由，而且你永远都不想再回来了。
 
