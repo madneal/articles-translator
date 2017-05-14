@@ -1,25 +1,31 @@
-https://github.com/webpack/docs/wiki/how-to-write-a-plugin
+# 如何写一个webpack插件
 
-Plugins expose the full potential of the Webpack engine to third-party developers. Using staged build callbacks, developers can introduce their own behaviors into the Webpack build process. Building plugins is a bit more advanced than building loaders, because you'll need to understand some of the Webpack low-level internals to hook into them. Be prepared to read some source code!
+> 原文：[how to write a plugin](https://github.com/webpack/docs/wiki/how-to-write-a-plugin)
+>
+> 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-插件能够将webpack引擎的全部潜力暴露给第三方的开发者。
+插件能够将webpack引擎的全部潜力暴露给第三方的开发者。通过使用阶段构建回调，开发者能够将他们自己的行为引入到webpack的构建过程中。构建插件比构建loader更高级，因为你需要理解一些webpack低层次的内部钩子。准备好阅读一些源代码吧!
 
-## Compiler and Compilation
+## Compiler以及Compilation
 
-Among the two most important resources while developing plugins are the `compiler` and `compilation` objects. Understanding their roles is an important first step in extending the Webpack engine.
+在开发插件的时候最重要的两个资源就是`compiler`和`compilation`对象。理解它们的角色是拓展webpack引擎重要的第一步。
 
-- The `compiler` object represents the fully configured Webpack environment. This object is built once upon starting Webpack, and is configured with all operational settings including options, loaders, and plugins. When applying a plugin to the Webpack environment, the plugin will receive a reference to this compiler. Use the compiler to access the main Webpack environment.
-
+- `compiler`对象代表了完整的配置的webpack环境。一旦开启webpack之后，这个对象就被构建了，并且这个对象会使用所有操作设置，包括options, loaders, 以及plugins来进行配置。当将一个插件应用到webpack环境中，这个插件将会获得一个对于这个compiler的引用。使用这个compiler可以访问主要的webpack环境。
 - A `compilation` object represents a single build of versioned assets. While running Webpack development middleware, a new compilation will be created each time a file change is detected, thus generating a new set of compiled assets. A compilation surfaces information about the present state of module resources, compiled assets, changed files, and watched dependencies. The compilation also provides many callback points at which a plugin may choose to perform custom actions.
+- 一个`compilation`对象代表版本资源的一次构建。当运行webpack开发中间件的时候，每次检测到文件变化的时候都会产生一个新的compilation，因此会生成一系列编译后的资源。Compilation表示有关模块资源，已编译资源，已更改文件和监视依赖关系的当前状态的信息。该compilation还提供了许多回调点，插件可以选择执行自定义操作。
 
-These two components are an integral part of any Webpack plugin (especially a `compilation`), so developers will benefit by familiarizing themselves with these source files:
+这两个组件是任何webpack插件（特别是`compilation`）的内部一部分，因此开发者熟悉这些源代码文件之后将会受益非凡：
 
 - [Compiler Source](https://github.com/webpack/webpack/blob/master/lib/Compiler.js)
 - [Compilation Source](https://github.com/webpack/webpack/blob/master/lib/Compilation.js)
 
-## Basic plugin architecture
+## 基本的插件架构
 
-Plugins are instanceable objects with an `apply` method on their prototype. This `apply` method is called once by the Webpack compiler while installing the plugin. The `apply` method is given a reference to the underlying Webpack compiler, which grants access to compiler callbacks. A simple plugin is structured as follows:
+插件是实例对象，并且在它们的prototype上，会有一个`apply`方法。当安装这个插件的时候，这个`apply`方法就会被webpack compiler调用。这个`apply`会给出一个对于潜在的webpack compiler的引用，保证了对于compiler回调的访问。一个简单的插件结构如下：
 
 ```javascript
 function HelloWorldPlugin(options) {
@@ -35,7 +41,7 @@ HelloWorldPlugin.prototype.apply = function(compiler) {
 module.exports = HelloWorldPlugin;
 ```
 
-Then to install the plugin, just include an instance in your Webpack config `plugins` array:
+接着是安装这个插件，只要在你的webpack 配置`plugins`数组里面添加一个实例：
 
 ```javascript
 var HelloWorldPlugin = require('hello-world');
@@ -48,9 +54,9 @@ var webpackConfig = {
 };
 ```
 
-## Accessing the compilation
+## 访问compilation
 
-Using the compiler object, you may bind callbacks that provide a reference to each new compilation. These compilations provide callbacks for hooking into numerous steps within the build process.
+使用compiler对象，你可能绑定提供那个对于每一个新的compilation引用的回调。这些compilation提供对于在构建过程中对于很多步骤钩子的回调。
 
 ```javascript
 function HelloCompilationPlugin(options) {}
@@ -70,11 +76,11 @@ HelloCompilationPlugin.prototype.apply = function(compiler) {
 module.exports = HelloCompilationPlugin;
 ```
 
-For more information on what callbacks are available on the `compiler`, `compilation`, and other important objects, see the [[plugins API|plugins]] doc.
+对于更多关于`compiler`以及`compilation`上的回调以及其他重要的对象，请参考 [[plugins API|plugins]] 文档。
 
-## Async compilation plugins
+## 异步compilation plugins
 
-Some compilation plugin steps are asynchronous, and pass a callback function that _must_ be invoked when your plugin is finished running.
+有一些compilation插件步骤是异步的，并且当你的插件完成运行的时候，传递一个*必须*被调用的回调函数。
 
 ```javascript
 function HelloAsyncPlugin(options) {}
@@ -94,11 +100,11 @@ HelloAsyncPlugin.prototype.apply = function(compiler) {
 module.exports = HelloAsyncPlugin;
 ```
 
-## A simple example
+## 一个简单的例子
 
-Once we can latch onto the Webpack compiler and each individual compilation, the possibilities become endless for what we can do with the engine itself. We can reformat existing files, create derivative files, or fabricate entirely new assets.
+一旦我们可以锁定到webpack compiler以及每一个独立的compilation，我们可以利用引擎本身就能发挥无穷的潜力。我们能够重新格式化存在的文件，创建衍生文件，或者制造全新的资源。
 
-Let's write a simple example plugin that generates a new build file called `filelist.md`; the contents of which will list all of the asset files in our build. This plugin might look something like this:
+让我们写一个简单的能够生成一个新的打包文件`filelist.md`的插件例子；这个文件的内容会列出所有存在我们build之内的资源文件。这个插件可能看起来是这个样子的：
 
 ```javascript
 function FileListPlugin(options) {}
@@ -131,13 +137,13 @@ FileListPlugin.prototype.apply = function(compiler) {
 module.exports = FileListPlugin;
 ```
 
-## Useful Plugin Patterns
+## 有用的插件模式
 
-Plugins grant unlimited opportunity to perform customizations within the Webpack build system. This allows you to create custom asset types, perform unique build modifications, or even enhance the Webpack runtime while using middleware. The following are some features of Webpack that become very useful while writing plugins.
+插件允许在webpack构建系统内发挥无尽可能的定制化。这允许你创建自定义的资源类型，执行特殊的构建调整，或者设置在使用中间件的时候进一步提升webpack运行时间。下面的webpack的一些特性在开发插件的时候变得很有用。
 
-### Exploring assets, chunks, modules, and dependencies
+### 探索assets, chunks, modules, 以及dependencies
 
-After a compilation is sealed, all structures within the compilation may be traversed.
+在compilation完成之后，compilation中的所有的结构都可能被遍历。
 
 ```javascript
 function MyPlugin() {}
@@ -169,19 +175,15 @@ MyPlugin.prototype.apply = function(compiler) {
 module.exports = MyPlugin;
 ```
 
-- `compilation.modules`: An array of modules (built inputs) in the compilation. Each module manages the build of a raw file from your source library.
+- `compilation.modules`: 在compilation中由模块（构建输入）组成的数组。每个模块管理来自于源代码库中的源文件的构建。
+- `module.fileDependencies`: 包含在模块中的源文件路径数组。 这包括源JavaScript文件本身（例如：`index.js`）以及所需的所有依赖项资源文件（样式表，图像等）。 查看依赖关系对于查看哪些源文件属于模块很有用。
+- `compilation.chunks`: Compilation中由chunks组成的数组（构建输出）。 每个chunk管理最终渲染资源的组合。
+- `chunk.modules`: 包含在一个chunk中的模块数组。 通过扩展，您可以查看每个模块的依赖关系，以查看传递到chunk中的原始源文件
+- `chunk.files`: 由chunk生成的输出文件名的数组。 您可以从`compilation.assets`表访问这些资源。
 
-- `module.fileDependencies`: An array of source file paths included into a module. This includes the source JavaScript file itself (ex: `index.js`), and all dependency asset files (stylesheets, images, etc) that it has required. Reviewing dependencies is useful for seeing what source files belong to a module.
+### 检测观察图
 
-- `compilation.chunks`: An array of chunks (build outputs) in the compilation. Each chunk manages the composition of a final rendered assets.
-
-- `chunk.modules`: An array of modules that are included into a chunk. By extension, you may look through each module's dependencies to see what raw source files fed into a chunk.
-
-- `chunk.files`: An array of output filenames generated by the chunk. You may access these asset sources from the `compilation.assets` table.
-
-### Monitoring the watch graph
-
-While running Webpack middleware, each compilation includes a `fileDependencies` array (what files are being watched) and a `fileTimestamps` hash that maps watched file paths to a timestamp. These are extremely useful for detecting what files have changed within the compilation:
+在运行webpack中间件时，每个compilation都包含一个`fileDependencies`数组（正在监视的文件）和一个将观察文件路径映射到时间戳的`fileTimestamps`哈希。 这些对于检测compilation中哪些文件已更改非常有用：
 
 ```javascript
 function MyPlugin() {
@@ -204,11 +206,11 @@ MyPlugin.prototype.apply = function(compiler) {
 module.exports = MyPlugin;
 ```
 
-You may also feed new file paths into the watch graph to receive compilation triggers when those files change. Simply push valid filepaths into the `compilation.fileDependencies` array to add them to the watch. Note: the `fileDependencies` array is rebuilt in each compilation, so your plugin must push its own watched dependencies into each compilation to keep them under watch.
+您还可以将新的文件路径传入观察图，以便在这些文件更改时接收compilation触发器。 只需将有效的文件路径推送到`compilation.fileDependencies`数组中即可将其添加到观察列表中。 注意：在每个compilation中重建`fileDependencies`数组，因此您的插件必须将自己观察的依赖项推送到每个编译中，以使它们保持监视。
 
-### Changed chunks
+### 改变的chunks
 
-Similar to the watch graph, it's fairly simple to monitor changed chunks (or modules, for that matter) within a compilation by tracking their hashes.
+与观察图类似，通过跟踪它们的哈希值，可以在compilation中监视更改的块（或模块）。
 
 ```javascript
 function MyPlugin() {
