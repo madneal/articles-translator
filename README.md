@@ -17,6 +17,7 @@ Translate the distinct technical blogs. Any good article, please issue. I do rea
 * [Npm, yarn以及pnpm的不同之处](https://github.com/neal1991/articles-translator/blob/master/Npm%2C%20yarn%E4%BB%A5%E5%8F%8Apnpm%E7%9A%84%E4%B8%8D%E5%90%8C%E4%B9%8B%E5%A4%84.md)
 * [Github Pages以及单页面应用](https://github.com/neal1991/articles-translator/blob/master/Github%20Pages%E4%BB%A5%E5%8F%8A%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8.md)
 * [基于Vue JS, Webpack 以及Material Design的渐进式web应用 [Part 1]](https://github.com/neal1991/articles-translator/blob/master/%E5%9F%BA%E4%BA%8EVue%20JS%2C%20Webpack%20%E4%BB%A5%E5%8F%8AMaterial%20Design%E7%9A%84%E6%B8%90%E8%BF%9B%E5%BC%8Fweb%E5%BA%94%E7%94%A8%20%5BPart%201%5D.md)
+* [如何写一个webpack插件](https://github.com/neal1991/articles-translator/blob/master/%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E4%B8%AAwebpack%E6%8F%92%E4%BB%B6.md)
 
 
 # MIT License
