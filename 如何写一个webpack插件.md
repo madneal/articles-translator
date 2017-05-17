@@ -15,7 +15,6 @@
 在开发插件的时候最重要的两个资源就是`compiler`和`compilation`对象。理解它们的角色是拓展webpack引擎重要的第一步。
 
 - `compiler`对象代表了完整的配置的webpack环境。一旦开启webpack之后，这个对象就被构建了，并且这个对象会使用所有操作设置，包括options, loaders, 以及plugins来进行配置。当将一个插件应用到webpack环境中，这个插件将会获得一个对于这个compiler的引用。使用这个compiler可以访问主要的webpack环境。
-- A `compilation` object represents a single build of versioned assets. While running Webpack development middleware, a new compilation will be created each time a file change is detected, thus generating a new set of compiled assets. A compilation surfaces information about the present state of module resources, compiled assets, changed files, and watched dependencies. The compilation also provides many callback points at which a plugin may choose to perform custom actions.
 - 一个`compilation`对象代表版本资源的一次构建。当运行webpack开发中间件的时候，每次检测到文件变化的时候都会产生一个新的compilation，因此会生成一系列编译后的资源。Compilation表示有关模块资源，已编译资源，已更改文件和监视依赖关系的当前状态的信息。该compilation还提供了许多回调点，插件可以选择执行自定义操作。
 
 这两个组件是任何webpack插件（特别是`compilation`）的内部一部分，因此开发者熟悉这些源代码文件之后将会受益非凡：
