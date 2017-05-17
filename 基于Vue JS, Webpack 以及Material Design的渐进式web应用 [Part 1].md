@@ -16,7 +16,7 @@
 
 渐进式web应用（PWA）是一个web应用能够，提供给用户一种类似于app的体验。PWA得益于现代web科技创新（Service Workers, Native APIS, JS frameworks），并且提升的web应用质量标准。
 
-![](http://p0.qhimg.com/t0167435df73cd96e04.png)
+![](https://cloud.githubusercontent.com/assets/12164075/26136809/b7478288-3af0-11e7-9f2b-cd7b4a1595a0.png)
 
 如果你想了解更多关于PWA，请访问这个很棒的[Google developer page](https://developers.google.com/web/progressive-web-apps/)。
 
