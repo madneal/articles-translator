@@ -116,9 +116,9 @@ Below are the essential tags for basic, minimalist websites:
 - [ICBM on Wikipedia](https://en.wikipedia.org/wiki/ICBM_address#Modern_use)
 - [Geotagging on Wikipedia](https://en.wikipedia.org/wiki/Geotagging#HTML_pages)
 
-### Meta: Not Recommended
+### Meta: 不推荐
 
-Below are the meta attributes which are not recommended for use as they had low adoption rate, or have been deprecated:
+下面的meta属性不建议使用，因为他们的采用率很低或者已经被弃用了。
 
 ```
 <!-- Used to declare the document language, but not well supported. Better to use <html lang=""> -->
@@ -256,9 +256,9 @@ Below are the meta attributes which are not recommended for use as they had low 
 <!-- More info: https://css-tricks.com/prefetching-preloading-prebrowsing/ -->
 ```
 
-### Link: Not Recommended
+### Link: 不推荐
 
-Below are the link relations which are not recommended for use:
+下面的link不推荐使用：
 
 ```
 <link rel="shortcut icon" href="path/to/favicon.ico">
