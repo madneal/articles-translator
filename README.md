@@ -18,6 +18,7 @@ Translate the distinct technical blogs. Any good article, please issue. I do rea
 * [Github Pages以及单页面应用](https://github.com/neal1991/articles-translator/blob/master/Github%20Pages%E4%BB%A5%E5%8F%8A%E5%8D%95%E9%A1%B5%E9%9D%A2%E5%BA%94%E7%94%A8.md)
 * [基于Vue JS, Webpack 以及Material Design的渐进式web应用 [Part 1]](https://github.com/neal1991/articles-translator/blob/master/%E5%9F%BA%E4%BA%8EVue%20JS%2C%20Webpack%20%E4%BB%A5%E5%8F%8AMaterial%20Design%E7%9A%84%E6%B8%90%E8%BF%9B%E5%BC%8Fweb%E5%BA%94%E7%94%A8%20%5BPart%201%5D.md)
 * [如何写一个webpack插件](https://github.com/neal1991/articles-translator/blob/master/%E5%A6%82%E4%BD%95%E5%86%99%E4%B8%80%E4%B8%AAwebpack%E6%8F%92%E4%BB%B6.md)
+* [通过利用immutability的能力编写更安全和更整洁的代码](https://github.com/neal1991/articles-translator/blob/master/%E9%80%9A%E8%BF%87%E5%88%A9%E7%94%A8immutability%E7%9A%84%E8%83%BD%E5%8A%9B%E7%BC%96%E5%86%99%E6%9B%B4%E5%AE%89%E5%85%A8%E5%92%8C%E6%9B%B4%E6%95%B4%E6%B4%81%E7%9A%84%E4%BB%A3%E7%A0%81.md)
 
 
 # MIT License
