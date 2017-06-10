@@ -1,12 +1,24 @@
-## Adopting Flow & TypeScript 
+## 采用Flow以及TypeScript 
 
- ### A comparison between the two on-boarding processes
+ ### 两个流程之间的比较
 
->  This article is best enjoyed while listening to:
+>原文：[Adopting Flow & TypeScript](http://thejameskyle.com/adopting-flow-and-typescript.html)
 >
-> [**“Cotton Heads” — Caravan Palace**](https://www.youtube.com/watch?v=QNkBLye7xfY)Please do not link to this article on Reddit or Hacker News.
-> Let’s imagine a scenario where we want to adopt a type checker…
-> Lately we’ve been noticing a lot of NaN’s show up in our app. We search for the source and find the following code:
+>译者：[neal1991](https://github.com/neal1991)
+>
+>welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+>LICENSE: [MIT](https://opensource.org/licenses/MIT)
+
+>  和这首歌[**“Cotton Heads” — Caravan Palace**](https://www.youtube.com/watch?v=QNkBLye7xfY)食用本文更佳。
+
+Let’s imagine a scenario where we want to adopt a type checker…
+
+让我们想象一个需要采用类型检查的场景。
+
+Lately we’ve been noticing a lot of NaN’s show up in our app. We search for the source and find the following code:
+
+之后我们注意到我们的app出现了很多NaN。我们寻找源头并且找到了下面的代码：
 
 
     *// math.js*
@@ -15,18 +27,34 @@
     }
     square(**"oops"**);
 We sigh to ourselves, and decide maybe it’s finally time to add a type checker. We step back and take a look at our options: [Flow](https://flow.org/) or [TypeScript](http://www.typescriptlang.org/).
+
+我们对自己叹了口气，并且决定或许是时候添加一个类型检查了。我们退后一步，看看我们的选项：[Flow](https://flow.org/)或者[TypeScript](http://www.typescriptlang.org/)。
+
 Both of these tools have fairly simple file-by-file adoption:
- ***Flow:** Add a // @flow comment to the top of your file
- ***TypeScript: **Change the .js extension to a .ts extension
+
+这两个工具都有相当简单的文件逐个采用：
+
+* **Flow:**在你的文件顶部添加// @flow 注释
+* **TypeScript: **将.js后缀改成.ts后缀
+
 But let’s compare what happens from there.
- ### Adopting TypeScript
+
+但是让我们一起来比较。
+
+ ### 采用TypeScript
 To adopt TypeScript, we’ll first rename math.js to math.ts:
+
+为了采用TypeScript，我们将首先将math.js重命名成math.ts：
+
     *// math.ts*
     function square(n) {
       return n * n;
     }
     square(**"oops"**);
 Now we’ll run typescript:
+
+现在我们运行typescript：
+
     (no errors)
 There are no errors because TypeScript requires that we type annotate our function before it will check the type like this:
     function square(n**: number**)**: number** {
@@ -34,9 +62,9 @@ There are no errors because TypeScript requires that we type annotate our functi
     }
     square("oops");
 But without those types, TypeScript will do one of two things depending on your configuration:
-  1. Implicitly cast every unknown type to any. This any type will opt you out of all type checking.
-  2. Or if you’re using the --noImplicitAny option, it will throw an error for any unknown types, requiring you to add type annotations.
-  This means that the amount of code *covered* by TypeScript is tied to the types that you have written. Type coverage goes up *linearly* as you write types.
+    1. Implicitly cast every unknown type to any. This any type will opt you out of all type checking.
+    2. Or if you’re using the --noImplicitAny option, it will throw an error for any unknown types, requiring you to add type annotations.
+      This means that the amount of code *covered* by TypeScript is tied to the types that you have written. Type coverage goes up *linearly* as you write types.
  ### Type Coverage
 Before we go any further, I should explain what type coverage is.![Uncovered code shown in red](https://cdn-images-1.medium.com/max/2000/1*CgIv2yvDU_GTscCRLFp6DA.png) 
 
