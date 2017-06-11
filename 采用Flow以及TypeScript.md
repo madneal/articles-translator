@@ -28,8 +28,8 @@ square("oops");
 
 这两个工具都有相当简单的文件逐个采用：
 
-* **Flow:**在你的文件顶部添加`// @flow` 注释
-* **TypeScript: **将.js后缀改成.ts后缀
+* **Flow:** 在你的文件顶部添加`// @flow` 注释
+* **TypeScriptz:** 将.js后缀改成.ts后缀
 
 但是让我们一起来比较。
 
