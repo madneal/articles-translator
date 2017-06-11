@@ -113,7 +113,7 @@ Flow只需要我们输入文件以及外部模块的导出。其他的一切都�
     flow coverage path/to/file.js --color
 你也可以利用[flow-coverage-report](https://github.com/rpl/flow-coverage-report) 来帮助你。
 
-> **注意：**对于TypeScript我不知道任何代码覆盖报告工具（如果你知道的话，请给我发个链接！）但是你可已测试一下报告中错误的地方是否被代码覆盖检查所覆盖到。
+> **注意：** 对于TypeScript我不知道任何代码覆盖报告工具（如果你知道的话，请给我发个链接！）但是你可已测试一下报告中错误的地方是否被代码覆盖检查所覆盖到。
 
 ## 它是如何工作的？ 
 
