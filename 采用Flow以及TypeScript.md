@@ -41,7 +41,7 @@ square("oops");
 function square(n) {
   return n * n;
 }
-square(ty"oops");
+square("oops");
 ```
 现在我们运行typescript：
 
