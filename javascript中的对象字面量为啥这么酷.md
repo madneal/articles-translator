@@ -1,6 +1,11 @@
->* 原文链接 : [Why object literals in JavaScript are cool](https://rainsoft.io/why-object-literals-in-javascript-are-cool/)
-* 原文作者 : [Dmitri Pavlutin](https://rainsoft.io/author/dmitri-pavlutin/)
-* 译者 : neal1991
+# javascript中的对象字面量为啥这么酷
+>原文：[Why object literals in JavaScript are cool](https://rainsoft.io/why-object-literals-in-javascript-are-cool/)
+>
+>译者：[neal1991](https://github.com/neal1991)
+>
+>welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+>LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 
 在[ECMAScript 2015](https://rainsoft.io/why-object-literals-in-javascript-are-cool/www.ecma-international.org/ecma-262/6.0/)之前，Javascript中的对象字面量（也称为对象初始化器）是非常基础的。能够定义两种类型的属性：
