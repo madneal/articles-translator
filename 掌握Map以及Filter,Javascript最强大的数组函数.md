@@ -9,20 +9,27 @@ This article is for those who have written a for loop before, but don’t quite 
 
 ## Array.map 
 
-
 Array.map is meant to transform one array into another by performing some operation on each of its values. The original array is left untouched and the function returns a new, transformed array. For example, say we have an array of numbers and we want to **multiply each number by three**. We also don’t want to change the original array. To do this without Array.map, we can use a standard for-loop.
+
+Array.map是通过对于它的每个值进行操作从而将一个数组转换成另外一个。原始的数组不会发生变化，并且这个函数会返回一个新的数组，即转换后的数组。比如，假设我们有一个由数字组成的数组，并且我们希望**每一个数都乘以三**。我们也不想改变原始数组。如果不使用Array.map来做这个的话，我们可以使用一个标准的for循环。
+
 ### for-loop
 
-    var originalArr = [1, 2, 3, 4, 5];
-    var newArr = [];
-    
-    for(var i = 0; i < originalArr.length; i++) {
-        newArr[i] = originalArr[i] * 3;
-    }
-    
-    console.log(newArr); // -> [3, 6, 9, 12, 15]
+```javascript
+var originalArr = [1, 2, 3, 4, 5];
+var newArr = [];
+
+for(var i = 0; i < originalArr.length; i++) {
+    newArr[i] = originalArr[i] * 3;
+}
+
+console.log(newArr); // -> [3, 6, 9, 12, 15]
+```
 
 Simple enough. Let’s abstract this loop into its own function so that we can turn any array we like into a new array with each element multiplied by 3. In other words, we’re trying to write a function that will take in an any array ([1, 2, 3]) and spit out a brand new array with its numbers multiplied by three ([3, 6, 9]). All we have to do is take the code we wrote above and turn it into a function so that we can reuse that loop over and over. This might seem difficult, but try to get through it.
+
+足够简单。
+
 ### Multiply by three
 
     var originalArr = [1, 2, 3, 4, 5];
