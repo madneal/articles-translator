@@ -13,7 +13,7 @@ Array.map is meant to transform one array into another by performing some operat
 
 Array.map是通过对于它的每个值进行操作从而将一个数组转换成另外一个。原始的数组不会发生变化，并且这个函数会返回一个新的数组，即转换后的数组。比如，假设我们有一个由数字组成的数组，并且我们希望**每一个数都乘以三**。我们也不想改变原始数组。如果不使用Array.map来做这个的话，我们可以使用一个标准的for循环。
 
-### for-loop
+### for循环
 
 ```javascript
 var originalArr = [1, 2, 3, 4, 5];
@@ -28,50 +28,65 @@ console.log(newArr); // -> [3, 6, 9, 12, 15]
 
 Simple enough. Let’s abstract this loop into its own function so that we can turn any array we like into a new array with each element multiplied by 3. In other words, we’re trying to write a function that will take in an any array ([1, 2, 3]) and spit out a brand new array with its numbers multiplied by three ([3, 6, 9]). All we have to do is take the code we wrote above and turn it into a function so that we can reuse that loop over and over. This might seem difficult, but try to get through it.
 
-足够简单。
+足够简单。让我们将这个循环抽象成它自己的函数，因此我们能够将任何数组中的每一个元素乘以三从而编程一个新的数组。换句话说，我们尝试编写一个函数将一个数组([1, 2, 3])转成一个它的数字都乘以三的新数组([3, 6, 9])。所有我们需要做的就是采取上述代码并将它转换成一个函数，因此我们就能够反复利用这个循环。这个可能看起来很困难，但是尝试克服它吧。
 
-### Multiply by three
+### 乘以三
 
-    var originalArr = [1, 2, 3, 4, 5];
+```javascript
+var originalArr = [1, 2, 3, 4, 5];
+```
 
-    **function multiplyByThree(arr) {
-    **    var newArr = [];
-        
-        for(var i = 0; i < arr.length; i++) {
-            newArr[i] = arr[i] * 3;
-        }
+```javascript
+function multiplyByThree(arr) {
+    var newArr = [];
     
-    **    return newArr;
-    }**
-    
-    **var arrTransformed = multiplyByThree(originalArr);
-    **console.log(arrTransformed); // -> [3, 6, 9, 12, 15]
+    for(var i = 0; i < arr.length; i++) {
+        newArr[i] = arr[i] * 3;
+    }
+
+    return newArr;
+}
+
+var arrTransformed = multiplyByThree(originalArr);
+console.log(arrTransformed); // -> [3, 6, 9, 12, 15]
+```
 
 Beautiful. Now we can pass any array into multiplyByThree and get a new array out with its values multiplied. Now, we’re going to add some code that might seem useless, but bear with me here. Let’s take a single line in that function — newArr[i] = thisItem * 3 — and turn it into its own function as well. The result will be code that is equivalent to that in the block above, but we’ll need it this way right after.
 
-    var originalArr = [1, 2, 3, 4, 5];
+很优美。现在我们可以将任意数组传递到multiplyByThree接着我们就能获得一个值乘以三的新数组。现在，我们打算添加一些看起来没有用的代码，但是请忍耐一下我。让我们改变函数中的一行-`newArr[i]=thisItem * 3`，接着我们也将它转换成他函数。最后的结果就是上述等同的代码块，但是我们之后还是需要他的。
 
-    **function timesThree(item) {
-        return item * 3;
-    }**
+```javascript
+var originalArr = [1, 2, 3, 4, 5];
+```
+
+```javascript
+function timesThree(item) {
+    return item * 3;
+}
+
+function multiplyByThree(arr) {
+    var newArr = [];
     
-    function multiplyByThree(arr) {
-        var newArr = [];
-        
-        for(var i = 0; i < arr.length; i++) {
-            newArr[i] = **timesThree**(arr[i]);
-        }
-    
-        return newArr;
+    for(var i = 0; i < arr.length; i++) {
+        newArr[i] = timesThree(arr[i]);
     }
-    
-    var arrTransformed = multiplyByThree(originalArr);
-    console.log(arrTransformed); // -> [3, 6, 9, 12, 15]
+
+    return newArr;
+}
+
+var arrTransformed = multiplyByThree(originalArr);
+console.log(arrTransformed); // -> [3, 6, 9, 12, 15]
+```
 
 This block does the same exact thing as the one before it. It just takes one piece out and turns it into its own function.
 
+这个代码块和之前做的事情是完全一样的。它只是将其中的一块转换成函数。
+
 What if we wanted to multiply all items in an array by 5? or 10? Would we want to make a new looping function for each of those? No, not at all. That would be tedious and repetitive.
-### Multiply by anything
+
+如果我们想将数组中所有的数乘以5或者乘以10呢？我们需要为每一个创建一个新的循环函数嘛？不，根本不需要。那样会很无聊并且重复
+
+### 乘以任何数
 
 Let’s change the multiplyByThree code to be able to multiply by anything. Let’s rename it to just multiply. **This is the hardest part** and might take some time to wrap your head around, but try to get through it. Afterwards, it’s easy.
 
