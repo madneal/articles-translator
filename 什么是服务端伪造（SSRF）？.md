@@ -1,6 +1,6 @@
 # 什么是服务端伪造（SSRF）？
 
-> 原文：[GitHub Pages and Single-Page Apps](https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/)
+> 原文：[What is Server Side Request Forgery (SSRF)?](https://www.acunetix.com/blog/articles/server-side-request-forgery-vulnerability/)
 >
 > 译者：[neal1991](https://github.com/neal1991)
 >
