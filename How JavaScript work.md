@@ -1,5 +1,7 @@
 ## How JavaScript works: an overview of the engine, the runtime, and the call stack 
 
+https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf
+
 
 As JavaScript is getting more and more popular, teams are leveraging its support on many levels in their stack - front-end, back-end, hybrid apps, embedded devices and much more.
 
