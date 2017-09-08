@@ -1,11 +1,21 @@
-## How JavaScript works: an overview of the engine, the runtime, and the call stack 
+# How JavaScript works: an overview of the engine, the runtime, and the call stack 
+# JavaScript是如何工作的：引擎，运行时间以及回调的概述
 
-https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf
-
+> 原文：[How JavaScript works: an overview of the engine, the runtime, and the call stack](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)
+>
+> 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 As JavaScript is getting more and more popular, teams are leveraging its support on many levels in their stack - front-end, back-end, hybrid apps, embedded devices and much more.
 
+随着JavaScript变得越来越流行，团队在多个层级都对它进行利用－前端，后端，混合应用，嵌入式设备以及更多。
+
 As shown in the [GitHut stats](http://githut.info/), JavaScript is at the top in terms of Active Repositories and Total Pushes in GitHub. It doesn’t lag behind much in the other categories either.
+
+正如[GitHut stats](http://githut.info/)所展示的那样，JavaScript是Github上面最活跃以及总Push次数最多的语言。
 ![](https://cdn-images-1.medium.com/max/3036/1*Zf4reZZJ9DCKsXf5CSXghg.png) 
 
 
