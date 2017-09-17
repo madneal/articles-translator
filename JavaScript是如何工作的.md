@@ -33,7 +33,7 @@
 
 ## **JavaScript 引擎** 
 
-最流行的JavaScript殷勤的例子之一就是谷歌的V8引擎。比如Chrome以及Node.js内部就是使用V8引擎。下面是一个简单的视图示例：
+最流行的JavaScript引擎的例子之一就是谷歌的V8引擎。比如Chrome以及Node.js内部就是使用V8引擎。下面是一个简单的视图示例：
 
 ![](https://cdn-images-1.medium.com/max/2048/1*OnH_DlbNAPvB9KLxUCyMsA.png) 
 
