@@ -47,11 +47,11 @@ Here is an overview of what happens at each step of the cycle:
  * **Use memory — **this is the time when your program actually makes use of the previously allocated memory. **Read** and **write** operations are taking place as you’re using the allocated variables in your code.
 
  * **Release memory** — now is the time to release the entire memory that you don’t need so that it can become free and available again. As with the **Allocate memory **operation, this one is explicit in low-level languages.
- 
+
  * **分配内存**——操作系统为你的程序分配内存并且允许其使用。在低层次语言中（比如C），这正式开发者应该处理的操作。在高层次的语言，然而，就有语言帮你实现了。
- 
+
  * **使用内存**——当你的程序确实在使用之前分配的内存的阶段。当你在使用你带吗里面分配的变量的时候会发生**读**以及**写**操作。
- 
+
  * **释放内存**——这个阶段就是释放你不再需要的内存，从而这些内存被释放并且能够再次被使用。和**分配内存**操作一样，这在低层次的语言也是一个精确的操作。
 
 For a quick overview of the concepts of the call stack and the memory heap, you can read our [first post on the topic](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf).
@@ -77,12 +77,12 @@ A lot of things are stored in this memory:
 
 内存中存储了很多东西：
 
-  1. All variables and other data used by all programs.
+    1. All variables and other data used by all programs.
 
-  2. The programs’ code, including the operating system’s.
-  
-  1. 所有程序使用的变量和其他数据。
-  
+    2. The programs’ code, including the operating system’s.
+
+    3. 所有程序使用的变量和其他数据。
+
   2.程序的代码，包括操作系统的代码。
 
 The compiler and the operating system work together to take care of most of the memory management for you, but we recommend that you take a look at what’s going on under the hood.
@@ -267,95 +267,127 @@ Within the context of memory management, an object is said to reference another 
 在内存管理的上下文中，一个对象被称为是对于另外一个对象的引用，如果前者可以访问后者（隐含或明确的）。例如，一个JavaScript对象都有一个指向其[原型](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain)的引用（**隐含的引用**）
 
 In this context, the idea of an “object” is extended to something broader than regular JavaScript objects and also contains function scopes (or the global **lexical scope**).
+
+在这个上下文中，“对象”的概念扩展到比普通的JavaScript对象要广并且包括函数作用域（或者全局**词法作用域**）。
+
 >  Lexical Scoping defines how variable names are resolved in nested functions: inner functions contain the scope of parent functions even if the parent function has returned.
-### Reference-counting garbage collection
+>
+>  词法作用域定义了变量名称是如何在嵌套函数中解析的：内部函数包含了父函数的作用域即使父函数已经返回了。
+### 基于引用计数的垃圾收集器
 
 This is the simplest garbage collection algorithm. An object is considered “garbage collectible” if there are **zero** references pointing to it.
 
+这是最简单的垃圾收集器算法。如果没有引用指向这个对象的时候，这个对象就被认为是“可以作为垃圾收集”。
+
 Take a look at the following code:
 
-    var o1 = {
-      o2: {
-        x: 1
-      }
-    };
-    
-    // 2 objects are created. 
-    // 'o2' is referenced by 'o1' object as one of its properties.
-    // None can be garbage-collected
+请看如下代码：
 
+```javascript
+var o1 = {
+  o2: {
+    x: 1
+  }
+};
 
-    var o3 = o1; // the 'o3' variable is the second thing that 
-                // has a reference to the object pointed by 'o1'. 
+// 2 objects are created. 
+// 'o2' is referenced by 'o1' object as one of its properties.
+// None can be garbage-collected
+var o3 = o1; // the 'o3' variable is the second thing that 
+            // has a reference to the object pointed by 'o1'. 
+o1 = 1;      // now, the object that was originally in 'o1' has a         
+            // single reference, embodied by the 'o3' variable
 
+var o4 = o3.o2; // reference to 'o2' property of the object.
+                // This object has now 2 references: one as
+                // a property. 
+                // The other as the 'o4' variable
 
-    o1 = 1;      // now, the object that was originally in 'o1' has a         
-                // single reference, embodied by the 'o3' variable
-    
-    var o4 = o3.o2; // reference to 'o2' property of the object.
-                    // This object has now 2 references: one as
-                    // a property. 
-                    // The other as the 'o4' variable
-    
-    o3 = '374'; // The object that was originally in 'o1' has now zero
-                // references to it. 
-                // It can be garbage-collected.
-                // However, what was its 'o2' property is still
-                // referenced by the 'o4' variable, so it cannot be
-                // freed.
-    
-    o4 = null; // what was the 'o2' property of the object originally in
-               // 'o1' has zero references to it. 
-               // It can be garbage collected.
-### Cycles are creating problems
+o3 = '374'; // The object that was originally in 'o1' has now zero
+            // references to it. 
+            // It can be garbage-collected.
+            // However, what was its 'o2' property is still
+            // referenced by the 'o4' variable, so it cannot be
+            // freed.
+
+o4 = null; // what was the 'o2' property of the object originally in
+           // 'o1' has zero references to it. 
+           // It can be garbage collected.
+```
+
+### 循环在产生问题
 
 There is a limitation when it comes to cycles. In the following example, two objects are created and reference one another, thus creating a cycle. They will go out of scope after the function call, so they are effectively useless and could be freed. However, the reference-counting algorithm considers that since each of the two objects is referenced at least once, neither can be garbage-collected.
 
-    function f() {
-      var o1 = {};
-      var o2 = {};
-      o1.p = o2; // o1 references o2
-      o2.p = o1; // o2 references o1. This creates a cycle.
-    }
-    
-    f();
+当遇到循环的时候就会有一个限制。在下面的实例之中，创建两个对象，并且互相引用，因此就会产生一个循环。当函数调用结束之后它们会走出作用域之外，因此它们就没什么用并且可以被释放。但是，基于引用计数的算法认为这两个对象都会被至少引用一次，所以它俩都不会被垃圾收集器收集。
+
+```javascript
+function f() {
+  var o1 = {};
+  var o2 = {};
+  o1.p = o2; // o1 references o2
+  o2.p = o1; // o2 references o1. This creates a cycle.
+}
+
+f();
+```
 ![](https://cdn-images-1.medium.com/max/2000/1*GF3p99CQPZkX3UkgyVKSHw.png) 
 
-### Mark-and-sweep algorithm
+### 标记-清除算法
 
 In order to decide whether an object is needed, this algorithm determines whether the object is reachable.
 
+为了决定哪个对象是需要的，算法会决定是否这个对象是可访问的。
+
 The algorithm consists of the following steps:
 
-  1. The garbage collector builds a list of “roots”. Roots usually are global variables to which a reference is kept in the code. In JavaScript, the “window” object is an example of a global variable that can act as a root.
+这个算法由以下步骤组成：
 
-  2. All roots are inspected and marked as active (i.e. not garbage). All children are inspected recursively as well. Everything that can be reached from a root is not considered garbage.
+1. 这个垃圾收集器构建一个“roots”列表。Root是全局变量，被代码中的引用所保存。在JavaScript中，“window”就是这样的作为root的全局变量的例子。
+2. 所有的root都会被监测并且被标志成活跃的（比如不是垃圾）。所有的子代也会递归地被监测。所有能够由root访问的一切都不会被认为是垃圾。
+3. 所有不再被标志成活跃的内存块都被认为是垃圾。这个收集器现在就可以释放这些内存并将它们返还给操作系统。
 
-  3. All pieces of memory not marked as active can now be considered garbage. The collector can now free that memory and return it to the OS.
-  ![A visualization of the mark and sweep algorithm in action](https://cdn-images-1.medium.com/max/2000/1*WVtok3BV0NgU95mpxk9CNg.gif) 
+    1. The garbage collector builds a list of “roots”. Roots usually are global variables to which a reference is kept in the code. In JavaScript, the “window” object is an example of a global variable that can act as a root.
+
+    2. All roots are inspected and marked as active (i.e. not garbage). All children are inspected recursively as well. Everything that can be reached from a root is not considered garbage.
+
+    3. All pieces of memory not marked as active can now be considered garbage. The collector can now free that memory and return it to the OS.
+      ![A visualization of the mark and sweep algorithm in action](https://cdn-images-1.medium.com/max/2000/1*WVtok3BV0NgU95mpxk9CNg.gif) 
 
 
 This algorithm is better than the previous one since “an object has zero reference” leads to this object being unreachable. The opposite is not true as we have seen with cycles.
 
+这个算法要优于之前的因为“一个具有0引用的对象”可以让一个对象不能够再被访问。但是相反的却不一定成立，比如我们遇到循环的时候。
+
 As of 2012, all modern browsers ship a mark-and-sweep garbage-collector. All improvements made in the field of JavaScript garbage collection (generational/incremental/concurrent/parallel garbage collection) over the last years are implementation improvements of this algorithm (mark-and-sweep), but not improvements over the garbage collection algorithm itself, nor its goal of deciding whether an object is reachable or not.
 
+在2012年，所有的现代浏览器都使用标记-清除垃圾收集器。过去几年，JavaScript垃圾收集（代数/增量/并行/并行垃圾收集）领域的所有改进都是对该算法（标记和扫描）的实现进行了改进，但并没有对垃圾收集算法本身的改进， 其目标是确定一个对象是否可达。
+
 [In this article](https://en.wikipedia.org/wiki/Tracing_garbage_collection), you can read in a greater detail about tracing garbage collection that also covers mark-and-sweep along with its optimizations.
-### Cycles are not a problem anymore
+
+[在这篇文章中](https://en.wikipedia.org/wiki/Tracing_garbage_collection)，你可以鱼都到更多关于垃圾收集跟踪并且也覆盖到了关于标记-清除算法的优化。
+
+### 循环不再是一个问题
 
 In the first example above, after the function call returns, the two objects are not referenced anymore by something reachable from the global object. Consequently, they will be found unreachable by the garbage collector.
+
+在上述的第一个例子中，在函数调用返回之后，这两个对象不能够被全局对象所访问。因此，垃圾收集器就会发现它们不能够被访问了。
+
 ![](https://cdn-images-1.medium.com/max/2048/1*FbbOG9mcqWZtNajjDO6SaA.png) 
 
-
 Even though there are references between the objects, they’re not reachable from the root.
+
+即使在这两个对象之间存在着引用，它们再也不能从root访问了。
+
 ### Counter intuitive behavior of Garbage Collectors
 
 Although Garbage Collectors are convenient they come with their own set of trade-offs. One of them is *non-determinism*. In other words, GCs are unpredictable. You can’t really tell when a collection will be performed. This means that in some cases programs use more memory that it’s actually required. In other cases, short-pauses may be noticeable in particularly sensitive applications. Although non-determinism means one cannot be certain when a collection will be performed, most GC implementations share the common pattern of doing collection passes during allocation. If no allocations are performed, most GCs stay idle. Consider the following scenario:
 
-  1. A sizable set of allocations is performed.
+    1. A sizable set of allocations is performed.
 
-  2. Most of these elements (or all of them) are marked as unreachable (suppose we null a reference pointing to a cache we no longer need).
+    2. Most of these elements (or all of them) are marked as unreachable (suppose we null a reference pointing to a cache we no longer need).
 
-  3. No further allocations are performed.
+    3. No further allocations are performed.
 
 In this scenario, most GCs will not run any further collection passes. In other words, even though there are unreachable references available for collection, these are not claimed by the collector. These are not strictly leaks but still, result in higher-than-usual memory usage.
 ### What are memory leaks?
