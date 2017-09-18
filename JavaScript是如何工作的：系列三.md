@@ -100,14 +100,26 @@ When you compile your code, the compiler can examine primitive data types and ca
 ```
 
 The compiler can immediately see that the code requires 
+
+编译器能够立即计算出代码需要
+
 4 + 4 × 4 + 8 = 28 bytes.
+
 >  That’s how it works with the current sizes for integers and doubles. About 20 years ago, integers were typically 2 bytes, and double 4 bytes. Your code should never have to depend on what is at this moment the size of the basic data types.
+
+> 那就是它如何对于现有的整形以及双浮点型工作。大约20年前，整形典型都是2个字节，双浮点型是4个字节。你的代码不应该取决于当下基本数据类型的大小。
 
 The compiler will insert code that will interact with the operating system to request the necessary number of bytes on the stack for your variables to be stored.
 
+编译器将会插入能够与操作系统交互的代码，从而在栈上获取你需要存储变量需要的字节数。
+
 In the example above, the compiler knows the exact memory address of each variable. In fact, whenever we write to the variable n, this gets translated into something like “memory address 4127963” internally.
 
+在上述的例子中，编译器知道每一个变量的准确的内存地址。事实上，无论我们何时写变量 n ，这都会在内部转化为类似于“内存地址 4127963”的东西。
+
 Notice that if we attempted to access x[4] here, we would have accessed the data associated with m . That’s because we’re accessing an element in the array that doesn’t exist — it’s 4 bytes further than the last actual allocated element in the array which is x[3], and may end up reading (or overwriting) some of m’s bits. This would almost certainly have very undesired consequences for the rest of the program.
+
+注意如果我们希望在这访问 x[4] 我们将会需要访问和 m 一起的数据。这是因为我们在访问数组里面并不存在的元素——
 ![](https://cdn-images-1.medium.com/max/2048/1*5aBou4onl1B8xlgwoGTDOg.png) 
 
 
