@@ -264,6 +264,8 @@ The main concept garbage collection algorithms rely on is the one of **reference
 
 Within the context of memory management, an object is said to reference another object if the former has an access to the latter (can be implicit or explicit). For instance, a JavaScript object has a reference to its [prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain) (**implicit reference**) and to its properties’ values (**explicit reference**).
 
+在内存管理的上下文中，一个对象被称为是对于另外一个对象的引用，如果前者可以访问后者（隐含或明确的）。例如，一个JavaScript对象都有一个指向其[原型](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Inheritance_and_the_prototype_chain)的引用（**隐含的引用**）
+
 In this context, the idea of an “object” is extended to something broader than regular JavaScript objects and also contains function scopes (or the global **lexical scope**).
 >  Lexical Scoping defines how variable names are resolved in nested functions: inner functions contain the scope of parent functions even if the parent function has returned.
 ### Reference-counting garbage collection
