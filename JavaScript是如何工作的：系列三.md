@@ -379,36 +379,55 @@ Even though there are references between the objects, they’re not reachable fr
 
 即使在这两个对象之间存在着引用，它们再也不能从root访问了。
 
-### Counter intuitive behavior of Garbage Collectors
+### 列举垃圾收集器的直观行为
 
 Although Garbage Collectors are convenient they come with their own set of trade-offs. One of them is *non-determinism*. In other words, GCs are unpredictable. You can’t really tell when a collection will be performed. This means that in some cases programs use more memory that it’s actually required. In other cases, short-pauses may be noticeable in particularly sensitive applications. Although non-determinism means one cannot be certain when a collection will be performed, most GC implementations share the common pattern of doing collection passes during allocation. If no allocations are performed, most GCs stay idle. Consider the following scenario:
+
+虽然垃圾收集器很方便，但它们自己也有自己的代价。 其中一个是非确定论。 换句话说，GC是不可预测的。 你不能真正地告诉你什么时候会收集。 这意味着在某些情况下，程序会使用实际需要的更多内存。 在其他情况下，特别敏感的应用程序可能会引起短暂暂停。 虽然非确定性意味着在执行集合时无法确定，但大多数GC实现共享在分配期间执行收集遍历的常见模式。 如果没有执行分配，大多数GC保持空闲状态。 考虑以下情况：
+
+1. 执行相当大的一组分配。
+2. 这些元素中的大多数（或全部）被标记为不可访问（假设我们将指向我们不再需要的缓存的引用置空）。
+3. 不再执行分配。
+
+
 
     1. A sizable set of allocations is performed.
 
     2. Most of these elements (or all of them) are marked as unreachable (suppose we null a reference pointing to a cache we no longer need).
 
     3. No further allocations are performed.
-
 In this scenario, most GCs will not run any further collection passes. In other words, even though there are unreachable references available for collection, these are not claimed by the collector. These are not strictly leaks but still, result in higher-than-usual memory usage.
-### What are memory leaks?
+
+在这种情况下，大多数GC不会再运行收集处理。换句话说，即使存在对于收集器来说不可访问的引用，它们也不会被收集器所认领。严格意义来说这并不是泄露，但是依然会导致比平常更多的内存使用。
+
+### 什么是内存泄露？
 
 In essence, memory leaks can be defined as memory that is not required by the application anymore but for some reason is not returned to the operating system or the pool of free memory.
-![](https://cdn-images-1.medium.com/max/2000/1*0B-dAUOH7NrcCDP6GhKHQw.jpeg) 
 
+实质上，内存泄漏可以被定义为应用程序不再需要的内存，但是由于某些原因不会返回到操作系统或可用内存池。
+
+![](https://cdn-images-1.medium.com/max/2000/1*0B-dAUOH7NrcCDP6GhKHQw.jpeg) 
 
 Programming languages favor different ways of managing memory. However, whether a certain piece of memory is used or not is actually an [undecidable problem](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management#Release_when_the_memory_is_not_needed_anymore). In other words, only developers can make it clear whether a piece of memory can be returned to the operating system or not.
 
-Certain programming languages provide features that help developers do this. Others expect developers to be completely explicit about when a piece of memory is unused. Wikipedia has good articles on [manual](https://en.wikipedia.org/wiki/Manual_memory_management) and [automatic](https://en.wikipedia.org/wiki/Manual_memory_management) memory management.
-### The four types of common JavaScript leaks
-### 1: Global variables
+编程语言有支持管理内存的不同方法。 然而，某块内存是否被使用实际上是一个[不可判定的问题](ttps://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management#Release_when_the_memory_is_not_needed_anymore)。 换句话说，只有开发人员可以清楚一个内存是否可以返回到操作系统。
 
-JavaScript handles undeclared variables in an interesting way: a reference to an undeclared variable creates a new variable inside the *global *object. In the case of browsers, the global object is window. In other words:
+Certain programming languages provide features that help developers do this. Others expect developers to be completely explicit about when a piece of memory is unused. Wikipedia has good articles on [manual](https://en.wikipedia.org/wiki/Manual_memory_management) and [automatic](https://en.wikipedia.org/wiki/Manual_memory_management) memory management.
+
+某些编程语言提供了帮助开发者执行此操作的功能。其他的则期望开发人员能够完全明确何时使用一块内存。 维基百科有关于[手动](https://en.wikipedia.org/wiki/Manual_memory_management)和[自动](https://en.wikipedia.org/wiki/Manual_memory_management)内存管理的好文章。
+
+### 四种常见的JavaScript泄露
+### 1: 全局变量
+
+JavaScript handles undeclared variables in an interesting way: a reference to an undeclared variable creates a new variable inside the *global* object. In the case of browsers, the global object is window. In other words:
+
+JavaScript使用一种有趣的方式处理未声明的变量：一个未声明变量的引用会在*全局*对象内部产生一个新的变量。在浏览器的情况，这个全局变量就会是window。换句话说：
 
     function foo(arg) {
         bar = "some text";
     }
 
-is the equivalent of:
+等同于：
 
     function foo(arg) {
         window.bar = "some text";
@@ -416,9 +435,15 @@ is the equivalent of:
 
 If bar was supposed to hold a reference to a variable only inside the scope of the foo function and you forget to use var to declare it, an unexpected global variable is created.
 
+如果bar被期望仅仅在foo函数作用域内保持对变量的引用，并且你忘记使用var去声明它，一个意想不到的全局变量就产生了。
+
 In this example, leaking a simple string won't do much harm, but it could certainly be worse.
 
+在这个例子中，泄露就仅仅是一个字符串并不会带来太多危害，但是它可能会变得更糟。
+
 Another way in which an accidental global variable can be created is through this:
+
+另外一种可能产生意外的全局变量的方式是：
 
     function foo() {
         this.var1 = "potential accidental global";
@@ -428,11 +453,18 @@ Another way in which an accidental global variable can be created is through thi
     // rather than being undefined.
     foo();
 >  To prevent these mistakes from happening, add 'use strict'; at the beginning of your JavaScript files. This enables a stricter mode of parsing JavaScript that prevents accidental global variables. [Learn more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) about this mode of JavaScript execution.
+>
+>  为了阻止这些错误的发生，可以在js文件头部添加'use strict'。这将会使用严格模式来解析JavaScript从而阻止意外的全局变量。[了解更多](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)关于JavaScript执行的模式。
 
 Even though we talk about unsuspected globals, it’s still the case that much code is filled with explicit global variables. These are by definition non-collectible (unless assigned as null or reassigned). In particular, global variables that are used to temporarily store and process big amounts of information are of concern. If you must use a global variable to store lots of data, make sure to** assign it as null or reassign it** after you are done with it.
-### 2: Timers or callbacks that are forgotten
+
+即使我们讨论了未预期的全局变量，但仍然有很多代码用显式的全局变量填充。 这些定义是不可收集的（除非分配为null或重新分配）。 特别是，用于临时存储和处理大量信息的全局变量值得关注。 如果您必须使用全局变量来存储大量数据，请确保在完成之后**将其分配为null或重新分配**。
+
+### 2: 被遗忘的计时器和回调
 
 The use of setInterval is quite common in JavaScript.
+
+setInterval 在JavaScript中是经常被使用的。
 
 Most libraries, that provide observers and other facilities that take callbacks, take care of making any references to the callback unreachable after their own instances become unreachable as well. In the case of setInterval, however, code like this is quite common:
 
