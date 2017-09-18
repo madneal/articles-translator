@@ -1,41 +1,73 @@
 https://blog.sessionstack.com/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks-3f28b94cfbec
 
-## How JavaScript works: memory management + how to handle 4 common memory leaks** 
-
+## How JavaScript works: memory management + how to handle 4 common memory leaks
+## JavaScript是如何工作的：内存管理以及如何处理四种常见的内存泄漏
 
 A few weeks ago we started a series aimed at digging deeper into JavaScript and how it actually works: we thought that by knowing the building blocks of JavaScript and how they come to play together you’ll be able to write better code and apps.
 
+几个礼拜之前我们开始一系列对于JavaScript以及其本质工作原理的深入挖掘：我们认为通过了解JavaScript的构建方式以及它们是如何共同合作的，你就能够写出更好的代码以及应用。
+
 The first post of the series focused on providing [an overview of the engine, the runtime, and the call stack](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf). Thе [second post examined closely the internal parts of Google’s V8 JavaScript engine](https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e) and also provided a few tips on how to write better JavaScript code.
 
+这个系列的第一篇博客专注于介绍[对于引擎，运行时以及调用栈的概述](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)（译者注：[第一篇博客翻译版](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%EF%BC%9A%E7%B3%BB%E5%88%97%E4%B8%80.md)）。[第二篇博客近距离地检测了Google V8 引擎的内部](https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12)并且提供了一些如何写出更好的JavaScript代码的建议。
+
 In this third post, we’ll discuss another critical topic that’s getting ever more neglected by developers due to the increasing maturity and complexity of programming languages that are being used on a daily basis — memory management. We’ll also provide a few tips on how to handle memory leaks in JavaScript that we at [SessionStack](https://www.sessionstack.com/) follow as we need to make sure SessionStack causes no memory leaks or doesn’t increase the memory consumption of the web app in which we are integrated.
-### Overview
+
+在第三篇博客中，我们将会讨论另外一个关键的话题。这个话题有趣编程语言的逐渐成熟和复杂化，越来越被开发者忽视，这个话题就是在日常中使用到的——内存管理。我们还将提供一些有关如何处理我们在[SessionStack](https://www.sessionstack.com/)中的JavaScript中的内存泄漏的建议，因为我们需要确保SessionStack不会导致内存泄漏或者增加我们集成的Web应用程序的内存消耗
+
+### 概述
 
 Languages, like C, have low-level memory management primitives such as malloc() and free(). These primitives are used by the developer to explicitly allocate and free memory from and to the operating system.
 
+语言，比如C，具有低层次的内存管理方法，比如`malloc()`以及`free()`。开发者利用这些方法精确地为操作系统分配以及释放内存。
+
 At the same time, JavaScript allocates memory when things (objects, strings, etc.) are created and “automatically” frees it up when they are not used anymore, a process called *garbage collection*. This seemingly “automatical” nature of freeing up resources is a source of confusion and gives JavaScript (and other high-level-language) developers the false impression they can choose not to care about memory management.** This is a big mistake.**
 
+同时，JavaScript会在创建一些变量（对象，字符串等等）的时候分配内存，并且会在这些不被使用之后“自动地”释放这些内存，这个过程被称为*垃圾收集*。这个看起来“自动化的”特性其实就是产生误解的原因，并且给JavaScript（以及其他高层次语言）开发者一个假象，他们不需要关心内存管理。**大错特错。**
+
 Even when working with high-level languages, developers should have an understanding of memory management (or at least the basics). Sometimes there are issues with the automatic memory management (such as bugs or implementation limitations in the garbage collectors, etc.) which developers have to understand in order to handle them properly (or to find a proper workaround, with a minimum trade off and code debt).
-### Memory life cycle
+
+即使是使用高层次语言，开发者硬挨对于内存管理有一定的理解（或者最基本的理解）。有时候自动的内存管理会存在一些问题（比如一些bug或者垃圾收集器的一些限制等等），对于这些开发者必须能够理解从而能够合适地处理（或者使用最小的代价以及代码债务去绕过这个问题）。
+
+### 内存生命周期
 
 No matter what programming language you’re using, memory life cycle is pretty much always the same:
+
+不管你在使用什么编程语言，内存的生命周期基本上都是一样的：
+
 ![](https://cdn-images-1.medium.com/max/2048/1*slxXgq_TO38TgtoKpWa_jQ.png) 
 
 
 Here is an overview of what happens at each step of the cycle:
+
+下面是对于周期中每一步所发生的情况的概述：
 
  * **Allocate memory **— memory is allocated by the operating system which allows your program to use it. In low-level languages (e.g. C) this is an explicit operation that you as a developer should handle. In high-level languages, however, this is taken care of for you.
 
  * **Use memory — **this is the time when your program actually makes use of the previously allocated memory. **Read** and **write** operations are taking place as you’re using the allocated variables in your code.
 
  * **Release memory** — now is the time to release the entire memory that you don’t need so that it can become free and available again. As with the **Allocate memory **operation, this one is explicit in low-level languages.
+ 
+ * **分配内存**——操作系统为你的程序分配内存并且允许其使用。在低层次语言中（比如C），这正式开发者应该处理的操作。在高层次的语言，然而，就有语言帮你实现了。
+ 
+ * **使用内存**——当你的程序确实在使用之前分配的内存的阶段。当你在使用你带吗里面分配的变量的时候会发生**读**以及**写**操作。
+ 
+ * **释放内存**——这个阶段就是释放你不再需要的内存，从而这些内存被释放并且能够再次被使用。和**分配内存**操作一样，这在低层次的语言也是一个精确的操作。
 
 For a quick overview of the concepts of the call stack and the memory heap, you can read our [first post on the topic](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf).
-### What is memory?
+
+对于调用栈以及内存堆有一个快速的概念认识，你可以阅读我们[关于这个话题的第一篇博客](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)。
+
+### 什么是内存？
 
 Before jumping straight to memory in JavaScript, we’ll briefly discuss what memory is in general and how it works in a nutshell.
 
+在我们讲述JavaScript内存之前，我们将简要地讨论一下内存是什么以及它们是如何在nutshell中工作的。
+
 On a hardware level, computer memory consists of a large number of
 [flip flops](https://en.wikipedia.org/wiki/Flip-flop_%28electronics%29). Each flip flop contains a few transistors and is capable of storing one bit. Individual flip flops are addressable by a **unique identifier**, so we can read and overwrite them. Thus, conceptually, we can think of our entire computer memory as a just one giant array of bits that we can read and write.
+
+在硬件层次上，计算机内存由大量的 [flip flops](https://en.wikipedia.org/wiki/Flip-flop_%28electronics%29) 组成。
 
 Since as humans, we are not that good at doing all of our thinking and arithmetic in bits, we organize them into larger groups, which together can be used to represent numbers. 8 bits are called 1 byte. Beyond bytes, there are words (which are sometimes 16, sometimes 32 bits).
 
