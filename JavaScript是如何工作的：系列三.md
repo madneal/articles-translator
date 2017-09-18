@@ -67,23 +67,37 @@ Before jumping straight to memory in JavaScript, we’ll briefly discuss what me
 On a hardware level, computer memory consists of a large number of
 [flip flops](https://en.wikipedia.org/wiki/Flip-flop_%28electronics%29). Each flip flop contains a few transistors and is capable of storing one bit. Individual flip flops are addressable by a **unique identifier**, so we can read and overwrite them. Thus, conceptually, we can think of our entire computer memory as a just one giant array of bits that we can read and write.
 
-在硬件层次上，计算机内存由大量的 [flip flops](https://en.wikipedia.org/wiki/Flip-flop_%28electronics%29) 组成。
+在硬件层次上，计算机内存由大量的 [flip flops](https://en.wikipedia.org/wiki/Flip-flop_%28electronics%29) 组成。每一个 flip flop 都包含一些晶体管并且能够存储一比特。单独的 flip flop 可以通过**独特的标识符**去访问，因此我们能够读取以及重写它们。因此，从概念上来说，我们可以认为我们的整个计算机内存就是一个我们能够读写巨大的比特数组。
 
 Since as humans, we are not that good at doing all of our thinking and arithmetic in bits, we organize them into larger groups, which together can be used to represent numbers. 8 bits are called 1 byte. Beyond bytes, there are words (which are sometimes 16, sometimes 32 bits).
 
+因为作为人类，我们不擅长直接基于比特进行思考以及算术，我们将它们组织成大规模群组，它们在一起可以代表一个数字。8个比特称为一个字节。除了字节，还有词（有时候是16比特，有时候是32比特）。
+
 A lot of things are stored in this memory:
+
+内存中存储了很多东西：
 
   1. All variables and other data used by all programs.
 
   2. The programs’ code, including the operating system’s.
+  
+  1. 所有程序使用的变量和其他数据。
+  
+  2.程序的代码，包括操作系统的代码。
 
 The compiler and the operating system work together to take care of most of the memory management for you, but we recommend that you take a look at what’s going on under the hood.
 
+编译器和操作系统共同合作为你处理大部分的内存管理，但是我们建议你应该了解其内部的运行原理。
+
 When you compile your code, the compiler can examine primitive data types and calculate ahead of time how much memory they will need. The required amount is then allocated to the program in the call** stack space**. The space in which these variables are allocated is called the stack space because as functions get called, their memory gets added on top of the existing memory. As they terminate, they are removed in a LIFO (last-in, first-out) order. For example, consider the following declarations:
 
+当你编译你的代码的时候，编译器将会检查原始数据类型并且提前计算好它们需要多少内存。需要的内存被分配给程序，这被称为**栈空间**。这些被分配给变量的空间被称为栈空间，因为一旦函数被调用，它们的内存就会增加到现有内存的上面。当它们终止的时候，它们就会以后进先出(LIFO)的顺序移除。比如，考虑下面的声明。
+
+```
     int n; // 4 bytes
     int x[4]; // array of 4 elements, each 4 bytes
     double m; // 8 bytes
+```
 
 The compiler can immediately see that the code requires 
 4 + 4 × 4 + 8 = 28 bytes.
