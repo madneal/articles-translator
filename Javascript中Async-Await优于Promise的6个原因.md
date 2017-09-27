@@ -8,20 +8,20 @@
 >
 > LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-你可能期待已久，Node从7.6版本就是开始支持async/await了。如果你还到现在还没有尝试，下面是一些你应该立刻采用它的带有例子的理由，而且你永远都不想再回来了。
+你可能期待已久，Node 从7.6版本就是开始支持 async/await 了。如果你还到现在还没有尝试，下面是一些你应该立刻采用它的带有例子的理由，而且你永远都不想再回来了。
 
 ### Async/await 101
 
 对于从来没有听过这个话题的人，下面将会是一个简短的介绍：
 
-* async/await是一种写异步代码的新方式。之前对于异步代码的选择包括回调和promise。
-* async/await事实上是建立在promise之上的。他不能仅仅通过回调或者节点回调来使用。
-* async/wait和promise类似，是非阻塞的。
-* async/await让异步代码看起来非常像同步代码。这就是它的能力所在。
+* async/await 是一种写异步代码的新方式。之前对于异步代码的选择包括回调和 promise。
+* async/await 事实上是建立在promise之上的。它不能仅仅通过回调或者节点回调来使用。
+* async/wait 和 promise类似，是非阻塞的。
+* async/await 让异步代码看起来非常像同步代码。这就是它的能力所在。
 
 ### 语法
 
-假设函数`getJSON`返回一个promise，并且这个promise解析了一些JSON对象。我们只想调用它并且显示出JSON，接着返回`"done"`。
+假设函数`getJSON`返回一个 promise，并且这个 promise 解析了一些 JSON 对象。我们只想调用它并且显示出 JSON，接着返回`"done"`。
 
 下面是使用promise来实现
 
