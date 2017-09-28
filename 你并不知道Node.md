@@ -2,41 +2,73 @@
 
 At this year’s Forward.js conference (a JavaScript one), I gave a talk titled “You don’t know Node”. In that talk, I challenged the audience with a set of questions about the Nodejs runtime and most of the *technical* audience could not answer most of the questions.
 
+在今年 Forward.js （一个 JavaScript）会议中，我做了主题为“你并不知道 Node”的演讲。在这个演讲中，我向观众提出一些列关于 Node.js 运行时的具有挑战性的问题，大多数**技术相关观众**无法回答其中的大部分问题。
+
 I didn’t really measure that but it certainly felt so in the room and a few brave people approached me after the talk and confessed to the fact.
+
+我并没有进行实际的统计，但是在那个房间感觉是这个样子的。并且有一些勇敢的观众在演讲之后向我承认了这一事实。
 
 Here is the problem that made me give that talk. I don’t think we teach Node the right way! Most educational content about Nodejs focuses on Node packages and not its runtime. Most of these packages wrap modules in the Node runtime itself (like *http*, or *stream*). When you run into problems, these problems might be inside the runtime itself and if you don’t know the Node runtime, you are in trouble.
 
+这也就是我做此次演讲的原因。我不认为我们以正确的方式教学 Node！大多数的 Nodejs相关的教学概念集中于Node 包却不是它的运行时。大多数的包都将 Node 运行时包裹在模块中（比如 http 或者 stream）。当你遇到问题的时候，这些问题可能存在于运行时之中，如果你不知道Node 运行的话， 你就陷入麻烦了。
+
 >  The problem: most educational content about Nodejs focuses on Node packages and not its runtime.
+>
+>  这个问题：多数的 Nodejs相关的教学概念集中于Node 包却不是它的运行时
 
 I picked a few questions and answers to feature for this article. They are presented in headers below. Try to answer them in your head first!
 
+我为这篇文章调取了一些问题并且做出回答。它们将以标题的形式在下面呈现。首先尝试在你自己心中做出回答！
+
 *If you find a wrong or misleading answer here, please let me know.*
 
-## Question #1: What is the Call Stack and is it part of V8?
+*如果你发现错误或者具有误导性的回答，请让我知道。*
+
+## 问题 #1: 什么是调用栈并且它是V8的一部分么？
 
 The Call Stack is definitely part of V8. It is the data structure that V8 uses to keep track of function invocations. Every time we invoke a function, V8 places a reference to that function on the call stack and it keeps doing so for each nested invocation of other functions. This also includes functions that call themselves recursively.
+
+调用栈当然是 V8 的一部分。它是 V8 用来追踪函数调用的一种数据结构。每次我们调用一个函数的时候，V8都会将向函数调用栈中压入一个对于函数的引用，它对于其它函数的内嵌函数也会这样做。这也包括递归调用函数的函数。
 
 ![img](https://cdn-images-1.medium.com/max/800/1*9xKwtu4Gq-a7Pj_tWJ-tog.png)
 
 When the nested invocations of functions reaches an end, V8 will pop one function at a time and use its returned value in its place.
 
+当函数中的内嵌函数到达末端的时候，V8 就会每次弹出一个函数并且在它的位置使用返回值。
+
 Why is this important to understand for Node? Because you only get ONE Call Stack per Node process. If you keep that Call Stack busy, your whole Node process is busy. Keep that in mind.
 
-#### Question #2: What is the Event Loop? Is it part of V8?
+为什么理解 Node 是重要的？因为你在每个 Node 进程中只能获取一个调用栈。如果你让这个调用栈保持忙碌，那么你的整个 Node 进程也会是忙碌的。记住这一点。
+
+#### 问题 #2: 什么是事件循环? 它是V8的一部分吗?
 
 Where do you think the event loop is in this diagram?
 
+你认为事件循环是在这张图的什么地方？
+
 ![img](https://cdn-images-1.medium.com/max/800/1*nLwOhFq_i4XbxRWUoXMlQQ.png)The event loop is provided by the *libuv* library. It is not part of V8.
+
+时间循环是由 *libbuv* 库提供，它不是 V8 的一部分。
 
 The Event Loop is the entity that handles external events and converts them into callback invocations. It is a loop that picks events from the event queues and pushes their callbacks into the Call Stack. It is also a multi-phase loop.
 
+事件循环处理外部事件并且将它们转换成回调调用。它是一个从事件队列中跳去事件的循环并且将它们的回调压入到回调栈中。它也是一个多相回调。
+
 If this is the first time you are hearing of the Event Loop, these definitions will not be that helpful. The Event Loop is part of a much bigger picture:
+
+如果这是你第一次听说时间循环，这些概念将可能不会那么有用。这个时间循环是一张更大的图的一部分。
 
 ![img](https://cdn-images-1.medium.com/max/800/1*lj3_-x3yh-114QzWpFq8Ug.png)You need to understand that bigger picture to understand the Event Loop. You need to understand the role of V8, know about the Node APIs, and know how things get queued to be executed by V8.
 
+你需要理解这张更大的图从而理解时间循环。你需要理解 V8 的角色，知道 Node 的 API，并且知道事件如何进入队列从而被 V8 所执行。
+
 The Node APIs are functions like `setTimeout` or `fs.readFile`. These are not part of JavaScript itself. They are just functions provided by Node.
 
+Node 的 API 就是一些函数，比如 `setTimeout` 或者 `fs.readFile`。这些并不是 JavaScript 中的一部分。它们是由 Node 提供的函数。
+
 The Event Loop sits in the middle of this picture (a more complex version of it, really) and acts like an organizer. When V8 Call Stack is empty, the event loop can decide what to execute next.
+
+事件循环位于这张图（真的是一个更复杂的版本）的中间位置，就好像是一个组织者。当 V8 调用栈为空的时候，事件循环可以决定下一步执行哪一个。
 
 #### Question #3: What will Node do when the Call Stack and the event loop queues are all empty?
 
