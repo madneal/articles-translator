@@ -70,17 +70,25 @@ The Event Loop sits in the middle of this picture (a more complex version of it,
 
 事件循环位于这张图（真的是一个更复杂的版本）的中间位置，就好像是一个组织者。当 V8 调用栈为空的时候，事件循环可以决定下一步执行哪一个。
 
-#### Question #3: What will Node do when the Call Stack and the event loop queues are all empty?
+#### 问题 #3: 当调用栈以及事件循环都为空的时候，Node会做什么？
 
 It will simply exit.
 
+很简单，它会退出。
+
 When you run a Node program, Node will automatically start the event loop and when that event loop is idle and has nothing else to do, the process will exit.
+
+当你运行一个Node程序的时候，Node 将会自动开始事件循环并且当事件循环变为idle 的时候并且没有其它的事情需要做的时候，这个进程将会退出。
 
 To keep a Node process running, you need to place something somewhere in event queues. For example, when you start a timer or an HTTP server you are basically telling the event loop to keep running and checking on these events.
 
-#### Question #4: Besides V8 and Libuv, what other external dependencies does Node have?
+为了保持 Node进行运行，你需要在事件队列的某个地方放一些东西。比如，当你启动一个计时器或者一个 HTTP 服务的时候，你基本上就是告诉事件循环保持运行并且检查这些事件。
+
+#### 问题 #4: 除了V8以及Libuv，Node还有哪些外部依赖?
 
 The following are all separate libraries that a Node process can use:
+
+下面的是 Node 进行需要的所有的单独库：
 
 - http-parser
 - c-ares
@@ -89,9 +97,13 @@ The following are all separate libraries that a Node process can use:
 
 All of them are external to Node. They have their own source code. They have their own license. Node just uses them.
 
+它们对于 Node 来说都是外部依赖。它们具有它们自己的源代码。它们具有它们自己的证书。Node 只是使用它们。
+
 You want to remember that because you want to know where your program is running. If you are doing something with data compression, you might encounter trouble deep in the zlib library stack. You might be fighting a zlib bug. Do not blame everything on Node.
 
-#### Question #5: Would it be possible to run a Node process without V8?
+你希望记住因为你想知道你的程序在什么地方运行。如果你在处理数据压缩，你可能遇到一些 zlib 库使用的一些困难。你可能在解决一个 zlib 的 bug。不要把所有的事都归结为 Node。
+
+#### 问题 #5: 可以不适用V8来运行
 
 This might be a trick question. You do need a VM to run a Node process, but V8 is not the only VM that you can use. You can use *Chakra*.
 
