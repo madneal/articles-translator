@@ -103,52 +103,62 @@ You want to remember that because you want to know where your program is running
 
 你希望记住因为你想知道你的程序在什么地方运行。如果你在处理数据压缩，你可能遇到一些 zlib 库使用的一些困难。你可能在解决一个 zlib 的 bug。不要把所有的事都归结为 Node。
 
-#### 问题 #5: 可以不适用V8来运行
+#### 问题 #5: 可以不使用V8来运行 Node？
 
 This might be a trick question. You do need a VM to run a Node process, but V8 is not the only VM that you can use. You can use *Chakra*.
 
+这可能是一个棘手的问题。你需要一个 VM 来运行 Node 进程，但是 V8 并不是你唯一可以试用的 VM。你可以使用 *Chakra*。
+
 Checkout this Github repo to track the progress of the node-chakra project:https://github.com/nodejs/node-**chakracore**
 
-#### Question #6: What is the difference between module.exports and exports?
+获取 Github仓库来跟追踪 node-chakra 的进程：https://github.com/nodejs/node-chakracore
+
+#### 问题 #6: module.exports 和 exports 的区别是什么?
 
 You can always use `module.exports` to export the API of your modules. You can also use `exports` except for one case:
 
+你可以总是试用 `module.exports` 来导出你模块的 API。你也可以`exports` 除了一种情况：
+
 ```
 module.exports.g = ...  // Ok
-```
-
-```
 exports.g = ...         // Ok
-```
 
-```
 module.exports = ...    // Ok
 exports = ...           // Not Ok
 ```
 
-*Why?*
+*为什么？*
 
 `exports` is just a reference or alias to `module.exports`. When you change `exports` you are changing that reference and no longer changing the official API (which is `module.exports`). You would just get a local variable in the module scope.
 
-#### Question #7: How come top-level variables are not global?
+`exports` 只是一个对于 `module.exports` 的引用或者别名。当你改变 `exports` 的时候，你是在改变那个引用而不是改变官方的 API（`module.exports`）。你将只会获得一个模块作用域内的局部变量。
+
+#### 问题 #7: 顶级变量怎么不是全局变量？
 
 If you have `module1` that defines a top-level variable `g`:
 
-```
-// module1.js
-```
+如果你有一个 `module1` 定义了一个顶级变量 `g`：
 
 ```
+// module1.js
 var g = 42;
 ```
 
 And you have `module2` that requires `module1` and try to access the variable `g`, you would get `g is not defined`.
 
+并且你有一个 `module2` 引入了 `module1` 并且尝试访问变量 `g`，你将会发现 `g 是未定义的`。
+
 *Why?* If you do the same in a browser you can access top-level defined variables in all scripts included after their definition.
+
+*为什么？*在浏览器中你如果做同样的操作，你能够在所有的变量在定义之后被引入就可以访问顶级变量。
 
 Every Node file gets its own *IIFE* (Immediately Invoked Function Expression) behind the scenes. All variables declared in a Node file are scoped to that IIFE.
 
+每一个 Node 文件都会在背后获取它自己的立即执行函数表达式（IIFE）。所有在这个 Node 文件里面定义的变量都是在这个 IIFE 作用域内。
+
 **Related Question:** What would be the output of running the following Node file that has just this single line:
+
+**相关问题：**运行下面仅仅包含一行代码的 Node 文件的输出回事什么：
 
 ```
 // script.js
@@ -157,64 +167,79 @@ console.log(arguments);
 
 You are going to see some arguments!
 
-
+你将会看到一些参数！
 
 ![img](https://cdn-images-1.medium.com/max/800/1*mLd8sj1_SFudZNisAeiOAQ.png)
 
-*Why?*
+*为什么?*
 
 Because what Node executed is a function. Node wrapped your code with a function and that function explicitly defines the *five* arguments that you see above.
 
-#### Question #8: The objects `exports`, `require`, and `module` are all globally available in every file but they are different in every file. How?
+因为 Node 执行的是一个函数。 Node 将你的代码使用函数来包装并且这个函数准确定义了上面你看到的5个参数。
+
+#### 问题 #8: 对象`exports`，`require`和`module`都是在每个文件中全局可用，但每个文件都不同。 这是如何实现的？
 
 When you need to use the `require` object, you just use it directly as if it was a global variable. However, if you inspect `require` in two different files, you will see two different objects. How?
 
+当你需要使用 `require` 对象的时候，你就可以直接使用它就好像是一个全局变量。然而，如果当你在不同的两个文件中检测 `require`，你将会看到两个不同的对象。这是如何实现的？
+
 Because of that same magic IIFE:
 
-
+都是因为相同的神奇的 IIFE：
 
 ![img](https://cdn-images-1.medium.com/max/800/1*W926fXZZIUf7vnvE2IOnZg.png)
 
 As you can see, the magic IIFF passes to your code the following five arguments: `exports`, `require`, `module`, `__filename`, and `__dirname`.
 
+正如你所见，神奇的 IIFE 将你的代码传递到5个参数之中：`exports`，`require`，`modue`，`__filename`以及`__dirname`。
+
 These five variables appear to be global when you use them in Node, but they are actually just function arguments.
 
-#### Question #9: What are circular module dependencies in Node?
+当你在 Node 试用这5个参数的时候，它们看起来是全局的，但是事实上它们仅仅是函数的参数。
+
+#### 问题 #9: Node 中的循环模块依赖是什么?
 
 If you have a `module1` that requires `module2` and `module2` that in-turn requires `module1`, what is going to happen? An error?
 
+如果你有一个 `module1` 引入 `module2` 并且同样 `module2` 也引入了 `module1`，那么将会发生什么？一个错误？
+
 ```
 // module1
-```
-
-```
 require('./module2');
-```
-
-```
 // module2
-```
-
-```
 require('./module1');
 ```
 
 You will not get an error. Node allows that.
 
+你将不会得到一个错误。Node 允许这种情况。
+
 So `module1` requires `module2`, but since `module2` needs `module1` and `module1` is not done yet, `module1` will just get a partial version of `module2`.
+
+那么在 `module1` 引入 `module2` 的时候，但是因为 `module2` 需要 `module1` 并且 `module1` 尚未完成，`module1` 将会仅仅获取 `module2`的一个部分版本。
 
 You have been warned.
 
-#### Question #10: When is it OK to use the file system *Sync methods (like readFileSync)
+你将被警告。
+
+#### 问题 #10: 什么时候试用文件系统中的同步方法 (比如 readFileSync)是可以的？
 
 Every `fs` method in Node has a synchronous version. Why would you use a sync method instead of the async one?
 
+Node 中的每一个 `fs` 方法都有一个同步的版本。为什么你要使用一个同步方法而不是一个异步方法呢？
+
 Sometimes using the sync method is fine. For example, it can be used in any initializing step while the server is still loading. It is often the case that everything you do after the initializing step depends on the data you obtain there. Instead of introducing a callback-level, using synchronous methods is acceptable, as long as what you use the synchronous methods for is a one-time thing.
 
+有时候试用同步方法是不错的。比如，在初始化步骤中服务器依然在加载的情况下使用同步方法。大多数情况是初始化步骤之后的所有事取决与在初始化步骤中获取的数据。在不引入回调的层级，使用同步方法是可以接受的，只要你使用同步方法是一次性的事情。
+
 However, if you are using synchronous methods inside a handler like an HTTP server on-request callback, that would simply be 100% wrong. Do not do that.
+
+然而，如果你在一个处理程序中试用同步方法，比如 HTTP 服务器请求回调，那将会很明显 100% 报错。不要那样做。
 
 ------
 
 I hope you were able to answer some or all of these challenge questions. I will leave you with some detailed articles I wrote about beyond-the-basics concepts in Node.js:
+
+我希望你能够回答一些或者全部这些具有挑战性的问题。我将会给一些除了 Node.js 基本概念以外的文章。
 
 https://medium.com/@samerbuna/you-dont-know-node-6515a658a1ed
