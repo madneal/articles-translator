@@ -1,8 +1,6 @@
 # You don’t know Node
 
-At this year’s Forward.js conference (a JavaScript one), I gave a talk titled “You don’t know Node”. In that talk, I challenged the audience with a set of questions about the Nodejs runtime and most of the *technical* audience could not answer most of the questions.
-
-在今年 Forward.js （一个 JavaScript）会议中，我做了主题为“你并不知道 Node”的演讲。在这个演讲中，我向观众提出一些列关于 Node.js 运行时的具有挑战性的问题，大多数**技术相关观众**无法回答其中的大部分问题。
+在今年 Forward.js （一个 JavaScript）会议中，我做了主题为“你并不知道 Node”的演讲。在这个演讲中，我向观众提出一些关于 Node.js 运行时的具有挑战性的问题，大多数**技术相关观众**无法回答其中的大部分问题。
 
 I didn’t really measure that but it certainly felt so in the room and a few brave people approached me after the talk and confessed to the fact.
 
