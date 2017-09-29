@@ -1,4 +1,12 @@
-# You don’t know Node
+# 你并不知道Node
+
+> 原文：[You don’t know Node](https://medium.com/@samerbuna/you-dont-know-node-6515a658a1ed)
+>
+> 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 在今年 Forward.js （一个 JavaScript）会议中，我做了主题为“你并不知道 Node”的演讲。在这个演讲中，我向观众提出一些关于 Node.js 运行时的具有挑战性的问题，大多数**技术相关观众**无法回答其中的大部分问题。
 
@@ -169,5 +177,3 @@ Node 中的每一个 `fs` 方法都有一个同步的版本。为什么你要使
 ------
 
 我希望你能够回答一些或者全部这些具有挑战性的问题。我将会给一些除了 Node.js 基本概念以外的文章。
-
-https://medium.com/@samerbuna/you-dont-know-node-6515a658a1ed
