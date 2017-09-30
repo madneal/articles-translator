@@ -36,15 +36,15 @@
 
 ![img](https://cdn-images-1.medium.com/max/800/1*nLwOhFq_i4XbxRWUoXMlQQ.png)The event loop is provided by the *libuv* library. It is not part of V8.
 
-时间循环是由 *libbuv* 库提供，它不是 V8 的一部分。
+事件循环是由 *libbuv* 库提供，它不是 V8 的一部分。
 
 事件循环处理外部事件并且将它们转换成回调调用。它是一个从事件队列中跳去事件的循环并且将它们的回调压入到回调栈中。它也是一个多相回调。
 
-如果这是你第一次听说时间循环，这些概念将可能不会那么有用。这个时间循环是一张更大的图的一部分。
+如果这是你第一次听说事件循环，这些概念将可能不会那么有用。这个事件循环是一张更大的图的一部分。
 
 ![img](https://cdn-images-1.medium.com/max/800/1*lj3_-x3yh-114QzWpFq8Ug.png)
 
-你需要理解这张更大的图从而理解时间循环。你需要理解 V8 的角色，知道 Node 的 API，并且知道事件如何进入队列从而被 V8 所执行。
+你需要理解这张更大的图从而理解事件循环。你需要理解 V8 的角色，知道 Node 的 API，并且知道事件如何进入队列从而被 V8 所执行。
 
 
 Node 的 API 就是一些函数，比如 `setTimeout` 或者 `fs.readFile`。这些并不是 JavaScript 中的一部分。它们是由 Node 提供的函数。
