@@ -111,7 +111,7 @@ var g = 42;
 
 每一个 Node 文件都会在背后获取它自己的立即执行函数表达式（IIFE）。所有在这个 Node 文件里面定义的变量都是在这个 IIFE 作用域内。
 
-**相关问题：**运行下面仅仅包含一行代码的 Node 文件的输出回事什么：
+**相关问题**:运行下面仅仅包含一行代码的 Node 文件的输出回事什么：
 
 ```
 // script.js
@@ -138,8 +138,7 @@ Because of that same magic IIFE:
 
 ![img](https://cdn-images-1.medium.com/max/800/1*W926fXZZIUf7vnvE2IOnZg.png)
 
-正如你所见，神奇的 IIFE 将你的代码传递到5个参数之中：`exports`，`require`，`modue`，`__filename`以及`__dirname`。
-
+正如你所见，神奇的 IIFE 将你的代码传递到5个参数之中：`exports`，`require`，`modue`，`__filename` 以及 `__dirname`。
 
 当你在 Node 试用这5个参数的时候，它们看起来是全局的，但是事实上它们仅仅是函数的参数。
 
@@ -157,7 +156,6 @@ require('./module1');
 你将不会得到一个错误。Node 允许这种情况。
 
 那么在 `module1` 引入 `module2` 的时候，但是因为 `module2` 需要 `module1` 并且 `module1` 尚未完成，`module1` 将会仅仅获取 `module2`的一个部分版本。
-
 
 你将被警告。
 
