@@ -170,3 +170,9 @@ Node 中的每一个 `fs` 方法都有一个同步的版本。为什么你要使
 ------
 
 我希望你能够回答一些或者全部这些具有挑战性的问题。我将会给一些除了 Node.js 基本概念以外的文章。
+* https://medium.freecodecamp.org/before-you-bury-yourself-in-packages-learn-the-node-js-runtime-itself-f9031fbd8b69
+* https://medium.freecodecamp.org/requiring-modules-in-node-js-everything-you-need-to-know-e7fbd119be8
+* https://medium.freecodecamp.org/understanding-node-js-event-driven-architecture-223292fcbc2d
+* https://medium.freecodecamp.org/node-js-streams-everything-you-need-to-know-c9141306be93
+* https://medium.freecodecamp.org/node-js-child-processes-everything-you-need-to-know-e69498fe970a
+* https://medium.freecodecamp.org/scaling-node-js-applications-8492bd8afadc
