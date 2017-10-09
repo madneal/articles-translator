@@ -12,7 +12,7 @@ Earlier this year, TypeScript introduced a number of [new features](https://gith
 
 * Type inference for props on `this` based on the component’s `props`option.
 
-* Most importantly, **these improvements also benefit plain JavaScript users!** If you are using VSCode with the awesome [Vetur](https://github.com/vuejs/vetur) extension, you will get greatly improved autocompletion suggestions and even type hints when using plain JavaScript in Vue components! This is because `[vue-language-server`](https://www.npmjs.com/package/vue-language-server), the internal package that is responsible for analyzing Vue components, can take advantage of the TypeScript compiler to extract more information about your code. Moreover, any editor that supports the language server protocol can leverage `[vue-language-server`](https://github.com/vuejs/vetur/tree/master/server) to provide similar features.
+* Most importantly, **these improvements also benefit plain JavaScript users!** If you are using VSCode with the awesome [Vetur](https://github.com/vuejs/vetur) extension, you will get greatly improved autocompletion suggestions and even type hints when using plain JavaScript in Vue components! This is because `[vue-language-server`](https://www.npmjs.com/package/vue-language-server), the internal package that is responsible for analyzing Vue components, can take advantage of the TypeScript compiler to extract more information about your code. Moreover, any editor that supports the language server protocol can leverage [`vue-language-server`](https://github.com/vuejs/vetur/tree/master/server) to provide similar features.
 
 ![VSCode + Vetur + New Type Declarations in Action](https://cdn-images-1.medium.com/max/3640/1*ftKUpzYGIzn1eS87JcBS8Q.gif)
 
