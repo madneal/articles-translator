@@ -12,7 +12,7 @@
 * 基于组件的 `props` 选项，对于 `this` 中的 props 输入推断。
 * 最重要的是，**这些改进也使得纯 JavaScript 用户受益匪浅！** 如果你使用 VSCode 与超级棒的的 [Vetur](https://github.com/vuejs/vetur) 扩展，你将获得大大改进的自动完成建议，甚至在Vue组件中使用纯 JavaScript 时也能获得输入提示！ 这是因为[vue-language-server](https://www.npmjs.com/package/vue-language-server)是负责分析 Vue 组件的内部包，可以利用 TypeScript 编译器来提取有关你的代码的更多信息。 此外，任何支持语言服务器协议的编辑器都可以利用 [`vue-language-server`](https://github.com/vuejs/vetur/tree/master/server)来提供类似的功能。
 
-![VSCode + Vetur + New Type Declarations in Action](https://cdn-images-1.medium.com/max/3640/1*ftKUpzYGIzn1eS87JcBS8Q.gif)
+![1-ftkupzygizn1es87jcbs8q](https://user-images.githubusercontent.com/12164075/31341266-932f5cc8-ad3b-11e7-8677-addf8d3ad5d4.gif)
 
 对于那些好奇的人，你可以通过克隆这个 [playground 项目](https://github.com/octref/veturpack/tree/new-types)（确保获取 `new-types` 的分支）并使用 VSCode + Vetur 打开它来尝试一下！
 
