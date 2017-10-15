@@ -8,7 +8,7 @@
 >
 > LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-我们很高兴宣布 Vue 2.5 Level E 的发布！本次发布包括多个功能提升并且我们推荐你查看[发布说明](https://github.com/vuejs/vue/releases/tag/v2.5.0)来获取完整详细信息。 在这篇文章中，我们将重点介绍一些更重要的的变化：更好的 TypeScript 集成，更好的错误处理，更好地支持单个文件组件中的功能组件以及与环境无关的服务器端渲染。
+我们很高兴宣布 Vue 2.5 Level E 的发布！本次发布包括多个功能提升并且我们推荐你查看[发布说明](https://github.com/vuejs/vue/releases/tag/v2.5.0)来获取完整详细信息。 在这篇文章中，我们将重点介绍一些更重要的的变化：更好的 TypeScript 集成，更好的错误处理，更好地支持单文件组件中的功能组件以及与环境无关的服务器端渲染。
 
 ## 更好的 TypeScript 集成
 
