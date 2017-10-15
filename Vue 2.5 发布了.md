@@ -14,7 +14,7 @@
 
 ![](https://cdn-images-1.medium.com/max/3200/1*vB-z-t961mJnd4a6re02Iw.png)
 
-得益于 TypeScript 团队的帮助，2.5 提供了大大改进的类型声明，可以与 Vue 的开箱即用的 API 一起使用，而不需要组件类装饰器。 新的类型声明还可以让 Vetur 等编辑器扩展功能更强大，为纯 JavaScript 用户提供更好的Intellisense 支持。 更多详细信息，请查看[我们之前关于更改的信息](https://medium.com/the-vue-point/upcoming-typescript-changes-in-vue-2-5-e9bd7e2ecf08)。
+得益于 TypeScript 团队的帮助，2.5 提供了大大改进的类型声明，可以与 Vue 的开箱即用的 API 一起使用，而不需要组件类装饰器。 新的类型声明还可以让 [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) 等编辑器扩展功能更强大，为纯 JavaScript 用户提供更好的Intellisense 支持。 更多详细信息，请查看[我们之前关于更改的信息](https://medium.com/the-vue-point/upcoming-typescript-changes-in-vue-2-5-e9bd7e2ecf08)。
 
 *感谢来自 TypeScript 团队的 Daniel Rosenwasser 发起的PR，以及核心团队成员 Herrington Darkholme和 Katashin 的改进和审查。*
 
