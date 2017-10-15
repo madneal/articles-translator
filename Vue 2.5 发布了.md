@@ -8,15 +8,15 @@
 >
 > LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-我们很高兴宣布 Vue 2.5 Level E 的发布！本次发布包括多个功能提升并且我们推荐你查看[发布说明](https://github.com/vuejs/vue/releases/tag/v2.5.0)来获取完整详细信息。 在这篇文章中，我们将重点介绍一些更重要的的变化：更好的 TypeScript 集成，更好的错误处理，更好地支持单个文件组件中的功能组件以及与环境无关的服务器端渲染。
+我们很高兴宣布 Vue 2.5 Level E 的发布！本次发布包括多个功能提升并且我们推荐你查看[发布说明](https://github.com/vuejs/vue/releases/tag/v2.5.0)来获取完整详细信息。 在这篇文章中，我们将重点介绍一些更重要的的变化：更好的 TypeScript 集成，更好的错误处理，更好地支持单文件组件中的功能组件以及与环境无关的服务端渲染。
 
 ## 更好的 TypeScript 集成
 
 ![](https://cdn-images-1.medium.com/max/3200/1*vB-z-t961mJnd4a6re02Iw.png)
 
-得益于 TypeScript 团队的帮助，2.5 提供了大大改进的类型声明，可以与 Vue 的开箱即用的 API 一起使用，而不需要组件类装饰器。 新的类型声明还可以让 Vetur 等编辑器扩展功能更强大，为纯 JavaScript 用户提供更好的Intellisense 支持。 更多详细信息，请查看[我们之前关于更改的信息](https://medium.com/the-vue-point/upcoming-typescript-changes-in-vue-2-5-e9bd7e2ecf08)。
+得益于 TypeScript 团队的帮助，2.5 提供了大大改进的类型声明，可以与 Vue 的开箱即用的 API 一起使用，而不需要组件类装饰器。 新的类型声明还可以让 [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur) 等编辑器扩展功能更强大，为纯 JavaScript 用户提供更好的Intellisense 支持。 更多详细信息，请查看[我们之前关于更改的信息](https://medium.com/the-vue-point/upcoming-typescript-changes-in-vue-2-5-e9bd7e2ecf08)。
 
-*感谢来自 TypeScript 团队的 Daniel Rosenwasser 发起的PR，以及核心团队成员 Herrington Darkholme和 Katashin 的改进和审查。*
+*感谢来自 TypeScript 团队的 Daniel Rosenwasser 发起的 PR，以及核心团队成员 Herrington Darkholme和 Katashin 的改进和审查。*
 
 >  注意：TypeScript 用户还应将以下包更新为最新版本从而兼容类型声明：`vue-router`，`vuex`，`vuex-router-sync` 和`vue-class-component`。
 
