@@ -8,7 +8,7 @@
 >
 > LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-我们很高兴宣布 Vue 2.5 Level E 的发布！本次发布包括多个功能提升并且我们推荐你查看[发布说明](https://github.com/vuejs/vue/releases/tag/v2.5.0)来获取完整详细信息。 在这篇文章中，我们将重点介绍一些更重要的的变化：更好的 TypeScript 集成，更好的错误处理，更好地支持单文件组件中的功能组件以及与环境无关的服务端渲染。
+我们很高兴宣布 Vue 2.5 Level E 的发布！本次发布包括多个功能提升并且我们推荐你查看[发布说明](https://github.com/vuejs/vue/releases/tag/v2.5.0)来获取完整详细信息。 在这篇文章中，我们将重点介绍一些更重要的的变化：更好的 TypeScript 集成，更好的错误处理，更好地支持单文件组件中的函数式组件以及与环境无关的服务端渲染。
 
 ## 更好的 TypeScript 集成
 
@@ -28,11 +28,11 @@
 
 在2.5中，我们引入了新的 `errorCaptured` 钩子。 具有此钩子的组件捕获其子组件树（不包括其自身）中的所有错误（不包括在异步回调中调用的那些）。 如果你熟悉React，这与 React 16 中引入的[错误边界](https://reactjs.org/blog/2017/07/26/error-handling-in-react-16.html#introducing-error-boundaries)的概念相似。钩子接收与全局 `errorHandler` 相同的参数，你可以利用这个钩子来[优雅地处理和显示错误](https://gist.github.com/yyx990803/9bdff05e5468a60ced06c29c39114c6b#error-handling-with-errorcaptured-hook)。
 
-## 更好地支持 `SFC` 中的功能组件
+## 更好地支持 `SFC` 中的函数式组件
 
 ![](https://cdn-images-1.medium.com/max/2828/1*jg9qGPkPadGBEa-KUPrMpA.png)
 
-使用 `vue-loader> = 13.3.0` 和 `Vue 2.5`，在 `* .vue` 文件中定义为单个文件组件的功能组件现在可以得到[正确的模板编译，Scoped CSS和热重新加载支持](https://vue-loader.vuejs.org/en/features/functional.html)。 这使得将叶子组件转换为函数式的更为容易，从而进行性能优化。
+使用 `vue-loader> = 13.3.0` 和 `Vue 2.5`，在 `* .vue` 文件中定义为单个文件组件的函数式组件现在可以得到[正确的模板编译，Scoped CSS和热重新加载支持](https://vue-loader.vuejs.org/en/features/functional.html)。 这使得将叶子组件转换为函数式的更为容易，从而进行性能优化。
 
 *感谢核心团队成员[Blake Newman](https://github.com/blake-newman) 对于这些功能做出的贡献。
 
