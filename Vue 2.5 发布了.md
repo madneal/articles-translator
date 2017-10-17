@@ -36,7 +36,7 @@
 
 *感谢核心团队成员[Blake Newman](https://github.com/blake-newman) 对于这些功能做出的贡献。
 
-## 与环境无关的服务器端渲染
+## 与环境无关的服务端渲染
 
 `vue-server-renderer` 的默认构建假定一个 Node.js 环境，这使得它在有的 JavaScript 运行时（如 [php-v8js](https://github.com/phpv8/v8js) 或Nashorn）中不可用。 在 2.5 中，我们已经发布了[一个与环境无关的 `vue-server-renderer` 版本](https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/basic.j)，可以在浏览器或纯 JavaScript 引擎中使用。 这可以打开有趣的策略，例如[直接在 PHP 进程中使用 Vue 服务端渲染](https://gist.github.com/yyx990803/9bdff05e5468a60ced06c29c39114c6b#environment-agnostic-ssr)。
 
