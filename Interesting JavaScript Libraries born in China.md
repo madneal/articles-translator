@@ -42,7 +42,7 @@ The makers of Ant Design have made development easier, as it can be installed us
 
 Simply type in the following into your terminal:
 
-    `npm install antd --save`
+    npm install antd --save
 
 OR
 
