@@ -1,6 +1,8 @@
 # articles-translator :memo:
 Translate the distinct technical blogs. Any good article, please issue. I do really hope anyone can join me to continue this work. Provide original articles or join the translation work, either one is appreciated.[@neal](mailto:bing@stu.ecnu.edu.cn)
 
+Moreover, for the export of blogs in Medium, I will suggest the Chrome extension [Export to Markdown](https://chrome.google.com/webstore/detail/export-to-markdown/dodkihcbgpjblncjahodbnlgkkflliim?utm_source=chrome-ntp-icon&authuser=1).
+
 * [我认为Bootstrap是有害的](https://github.com/neal1991/articles-translator/blob/master/Bootstrap_considered_harmful.md)
 * [javascript中的对象字面量为啥这么酷](https://github.com/neal1991/articles-translator/blob/master/javascript%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%AD%97%E9%9D%A2%E9%87%8F%E4%B8%BA%E5%95%A5%E8%BF%99%E4%B9%88%E9%85%B7.md)
 * [Latex 专业的参考](https://github.com/neal1991/articles-translator/blob/master/Latex%20%E4%B8%93%E4%B8%9A%E7%9A%84%E5%8F%82%E8%80%83.md)
