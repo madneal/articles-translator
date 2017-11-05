@@ -1,16 +1,26 @@
 ![](https://cdn-images-1.medium.com/max/11520/1*iMkFu1T52fkSnlZDlCrvkQ.jpeg)
 
-## Going out to eat and understanding the basics of Express.js
+## Going out to eat and understanding the basics of Express.js出去吃饭并且理解Express.js的基本知识
 
 If you have ever visited a sit-down restaurant, then you can understand the basics of Express. But if you are just starting to build your first Node.js back end…you might be in for a bumpy ride.
 
 Yes — it is certainly easier to learn Node if you have past experience with JavaScript. But the challenges you will face while building a back end are completely different than the ones you face while using JavaScript on the front end.
 
+如果你曾经去过一个坐下来就餐的餐厅，那么你可以了解 Express 的基础知识。 但是，如果你刚刚开始构建你的第一个 Node.js 后端......你可能并不会很顺利。
+
+是的 - 如果你曾经有过 JavaScript 经验，学习 Node 肯定更容易。 但是，在构建后端时面临的挑战与在前端使用JavaScript 时所面临的挑战完全不同。
+
 When I learned Node, I chose the hard way. I studied eBooks, written tutorials, and videos over and over until I finally understood **why **I was doing what I was doing.
 
 There is an easier way. I am going to use a restaurant analogy to explain four key parts of your first Express app. [Express.js](https://expressjs.com/) is a popular framework for organizing your code, and I would recommend it for any beginner. I’ll explain further in a moment.
 
+当我学习Node时，我选择了困难的方式。 我一遍又一遍地学习电子书，写作教程和视频，直到我终于明白我**为什么**要做我正在做的事情。
+
+有一个更简单的方法。 我打算用一个餐馆的比喻来解释你的第一个应用程序的四个关键部分。 [Express.js](https://expressjs.com/) 是一个组织你的代码的流行框架，我会为任何初学者推荐它。 稍后我会进一步解释。
+
 Here are the four key parts we will cover:
+
+下面是我们将会涉及到的四个关键部分：
 
   1. The require statements
 
@@ -22,29 +32,44 @@ Here are the four key parts we will cover:
 
 In this analogy, you are a restaurant owner looking to hire a general manager — the person who creates all the processes and manages the place so that it runs smoothly and customers leave happy.
 
+在这个比喻中，你是一个餐馆老板，希望雇用一个总经理 - 创建所有流程并且进行管理，这样餐厅就可以顺利运行，客户也就快乐了。
+
 Here is a preview of what is next:
+
+下面是接下来部分的预览：
 
 ![](https://cdn-images-1.medium.com/max/2578/1*gWVqib20b1NNzB6vrM-U6w.png)
 
 By the end, you will understand the functionality of every part of a basic Express app.
 
-## Step 1: hiring the manager (require statements)
+最后，你将会理解基本 Express app 的每个部分的功能。
+
+## 步骤一: 雇佣经理 (require statements)
 
 In this example, you are the restaurant owner. And you need to hire an expert to run the day-to-day operations of your new restaurant. You certainly aren’t an expert, and you can’t leave it to the waitstaff and kitchen to figure out.
 
 If you want to run an efficient and safe restaurant, you need someone to keep your staff working at maximum efficiency. Express is the new manager.
 
+在这个例子中，你是餐馆老板。 而且你需要聘请专家来管理你的新餐厅的日常运作。 你当然不是专家，你不能把它交给服务员和厨房去搞清楚。
+
+如果你想经营一家高效安全的餐厅，你需要有人来保证你的员工以最高的效率工作。 Express 就是新的经理。
+
 The first part is pretty straightforward. Like with any other NPM package, you need to npm install the express module and then use a **require** statement to load the module.
+
+第一部分非常简单。 与其他 NPM 软件包一样，你需要使用 npm 安装 express 模块，然后使用 **require** statement 来加载模块。
 
 ![](https://cdn-images-1.medium.com/max/2596/1*VjyG-yoVn9aUYJ_cdN6RYA.png)
 
 Unlike many other NPM packages, you also need to use this line:
 
-    const app = express();
+不像其它的许多 NPM 包，你也需要使用这行：
 
+    const app = express();
 This is because you need a variable to hold your new Express application. Express is not a default part of Node.
 
-## Step 2: making decisions at the restaurant (middleware)
+这是因为你需要一个变量来保存你的新的 Express 应用程序。 Express 不是 Node 的默认部分。
+
+## 步骤二: 在餐厅做决定 (middleware)
 
 Let’s take a step back here. What are some common routines that happen at restaurants? There are three that immediately jump into my head:
 
