@@ -72,24 +72,28 @@ This is because you need a variable to hold your new Express application. Expres
 ## 步骤二: 在餐厅做决定 (middleware)
 
 Let’s take a step back here. What are some common routines that happen at restaurants? There are three that immediately jump into my head:
+让我们在这停一下。餐厅里最常见的例程有哪些？我们脑海中立马出现了3个：
 
-  1. Seating new customers
+  1. 给新顾客安排座位
 
-  2. Taking food orders
+  2. 接受食物订单
 
-  3. Presenting the check at the end of the meal
+  3. 在用餐结束进行确认
 
 For each one, there are a series of checks that you need to run before you can execute the action. For example, before you seat customers you need to know:
 
-  1. Are they wearing a shirt and shoes (and pants)? Otherwise, they cannot be seated.
+对于每一个例程，都需要进行一系列的进程才能执行行动。比如，在你给顾客安排座位之前，你需要知道：
 
-  2. If they want to sit at the bar, are they 21 years old (if you are in the United States)?
+  1. Are they wearing a shirt and shoes (and pants)? Otherwise, they cannot be seated.他们是不是穿了衬衫和鞋子（以及裤子）？否则，他们不能被安排座位。
+
+  2. If they want to sit at the bar, are they 21 years old (if you are in the United States)?如果他们想坐在吧台那里，他们是否已经有21岁（如果你在美国的话）
 
 This ain’t a beach bar! Similarly, in your code, you will need to validate that requests have certain criteria before they can continue. For example, if a person tries to log in to your site:
+这不是海滩酒吧！ 同样，在你的代码中，你需要验证请求是否具有某些标准，然后才能继续。 例如，如果有人尝试登录到您的网站：
 
-  1. Do they have an account?
+  1. Do they have an account?他们是否具有账户？
 
-  2. Did they enter the correct password?
+  2. Did they enter the correct password?他们是否输入了正确的密码？
 
 This is where the concept of **middleware** comes in. Middleware functions allow you to take action on any incoming request and modify it before sending back a response.
 
