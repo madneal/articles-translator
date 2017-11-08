@@ -22,13 +22,13 @@ Here are the four key parts we will cover:
 
 下面是我们将会涉及到的四个关键部分：
 
-  1. The require statements
+    1. The require statements
 
-  2. Middleware
+    2. Middleware
 
-  3. Routing
+    3. Routing
 
-  4. App.listen()/ Starting the server
+    4. App.listen()/ Starting the server
 
 In this analogy, you are a restaurant owner looking to hire a general manager — the person who creates all the processes and manages the place so that it runs smoothly and customers leave happy.
 
@@ -74,32 +74,36 @@ This is because you need a variable to hold your new Express application. Expres
 Let’s take a step back here. What are some common routines that happen at restaurants? There are three that immediately jump into my head:
 让我们在这停一下。餐厅里最常见的例程有哪些？我们脑海中立马出现了3个：
 
-  1. 给新顾客安排座位
+    1. 给新顾客安排座位
 
-  2. 接受食物订单
+    2. 接受食物订单
 
-  3. 在用餐结束进行确认
+    3. 在用餐结束进行确认
 
 For each one, there are a series of checks that you need to run before you can execute the action. For example, before you seat customers you need to know:
 
 对于每一个例程，都需要进行一系列的进程才能执行行动。比如，在你给顾客安排座位之前，你需要知道：
 
-  1. Are they wearing a shirt and shoes (and pants)? Otherwise, they cannot be seated.他们是不是穿了衬衫和鞋子（以及裤子）？否则，他们不能被安排座位。
+    1. Are they wearing a shirt and shoes (and pants)? Otherwise, they cannot be seated.他们是不是穿了衬衫和鞋子（以及裤子）？否则，他们不能被安排座位。
 
-  2. If they want to sit at the bar, are they 21 years old (if you are in the United States)?如果他们想坐在吧台那里，他们是否已经有21岁（如果你在美国的话）
+    2. If they want to sit at the bar, are they 21 years old (if you are in the United States)?如果他们想坐在吧台那里，他们是否已经有21岁（如果你在美国的话）
 
 This ain’t a beach bar! Similarly, in your code, you will need to validate that requests have certain criteria before they can continue. For example, if a person tries to log in to your site:
 这不是海滩酒吧！ 同样，在你的代码中，你需要验证请求是否具有某些标准，然后才能继续。 例如，如果有人尝试登录到您的网站：
 
-  1. Do they have an account?他们是否具有账户？
+    1. Do they have an account?他们是否具有账户？
 
-  2. Did they enter the correct password?他们是否输入了正确的密码？
+    2. Did they enter the correct password?他们是否输入了正确的密码？
 
 This is where the concept of **middleware** comes in. Middleware functions allow you to take action on any incoming request and modify it before sending back a response.
+
+这是 **middleware** 概念的来源。Middleware 功能允许你对任何传入的请求采取行动，并在发回响应之前对其进行修改。
 
 ![](https://cdn-images-1.medium.com/max/2000/0*8HIzvtX-DA3C26uv.png)
 
 In your restaurant, you need a series of rules to decide if you should seat incoming people or not. Let’s say a couple walks through your door. You have one rule before giving them a table: are they wearing a shirt and shoes?
+
+在你的餐厅，你需要一系列的规则来决定你是否应该接待来访的人。 比方说，一对夫妇走进你的餐厅。 在给他们一张桌子之前，你有一条规则：他们穿着衬衫和鞋子吗？
 
 ![](https://cdn-images-1.medium.com/max/2636/1*Gqix0p7PBNJ5htTY3sT7OQ.png)
 
@@ -117,15 +121,33 @@ The code block above is missing one important thing: A **path**. This is the spe
 
 Can you imagine? When customers entered the restaurant… ordered food… asked for the check… employees would be forced to look up and down at them to make sure they were clothed! That is a quick way to go out of business.
 
+首先，你从[app.use()](http://expressjs.com/en/api.html#app.use)开始。这意味着这些仅仅是下一个路线需要应用的规则。它们不是 GET，POST，PUT或DELETE。
+
+在第四行，你有一个匿名函数，参数 req，res 和 next。对于这个代码块的目的，你只是检查请求（req），看它是否有衬衫和鞋子。
+
+你最后还需要使用next()函数，因为你只是在这里验证服装。之后，在路线中，你将允许客人获得实际的桌子。
+
+在第五行和第六行，你检查他们是否有衬衫和鞋子。
+
+而在第7-9行中，只有两者兼而有之才行。
+
+上面的代码块缺少一个重要的事情：一个**路径**。这是请求中包含的特定字符串。而且由于缺少路径，它将在每个请求上运行。
+
+你可以想象？当顾客进入餐馆...点了食物...要求支票...员工将被迫在他们上下看他们确定他们穿衣服！这是一个快速停业的办法。
+
 ![](https://cdn-images-1.medium.com/max/2578/1*fjZKIJYmTIxQmVMURYTW9g.png)
 
 So, we change line 4 in the example above. Now, we will only run this code when a user requests along the ‘/table’ route.
 
 The full explanation:
 
+所以，我们在上面的例子中改变第4行。 现在，我们只会在用户请求“/ table”路径时运行这个代码。
+
+完整的解释：
+
 ![](https://cdn-images-1.medium.com/max/2606/1*d1OPYjAlr6mUWtjtMRbk6g.png)
 
-## Step 3: executing common routines (routing)
+## 步骤三: 执行常见的例程 (路由)
 
 Let’s continue with the seating example. So far, we only know how to validate whether someone should be seated or not. But we do not actually know how to lead them to a table and sit them down.
 
@@ -134,6 +156,14 @@ This is where **routes** come in. Routes allow us to script specific actions bas
 In the context of a restaurant, we need to create a GET request in order to choose a specific table and seat the guests. GETs do not modify or add to your database. They just retrieve information based on specific parameters.
 
 In this case, let’s say that you need to create a procedure to seat a party of two. The number 2 came from the customer **request.**
+
+让我们继续就座的例子。 到目前为止，我们只知道如何验证某人是否应该坐着。 但是我们实际上并不知道如何把他们引到桌子上坐下来。
+
+这就是路线进入的地方。路线允许我们根据路径编写具体的行动。 选项是GET，POST，PUT和DELETE，但现在我们将重点介绍GET和POST。
+
+在餐馆的情况下，我们需要创建一个GET请求，以便选择一个特定的桌子和座位的客人。 GET不会修改或添加到您的数据库。 他们只是检索基于特定参数的信息。
+
+在这种情况下，假设您需要创建一个程序来安排两个派对。 2号来自客户的要求。
 
 ![](https://cdn-images-1.medium.com/max/2572/1*pGvgMABGA1xzrSL9EFGQmQ.png)
 
