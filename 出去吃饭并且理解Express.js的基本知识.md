@@ -157,13 +157,13 @@ In the context of a restaurant, we need to create a GET request in order to choo
 
 In this case, let’s say that you need to create a procedure to seat a party of two. The number 2 came from the customer **request.**
 
-让我们继续就座的例子。 到目前为止，我们只知道如何验证某人是否应该坐着。 但是我们实际上并不知道如何把他们引到桌子上坐下来。
+让我们继续就座的例子。 到目前为止，我们只知道如何验证某人是否应该就做。 但是我们实际上并不知道如何把他们指引到桌子旁边并且就坐。
 
-这就是路线进入的地方。路线允许我们根据路径编写具体的行动。 选项是GET，POST，PUT和DELETE，但现在我们将重点介绍GET和POST。
+这就是**路由**的来源。路由允许我们根据**路径**编写具体的行动。 选项是 GET，POST ，PUT 和 DELETE，但现在我们将重点介绍 GET 和 POST。
 
-在餐馆的情况下，我们需要创建一个GET请求，以便选择一个特定的桌子和座位的客人。 GET不会修改或添加到您的数据库。 他们只是检索基于特定参数的信息。
+在餐厅的环境下，我们需要创建一个 GET 请求，以便选择一个特定的桌子并安排客人就做。 GET 不会修改或添加新数据到你的数据库。 他们只是检索基于特定参数的信息。
 
-在这种情况下，假设您需要创建一个程序来安排两个派对。 2号来自客户的要求。
+在这种情况下，假设你需要创建一个程序来安排两个派对。 2号来自客户的要求。
 
 ![](https://cdn-images-1.medium.com/max/2572/1*pGvgMABGA1xzrSL9EFGQmQ.png)
 
@@ -174,6 +174,14 @@ In line 12, we define the procedure for finding a table when a guest **requests*
 In fact, everything after the function declaration in line 12 is technically **middleware** since it modifies a user request. You will see in the diagram at the end.
 
 In line 13, we access the number of people in the party from the **parameters** of the request object. That is not declared anywhere since the request came from the user, and we do not have any front-end code. So here is what the request might look like if this was a real app:
+
+好的，在我解释之前：是的，这只是在最后发送信息。 实际上还没有找到一个具体的表格来给客户安排座位。 我需要在一个数组中搜索一个打开的表格，这涉及到更多的背景故事......这超出了本教程的范围。
+
+在第12行中，我们定义了当宾客**请求**'table'**路由**时查找表的过程。 就像上面的中间件示例一样，我们有可用的请求和响应参数。 它也有一个**参数**，金额。 在这个例子中，这是两个。
+
+事实上，第12行函数声明之后的所有内容在技术上都是**middleware**，因为它修改了用户请求。 你会看到图中的结尾。
+
+在第13行中，我们从请求对象的**参数**中访问聚会中的人数。 由于请求来自用户，所以没有声明任何地方，我们没有任何前端代码。 所以如果这是一个真正的应用程序，请求可能如下所示：
 
     req = {
       params: {
