@@ -74,26 +74,26 @@ This is because you need a variable to hold your new Express application. Expres
 Let’s take a step back here. What are some common routines that happen at restaurants? There are three that immediately jump into my head:
 让我们在这停一下。餐厅里最常见的例程有哪些？我们脑海中立马出现了3个：
 
-    1. 给新顾客安排座位
+        1. 给新顾客安排座位
 
-    2. 接受食物订单
+        2. 接受食物订单
 
-    3. 在用餐结束进行确认
+        3. 在用餐结束进行确认
 
 For each one, there are a series of checks that you need to run before you can execute the action. For example, before you seat customers you need to know:
 
 对于每一个例程，都需要进行一系列的进程才能执行行动。比如，在你给顾客安排座位之前，你需要知道：
 
-    1. Are they wearing a shirt and shoes (and pants)? Otherwise, they cannot be seated.他们是不是穿了衬衫和鞋子（以及裤子）？否则，他们不能被安排座位。
+        1. Are they wearing a shirt and shoes (and pants)? Otherwise, they cannot be seated.他们是不是穿了衬衫和鞋子（以及裤子）？否则，他们不能被安排座位。
 
-    2. If they want to sit at the bar, are they 21 years old (if you are in the United States)?如果他们想坐在吧台那里，他们是否已经有21岁（如果你在美国的话）
+        2. If they want to sit at the bar, are they 21 years old (if you are in the United States)?如果他们想坐在吧台那里，他们是否已经有21岁（如果你在美国的话）
 
 This ain’t a beach bar! Similarly, in your code, you will need to validate that requests have certain criteria before they can continue. For example, if a person tries to log in to your site:
 这不是海滩酒吧！ 同样，在你的代码中，你需要验证请求是否具有某些标准，然后才能继续。 例如，如果有人尝试登录到您的网站：
 
-    1. Do they have an account?他们是否具有账户？
+        1. Do they have an account?他们是否具有账户？
 
-    2. Did they enter the correct password?他们是否输入了正确的密码？
+        2. Did they enter the correct password?他们是否输入了正确的密码？
 
 This is where the concept of **middleware** comes in. Middleware functions allow you to take action on any incoming request and modify it before sending back a response.
 
@@ -195,9 +195,15 @@ Finally in line 14, we send a **response** back to the customer: we are looking 
 
 That is a lot at once. Here is a diagram:
 
+在第13行中，我们的 party 变量访问请求中的 params 对象的 amount 属性。
+
+最后在第14行，我们发送响应给客户：我们正在寻找合适的桌子。
+
+这是一次很多。 下面一张图表：
+
 ![](https://cdn-images-1.medium.com/max/3666/1*k7DkIw1cheKYBwu_AC4SAA.png)
 
-## Step 3.5: making your restaurant efficient (router)
+## 步骤3.5: 让你的餐厅有效率 (路由)
 
 Now you can trace the full path from request to response. But as your app grows in size, you will not want to code the rules for each route individually. You will find that some routes share the same rules, so you need to find a way to apply one set of rules to multiple routes.
 
@@ -207,11 +213,23 @@ And, in terms of serving customers, you will need to use a slightly different pr
 
 This is where the **router** comes in. The router lets you group your routes so that you can create common rules.
 
+现在您可以追踪从请求到响应的完整路径。 但是，随着你的应用程序的规模不断扩大，你将不希望单独为每条路由编码规则。 你会发现一些路由共享相同的规则，所以你需要找到一种方法来将一组规则应用到多个路由。
+
+就座位而言，您可以将你的客户安置在吧台或餐桌旁。 他们有衬衫和鞋子的共同规则，但是在酒吧里坐着要求每个人都超过 21岁。
+
+而且，在服务客户方面，你需要使用稍微不同的程序来供应开胃菜，主菜和晚餐。 但是，这三条路线也有很多共同之处。
+
+这是路由器进来的地方。路由器让你分组你的路由，这样你就可以创建通用的规则。
+
 ![](https://cdn-images-1.medium.com/max/2394/1*6Irrxz4EmHaPgVm0JRgVLg.png)
 
 We need to create middleware to cover each of these cases. I will just cover the seating cases for now since it will overwrite the code above.
 
 Here is the full code snippet:
+
+我们需要创建 middleware 来覆盖这些情况。 现在我会将考虑到上面的就座案例，对上面的代码进行重写。
+
+这是完整的代码片段：
 
 ![](https://cdn-images-1.medium.com/max/2598/1*Pih87WdfXU_PEXkcbsaAIw.png)
 
@@ -224,6 +242,16 @@ In lines 6 and 14, we now have seatingRouter.use() in place of app.use() to indi
 Finally, in line 21, we add more middleware to show that every seatingRouter route begins with ‘/seating’. So, if someone requested a seat at the bar, the full path would be ‘/seating/bar.’ This may feel a little out of order, since you might expect the path to be defined when you create the router in line 4. That is normal!
 
 Here is that in diagram form:
+
+我将分别讨论每个部分。
+
+在第 4 行，我们声明我们的路由器。
+
+在第6行和第14行，我们现在使用seatingRouter.use（）来代替app.use（）来表示这个中间件只与seatRouter路由有关。
+
+最后，在第21行中，我们添加了更多的中间件，以显示每个座位路由器以“/ seating”开头。 所以，如果有人要求在酒吧坐一个座位，完整的路径是'/ seating / bar'，这可能会有点不合理，因为当你在第4行创建路由器时，你可能会预期路径被定义。 这很正常！
+
+这里是以图表的形式：
 
 ![](https://cdn-images-1.medium.com/max/2000/1*-1x9T6VvBCQihyzwqgnGIA.png)
 
