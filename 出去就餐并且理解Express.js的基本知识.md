@@ -1,6 +1,6 @@
 ![](https://cdn-images-1.medium.com/max/11520/1*iMkFu1T52fkSnlZDlCrvkQ.jpeg)
 
-## Going out to eat and understanding the basics of Express.js出去吃饭并且理解Express.js的基本知识
+## Going out to eat and understanding the basics of Express.js出去就餐并且理解Express.js的基本知识
 
 If you have ever visited a sit-down restaurant, then you can understand the basics of Express. But if you are just starting to build your first Node.js back end…you might be in for a bumpy ride.
 
@@ -74,11 +74,11 @@ This is because you need a variable to hold your new Express application. Expres
 Let’s take a step back here. What are some common routines that happen at restaurants? There are three that immediately jump into my head:
 让我们在这停一下。餐厅里最常见的例程有哪些？我们脑海中立马出现了3个：
 
-        1. 给新顾客安排座位
+1. 给新顾客安排座位
 
         2. 接受食物订单
+    3. 在用餐结束进行确认
 
-        3. 在用餐结束进行确认
 
 For each one, there are a series of checks that you need to run before you can execute the action. For example, before you seat customers you need to know:
 
@@ -257,24 +257,35 @@ Here is that in diagram form:
 
 And, when you add a GET route, it goes above the last statement where you assign routes to the router.
 
+并且当你添加一个 GET 路由的时候，  它将会转到你上面分配的路由。
+
 ![](https://cdn-images-1.medium.com/max/2604/1*EPEUF9z94mMlCYXMB6HENA.png)
 
-## Step 4: opening for business (ports)
+## 步骤4: 开放营业 (端口)
 
 Okay, last part. So far, you have hired a manager, defined what to do before accepting customer requests, and determined what to do with specific customer requests once they come in. Now, you just need to determine the address for the location where all this will happen.
 
-Your server has **ports **that are kind of like the address for the restaurant itself. ****Since your server can handle many types of restaurants (or server-side scripts) at once, you need to tell it where each script should run.
+Your server has **ports **that are kind of like the address for the restaurant itself. Since your server can handle many types of restaurants (or server-side scripts) at once, you need to tell it where each script should run.
+
+好吧，最后一部分。 到目前为止，你已经雇佣了一位经理，在接受客户请求之前定义了要做的事情，并且确定如何处理特定的客户请求。现在，你只需确定所需位置的地址即可。
+
+你的服务器端口有点像餐厅本身的地址。 由于你的服务器可以同时处理多种类型的餐厅（或服务器端脚本），因此你需要告知每个脚本应在哪里运行。
 
 ![](https://cdn-images-1.medium.com/max/2650/1*xGoTkrNMLnwyh7zR2wbbVA.png)
 
 In the example above, the port is 3000 and it is located on your computer. So if you type:
 
-    [https://localhost:3000/](https://localhost:3000/)
+在上面的例子中，端口是 3000，它位于你的计算机上。 所以如果你输入：
 
-into your browser, and you are running your Node app, the server knows to run the specific script. In this case, as soon as you enter the URL, you will log the message in the console and be able to use any of your **routes**. If the restaurant itself is your entire app, then it is now open for business at the address 3000.
+    [https://localhost:3000/](https://localhost:3000/)
+into your browser, and you are running your Node app, the server knows to run the specific script. In this case, as soon as you enter the URL, you will log the message in the console and be able to use any of your **routes**. If the restaurant itself is your e1ntire app, then it is now open for business at the address 3000.
+
+在你的浏览器中，并且你在运行你的 Node 应用程序，服务器知道运行特定的脚本。 在这种情况下，只要输入URL，您将在控制台中记录消息，并能够使用任何路由。 如果餐厅本身是您的电子商务应用程序，那么它现在在地址 3000 处开始营业。
 
 ![](https://cdn-images-1.medium.com/max/2650/1*kl9doAbsvsaQNJdFWhc2-Q.png)
 
 Did you enjoy this? Give it a clap so others can discover it as well. And, if you want to get notified when I release future tutorials that use analogies, sign up here:
+
+你喜欢这个教程吗？ 给它点赞，让别人也可以发现它。 而且，如果你希望在发布将来使用类比的教程时收到通知，请在此处注册：
 
  <iframe src="https://medium.com/media/614143bb18105e1285ae4a1df769c191" frameborder=0></iframe>
