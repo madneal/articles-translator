@@ -1,6 +1,6 @@
 ![](https://cdn-images-1.medium.com/max/11520/1*iMkFu1T52fkSnlZDlCrvkQ.jpeg)
 
-## Going out to eat and understanding the basics of Express.js出去就餐并且理解Express.js的基本知识
+## 出去就餐并且理解Express.js的基础知识
 
 >原文：[Going out to eat and understanding the basics of Express.js](https://medium.freecodecamp.org/going-out-to-eat-and-understanding-the-basics-of-express-js-f034a029fb66)
 >
