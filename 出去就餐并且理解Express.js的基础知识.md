@@ -1,6 +1,6 @@
 ![](https://cdn-images-1.medium.com/max/11520/1*iMkFu1T52fkSnlZDlCrvkQ.jpeg)
 
-## Going out to eat and understanding the basics of Express.js出去就餐并且理解Express.js的基本知识
+## 出去就餐并且理解Express.js的基础知识
 
 >原文：[Going out to eat and understanding the basics of Express.js](https://medium.freecodecamp.org/going-out-to-eat-and-understanding-the-basics-of-express-js-f034a029fb66)
 >
@@ -53,9 +53,8 @@
 让我们在这停一下。餐厅里最常见的例程有哪些？我们脑海中立马出现了3个：
 
 1. 给新顾客安排座位
-
-        2. 接受食物订单
-    3. 在用餐结束进行确认
+2. 接受食物订单
+3. 在用餐结束进行确认
 
 对于每一个例程，都需要进行一系列的进程才能执行行动。比如，在你给顾客安排座位之前，你需要知道：
 
@@ -175,7 +174,7 @@
 
 在上面的例子中，端口是 3000，它位于你的计算机上。 所以如果你输入：
 
-​	`[https://localhost:3000/](https://localhost:3000/)`
+​	`https://localhost:3000/`
 
 在你的浏览器中，并且你在运行你的 Node 应用程序，服务器知道运行特定的脚本。 在这种情况下，只要输入URL，您将在控制台中记录消息，并能够使用任何路由。 如果餐厅本身是您的电子商务应用程序，那么它现在在地址 3000 处开始营业。
 
