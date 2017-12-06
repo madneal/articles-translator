@@ -2,31 +2,52 @@
 
 https://codeburst.io/understanding-css-flexbox-d6162885fefe
 
+> 原文：[Understanding CSS Flexbox](https://codeburst.io/understanding-css-flexbox-d6162885fefe)
+>
+> 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
+
 ![](https://cdn-images-1.medium.com/max/2000/1*xpjy9vmoYYR_5RGPBqQoIw.png)
 
 Have you been wondering how best to arrange elements with flexbox? If you cant stand CSS Float hacks, then lets dive in and learn how to work with Flexbox.
 
- <iframe src="https://medium.com/media/ed658fac807f1b8b44792a653be70dfa" frameborder=0></iframe>
+你有没有想过如何最好地使用 flexbox 来排列元素？ 如果你再也不能 忍受 CSS Float hack，让我们深挖一下，并学习如何使用 Flexbox。
 
-## What is Flexbox?
+![oOLUe.png](https://s1.ax1x.com/2017/12/06/oOLUe.png)
+
+## 什么是 Flexbox?
 
 Let’s take note of two important elements that works with Flexbox properties; Flex Container and Flex Item.
 
 Flex Container is obviously set to be the parent element while the Flex Items are the Flex container’s direct children element.
 
 Therefore, Flexbox layout gives the Flex container the ability to adjust it’s Flex Items’ width and height to accommodate available space for all kinds of display devices and screen sizes.
+
+让我们来注意两个与 Flexbox 属性配合使用的重要元素; Flex 	Container 和 Flex Item。
+
+Flex Container 显然被设置为父元素，而 Flex Items 是 Flex Container 的直接子元素。
+
+因此，Flexbox 布局使得 Flex Container 能够调整 Flex Item 的宽度和高度，以适应各种显示设备和屏幕尺寸的可用空间。
+
 >  With the above being said, there are one or more ***flex items*** inside a ***flex container***.
+>
+>  如上所述，在 ***flex container*** 中存在一个或者多个 ***flex item***。
 
-## **Flexbox properties on Flex Container**
+## **Flex Container 中的 Flexbox 属性**
 
-    1. **Display: Flex**
+1. **Display: Flex**
 
 In the image below, we have four boxes and by default each box is a block element; that is, they ought to occupy a full-width of a line. Flexbox enables the flex properties on all the container’s direct children (i.e, the four boxes) and the four boxes are displayed inline.
+
+在下图中，我们有四个框，默认情况下每个框是一个块元素; 也就是说，他们应该占据整行。 Flexbox 可以在所有容器的直接孩子（即四个盒子）上启用 flex 属性，而四个框则以内联方式显示。
 
 ![](https://cdn-images-1.medium.com/max/2000/1*hb6tOl-7bpB_xOV2XDG3GA.png)
 
     .container {
-       ***display: flex;***
+       display: flex;
     }
 
 2. **Flex Direction**
@@ -35,22 +56,30 @@ Often times we have tried aligning menu list items vertically or horizontally. W
 
 But with Flex-direction on the Flex Container, it can help us specify the alignment direction of our Flex Items inside the container (ie, left to right ***Or*** right to left). The following are properties of flex-direction:
 
+我们经常尝试垂直或水平对齐菜单列表项。 然后，我们必须使用列表项，然后将无序列表的css属性显示为 ***display-inline***。
+
+但是通过Flex Container 的 Flex-direction，它可以帮助我们指定容器内的 Flex Item 的对齐方向（比如从左到右或从右到左）。 以下是 flex-direction 的属性：
+
 ***row, row-reverse, column and column-reverse.***
 
-![display: flex;
- ***flex-direction: column;***](https://cdn-images-1.medium.com/max/2000/1*vPkSdz6kf2yFFPLN_0oBYg.png)
+![](https://cdn-images-1.medium.com/max/2000/1*vPkSdz6kf2yFFPLN_0oBYg.png)
+
+​									display: flex;
+ 								***flex-direction: column;***
 
     .container {
        display: flex;
-       ***flex-direction: column;***    /** lays the Flex Items vertically from top to bottom **/
+       flex-direction: column;    /** lays the Flex Items vertically from top to bottom **/
     }
 
-![display: flex;
- ***flex-direction: row;***](https://cdn-images-1.medium.com/max/2000/1*hb6tOl-7bpB_xOV2XDG3GA.png)
+![](https://cdn-images-1.medium.com/max/2000/1*hb6tOl-7bpB_xOV2XDG3GA.png)
+
+​							display: flex;
+ 						***flex-direction: row;***
 
     .container {
        display: flex;
-       ***flex-direction: row;*** /** Places the Flex Items from left to right **/
+       flex-direction: row; /** Places the Flex Items from left to right **/
     }
 
 3. **Flex Wrap**
