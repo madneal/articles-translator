@@ -1,6 +1,4 @@
-## Understanding CSS Flexbox
-
-https://codeburst.io/understanding-css-flexbox-d6162885fefe
+## 理解 CSS Flexbox
 
 > 原文：[Understanding CSS Flexbox](https://codeburst.io/understanding-css-flexbox-d6162885fefe)
 >
