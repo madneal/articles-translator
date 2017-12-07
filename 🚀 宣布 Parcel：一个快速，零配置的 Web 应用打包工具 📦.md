@@ -18,7 +18,7 @@
 
 * 🚀 **非常快**的打包时间 - 多核编译，以及文件系统缓存，这样即使在重新启动后也能快速重建。
 * 📦对于 JS, CSS, HTML, 图片以及文件资源以及其它支持[开箱即用]((https://parceljs.org/assets.html)，**不需要安装插件**。
-* 🐠在需要时使用 Babel，PostCSS 和 PostHTML **自动[转换](https://parceljs.org/transforms.html)模块** - 甚至是node_modules。
+* 🐠在需要时使用 Babel，PostCSS 和 PostHTML **自动**[**转换**](https://parceljs.org/transforms.html)**模块** - 甚至是node_modules。
 * ✂️ **零配置**[代码分割](https://parceljs.org/code_splitting.html)使用动态import() 语句。
 * 🔥内置支持[热加载](https://parceljs.org/hmr.htm)
 * 🚨 友好的错误日志体验 - 语法高亮显示的代码帧有助于查明问题。
