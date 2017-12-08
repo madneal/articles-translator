@@ -29,6 +29,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [你应该了解的5个 Logstash Filter 插件](https://github.com/neal1991/articles-translator/blob/master/%E4%BD%A0%E5%BA%94%E8%AF%A5%E4%BA%86%E8%A7%A3%E7%9A%845%E4%B8%AA%20Logstash%20Filter%20%E6%8F%92%E4%BB%B6.md)
 * [出去就餐并且理解Express.js的基本知识](https://github.com/neal1991/articles-translator/blob/master/%E5%87%BA%E5%8E%BB%E5%B0%B1%E9%A4%90%E5%B9%B6%E4%B8%94%E7%90%86%E8%A7%A3Express.js%E7%9A%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.md)
 * [理解 CSS Flexbox](https://github.com/neal1991/articles-translator/blob/master/%E7%90%86%E8%A7%A3CSS%20Flexbox.md)
+* [🚀 宣布 Parcel：一个快速，零配置的 Web 应用打包工具 📦](https://github.com/neal1991/articles-translator/blob/master/%F0%9F%9A%80%20%E5%AE%A3%E5%B8%83%20Parcel%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%BF%AB%E9%80%9F%EF%BC%8C%E9%9B%B6%E9%85%8D%E7%BD%AE%E7%9A%84%20Web%20%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7%20%F0%9F%93%A6.md)
 
 # License
 
