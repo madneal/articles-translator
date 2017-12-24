@@ -2,7 +2,7 @@
 
 ## 输入提升
 
-自Vue 2.0发布以来，我们一直在收到更好的 TypeScript 集成请求。 自从发布以来，我们已经为大多数核心库（`vue`, `vue-router`, `vuex`)包含了官方的 TypeScript 类型声明。 然而，当使用开箱即用的 Vue API 时，目前的集成有些缺乏。 例如，TypeScript 不能轻易地推断 Vue 使用的基于对象的默认 API 中 `this` 的类型。 为了使我们的 Vue 代码可以很好地使用 TypeScript，我们必须使用 `vue-class-component` 装饰器，这样我们可以使用基于类的语法来创建 Vue 组件。
+自Vue 2.0发布以来，我们一直在收到更好的 TypeScript 集成请求。 自从发布以来，我们已经为大多数核心库（`vue`, `vue-router`, `vuex`)包含了官方的 TypeScript 类型声明。 然而，当使用开箱即用的 Vue API 时，目前的集成有些缺乏。 例如，TypeScript 不能轻易地推断 Vue 使用的基于对象的默认 API 中 `this` 的类型。 为了使我们的 Vue 代码可以很好地使用 TypeScript，我们必须使用 [`vue-class-component`](https://github.com/vuejs/vue-class-component) 装饰器，这样我们可以使用基于类的语法来创建 Vue 组件。
 
 对于喜欢基于类的API的用户来说，这可能已经足够好了，但对于仅仅为了类型推断的用户不得不使用不同的API是不幸的。 这也使得将现有 Vue 代码库迁移到 TypeScript 更具挑战性。
 
