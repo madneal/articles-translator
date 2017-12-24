@@ -24,7 +24,7 @@
 * 之前，我们已经推荐将 `tsconfig.json` 设为 `“allowSyntheticDefaultImports”: true` 从而在任何地方使用 ES 风格的导入(`import Vue from 'vue'`)。 新的类型(typing)将正式转换为ES风格的导入/导出语法，因此不再需要配置，并且用户在所有情况下都需要使用ES风格的导入。
 * 为了配合导出语法的改变，以下依赖于 Vue 核心类型(typing)的核心库 `vuex`, `vue-router`, `vuex-router-sync`, `vue-class-component` 将会收到新的主要版本，并且应与 Vue 核心 2.5 一起升级。
 * 当执行自定义模块扩充时，用户应该使用 `interface VueConstructor` 而不是 `namespace Vue`。(example diff)
-* 如果使用 `ComponentOptions <Something>` 对组件选项进行注释，则此类型的 `computed`，`watch`，`render` 和生命周期钩子将需要手动类型注解。
+* 如果使用 `ComponentOptions <Something>` 对组件选项进行标注，则此类型的 `computed`，`watch`，`render` 和生命周期钩子将需要手动标注类型。
 
 我们尽力减少所需的升级工作，这些类型的改进与 `vue-class-component` 中使用的基于类的 API 兼容。 对于大多数用户来说，只需升级依赖并切换到ES风格的导入即可。 同时，我们还建议你将Vue 版本锁定到2.4.x，直到你准备升级为止。
 
