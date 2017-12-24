@@ -1,6 +1,6 @@
 ## Vue 2.5中即将推出的TypeScript变化
 
-## 输入提升
+## 类型改进
 
 自Vue 2.0发布以来，我们一直在收到更好的 TypeScript 集成请求。 自从发布以来，我们已经为大多数核心库（`vue`, `vue-router`, `vuex`)包含了官方的 TypeScript 类型声明。 然而，当使用开箱即用的 Vue API 时，目前的集成有些缺乏。 例如，TypeScript 不能轻易地推断 Vue 使用的基于对象的默认 API 中 `this` 的类型。 为了使我们的 Vue 代码可以很好地使用 TypeScript，我们必须使用 [`vue-class-component`](https://github.com/vuejs/vue-class-component) 装饰器，这样我们可以使用基于类的语法来创建 Vue 组件。
 
@@ -9,8 +9,8 @@
 今年早些时候，TypeScript 引入了许多[新功能](https://github.com/Microsoft/TypeScript/pull/14141)，这样就可以改进Vue的类型声明从而使得 TypeScript 可以更好地理解基于对象字面量的 API。 来自 TypeScript 团队的 Daniel Rosenwasser 开始了一个雄心勃勃的PR（现在由核心团队成员 HerringtonDarkholme 在[这](https://github.com/vuejs/vue/pull/6391)维护），一旦合并，将提供：
 
 * 使用默认的 Vue API 时，对于 `this` 可以使用适当的类型推断。 它也可以在单文件组件中工作！
-* 基于组件的 `props` 选项，对于 `this` 中的 props 输入推断。
-* 最重要的是，**这些改进也使得纯 JavaScript 用户受益匪浅！** 如果你使用 VSCode 与超级棒的的 [Vetur](https://github.com/vuejs/vetur) 扩展，你将获得大大改进的自动完成建议，甚至在Vue组件中使用纯 JavaScript 时也能获得输入提示！ 这是因为[vue-language-server](https://www.npmjs.com/package/vue-language-server)是负责分析 Vue 组件的内部包，可以利用 TypeScript 编译器来提取有关你的代码的更多信息。 此外，任何支持语言服务器协议(Language Server Protocol)的编辑器都可以利用 [`vue-language-server`](https://github.com/vuejs/vetur/tree/master/server)来提供类似的功能。
+* 基于组件的 `props` 选项，对于 `this` 中的 props 类型推断。
+* 最重要的是，**这些改进也使得纯 JavaScript 用户受益匪浅！** 如果你使用 VSCode 与超级棒的的 [Vetur](https://github.com/vuejs/vetur) 扩展，你将获得大大改进的自动完成建议，甚至在Vue组件中使用纯 JavaScript 时也能获得类型提示！ 这是因为[vue-language-server](https://www.npmjs.com/package/vue-language-server)是负责分析 Vue 组件的内部包，可以利用 TypeScript 编译器来提取有关你的代码的更多信息。 此外，任何支持语言服务器协议(Language Server Protocol)的编辑器都可以利用 [`vue-language-server`](https://github.com/vuejs/vetur/tree/master/server)来提供类似的功能。
 
 ![1-ftkupzygizn1es87jcbs8q](https://user-images.githubusercontent.com/12164075/31341266-932f5cc8-ad3b-11e7-8677-addf8d3ad5d4.gif)
 
@@ -18,11 +18,11 @@
 
 ## TypeScript用户可能需要的操作
 
-输入升级将在 Vue 2.5 中发布，目前计划在10月初发布。 我们正在发布一个小版本，因为 JavaScript 公共 API 没有任何突破性的变化，但是升级可能需要现有的 TypeScript + Vue 用户采取一些操作。 这就是为什么我们现在宣布改变，以便你有足够的时间来计划升级。
+类型升级将在 Vue 2.5 中发布，目前计划在10月初发布。 我们正在发布一个小版本，因为 JavaScript 公共 API 没有任何突破性的变化，但是升级可能需要现有的 TypeScript + Vue 用户采取一些操作。 这就是为什么我们现在宣布改变，以便你有足够的时间来计划升级。
 
-* 新的输入至少需要 TypeScript 2.4 版本，建议升级到最新版本的 TypeScript 以及 Vue 2.5。
-* 之前，我们已经推荐将 `tsconfig.json` 设为 `“allowSyntheticDefaultImports”: true` 从而在任何地方使用 ES 风格的导入(`import Vue from 'vue'`)。 新的输入将正式转换为ES风格的导入/导出语法，因此不再需要配置，并且用户在所有情况下都需要使用ES风格的导入。
-* 为了配合导出语法的改变，以下依赖于 Vue 核心输入的核心库 `vuex`, `vue-router`, `vuex-router-sync`, `vue-class-component` 将会收到新的主要版本，并且应与 Vue 核心 2.5 一起升级。
+* 新的类型(typing)至少需要 TypeScript 2.4 版本，建议升级到最新版本的 TypeScript 以及 Vue 2.5。
+* 之前，我们已经推荐将 `tsconfig.json` 设为 `“allowSyntheticDefaultImports”: true` 从而在任何地方使用 ES 风格的导入(`import Vue from 'vue'`)。 新的类型(typing)将正式转换为ES风格的导入/导出语法，因此不再需要配置，并且用户在所有情况下都需要使用ES风格的导入。
+* 为了配合导出语法的改变，以下依赖于 Vue 核心类型(typing)的核心库 `vuex`, `vue-router`, `vuex-router-sync`, `vue-class-component` 将会收到新的主要版本，并且应与 Vue 核心 2.5 一起升级。
 * 当执行自定义模块扩充时，用户应该使用 `interface VueConstructor` 而不是 `namespace Vue`。(example diff)
 * 如果使用 `ComponentOptions <Something>` 对组件选项进行注释，则此类型的 `computed`，`watch`，`render` 和生命周期钩子将需要手动类型注解。
 
