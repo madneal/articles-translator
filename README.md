@@ -33,6 +33,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 
 ## Articles need translation
 * [Do you grok grok?](https://github.com/neal1991/articles-translator/issues/7)
+* [Elasticsearch Performance Tuning Practice at eBay](https://github.com/neal1991/articles-translator/issues/8)
 
 # License
 
