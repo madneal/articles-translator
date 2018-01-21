@@ -5,15 +5,23 @@
 >译者：[neal1991](https://github.com/neal1991)
 >
 >welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
-
-
+>
 >LICENSE: [MIT](https://opensource.org/licenses/MIT)
-> ​grok (verb) 
+
+
+
+
+> grok (verb) 
+>
 > understand (something) intuitively or by empathy.
 
 One the most common tasks when parsing log data is to decompose raw lines of text into a set of structured fields which other tools can manipulate. If you’re using the Elastic Stack, you can leverage Elasticsearch’s aggregations and Kibana’s visualizations to answer both business and operational questions from the information extracted in the logs, like ip addresses, timestamps, and domain specific data.
 
+解析日志数据时最常见的任务是将原始文本行分解为其他工具可以操作的一组结构化字段。 如果你使用 Elastic Stack，则可以利用 Elasticsearch 的聚合和 Kibana 的可视化，从日志中提取的信息（如 IP 地址，时间戳和特定域的数据）解释业务和操作问题。
+
 For Logstash, this deconstruction job is carried by [logstash-filter-grok](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html), a filter plugin that helps you describe the structure of your log formats.
+
+对于 Logstash，这个解构工作由 [logstash-filter-grok](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html) 来承担，它是一个过滤器插件，可以帮助你描述日志格式的结构。
 
 There are [over 200 grok patterns available](https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns) which abstract concepts such as [IPv6 addresses](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L29) , [UNIX paths](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L38) and [names of months](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L52). 
 In order to match a line with the format:
