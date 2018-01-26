@@ -24,12 +24,18 @@ For Logstash, this deconstruction job is carried by [logstash-filter-grok](https
 对于 Logstash，这个解构工作由 [logstash-filter-grok](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html) 来承担，它是一个过滤器插件，可以帮助你描述日志格式的结构。
 
 There are [over 200 grok patterns available](https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns) which abstract concepts such as [IPv6 addresses](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L29) , [UNIX paths](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L38) and [names of months](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L52). 
+
+[这里有超过200个 grok 模式](https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns)对于一些概念进行概括，如[IPv6 地址](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns＃L29），[UNIX 路径](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns＃L38)和[月份名称](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L52)。
+
+为了以 grok 库匹配下列一行的格式，只需要将一些模式组合在一起：
 In order to match a line with the format:
 
 `2016-09-19T18:19:00 [8.8.8.8:prd] DEBUG this is an example log message`
 with the grok library, it’s only necessary to compose a handful of patterns to come up with:
 
 `%{TIMESTAMP_ISO8601:timestamp} \[%{IPV4:ip};%{WORD:environment}\] %{LOGLEVEL:log_level} %{GREEDYDATA:message}`
+
+这样就会生成结构化结果：
 Which will create the structure:
 
 ```{
@@ -55,25 +61,47 @@ Yes!
 
 Great! Are we done here? No! Because..
 
+很简单，是不是？
+
+是！
+
+很棒！就到这了么？不！因为...
+
 ## “I’m using grok and it’s super slow!!”
+## “我正在使用 grok 并且它非常慢”
 
 That is a very common remark! Performance is a topic that is often brought up from the community as, often enough, users or customers will create a grok expression that will greatly reduce the number of events per second being processed by the logstash pipeline.
 
 As mentioned before, grok patterns are regular expressions, and therefore this plugin’s performance is severely impacted by the behaviour of the regular expression engine. In the following chapters, we’ll provide some guidelines on do’s and don’ts when creating grok expressions to match your log lines.
 
+这是一个非常普遍的说法！性能是一个经常从社区引发的话题，用户或客户通常会创建一个 grok 表达式，这将极大地减少 logstash 管道每秒处理的事件数量。
+
+如前所述，grok 模式是正则表达式，因此这个插件的性能受到正则表达式引擎严重影响。 在接下来的章节中，我们将提供一些关于创建 grok 表达式来匹配日志行的操作指南。
+
 ## Measure, measure, measure
+## 测量，测量，测量
 
 In order to validate decisions and experiments during grok expression design, we need a way to quickly measure performance between two or more expressions. For this, I created a small jruby script that uses the logstash-filter-grok plugin directly, bypassing the logstash pipeline.
+为了在 grok 表达式设计过程中验证决策和实验，我们需要一种方法来快速测量两个或更多表达式之间的性能。 为此，我创建了一个小的 jruby 脚本，它直接使用logstash-filter-grok 插件，绕过 logstash 管道。
 
 You can fetch [this script here](https://gist.github.com/jsvd/a2613ea1ba00f02926a302781ca62f7b). We’ll be using it to collect performance numbers to validate (or destroy!) our assumptions.
 
+你可以从[这](https://gist.github.com/jsvd/a2613ea1ba00f02926a302781ca62f7b)获取脚本。我们将使用它来收集性能数据来验证（或者推翻！）我们的假设。
+
 ## Beware of the performance impact when grok fails to match
+## 留意 grok 匹配失败时的性能影响
 
 Although it is very important to know how fast your grok pattern matches a log entry, it is also essential to understand what happens when it doesn’t. Successful matches can perform very differently than unsuccessful ones.
 
+尽管知道 grok 模式与日志条目可以多快匹配非常重要，但是了解它在什么时候匹配失败也很重要。匹配成功和匹配失败的性能可能会差异很大。
+
 When grok fails to match an event, it will add a tag to the event. By default, this tag is [_grokparsefailure](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html#plugins-filters-grok-tag_on_failure).
 
+当 grok 无法匹配一个事件的时候，它将会为这个事件添加一个 tag。默认这个 tag 是 [_grokparsefailure](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html#plugins-filters-grok-tag_on_failure)。
+
 Logstash allows you then to route those events somewhere where they can be counted and reviewed. For example, you can write all the failed matches to a file:
+
+Logstash 允许你将这些事件路由到可以统计和检查的地方。 例如，你可以将所有失败的匹配写入文件：
 
 ```yaml
 input { # ... }
@@ -97,11 +125,20 @@ If you find that there are multiple pattern match failures, you can benchmark th
 
 We’ll now use a grok expression that is meant to parse apache log lines and study its behaviour. First, we start with an example log entry:
 
+如果发现有多个模式匹配失败，则可以对这些行进行基准测试，并找出它们对管道吞吐量的影响。
+
+现在我们将使用 grok 表达式来解析 apache 日志行并研究其行为。 首先，我们从一个示例日志条目开始：
+
 `220.181.108.96 - - [13/Jun/2015:21:14:28 +0000] "GET /blog/geekery/xvfb-firefox.html HTTP/1.1" 200 10975 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"`
+
 And use the following grok pattern to match it:
+使用以下 grok 模式来匹配它：
 
 `%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "%{WORD:verb} %{DATA:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response:int} (?:-|%{NUMBER:bytes:int}) %{QS:referrer} %{QS:agent}`
+
 Now, we’ll compare the matching speed of a successful match against three other log entries which don’t conform to the format, either at the start, the middle, or at the end of the line:
+
+现在，我们将比较成功匹配的匹配速度和不符合格式的其他三个日志条目，无论是在开始，中间还是在行尾：
 
 ```
 beginning mismatch - doesn't start with an IPORHOST
