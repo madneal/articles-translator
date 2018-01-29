@@ -156,50 +156,79 @@ end mismatch - the last element isn't a quoted string, but a number
 ```
 
 These log lines were benchmarked using the script described at the start, and the result is presented below:
+这些日志行在文章开头提到的脚本进行基准测试，结果如下：
 
 [![jndER.md.png](https://s1.ax1x.com/2017/12/21/jndER.md.png)](https://imgchr.com/i/jndER)
 
 matching events per second
+每秒匹配的日志数
 
 We can see that, for this grok expression, depending on the location of the mismatch, the time spent checking that a line doesn’t match can be up to 6 times slower than a regular (successful) match. This helps explain user reports on grok maximizing CPU usage when lines don’t match, like https://github.com/logstash-plugins/logstash-filter-grok/issues/37.
+我们可以看到，对于这个 grok 表达式，取决于不匹配的位置，检查一行不匹配的时间可能比常规（成功）匹配慢6倍。 这有助于解释在行数不匹配时 grok 最大化 CPU 使用率的用户报告，如https://github.com/logstash-plugins/logstash-filter-grok/issues/37。
 
 What can we do about it?
+对此我们可以做什么呢？
 
 ## Fail Faster, Set Anchors
+## 设置锚可以加速失败匹配
 
 So now that we understand that match failures are dangerous to your pipeline’s performance, we need to fix them. In regular expression design, the best thing you can do to aid the regex engine is to reduce the amount of guessing it needs to do. This is why greedy patterns are generally avoided, but we’ll come back to that in a bit, as there’s a much simpler change that alters how your patterns are matched.
 
+既然现在我们知道匹配失败对你的管道性能是很危险的，我们需要修复它们。 在正则表达式设计中，你可以做的最好的事情来帮助正则表达式引擎是减少它需要做的猜测工作。 这就是为什么通常会避免贪婪模式的原因，但是我们稍微回顾一下，因为有一个更简单的变化来改变模式的匹配。
+
 Let’s come back to our lovely apache log line…
+让我们回到我们可爱的 apache 日志行...
 
 `220.181.108.96 - - [13/Jun/2015:21:14:28 +0000] "GET /blog/geekery/xvfb-firefox.html HTTP/1.1" 200 10975 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)"`
+
 …which is parsed by the grok pattern below:
+它由以下的 grok 模式来进行解析：
 
 `%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "%{WORD:verb} %{DATA:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response:int} (?:-|%{NUMBER:bytes:int}) %{QS:referrer} %{QS:agent}`
+
 There’s a performance problem hiding in plain sight which exists due the natural expectations from the user of the grok plugin: the assumption that the grok expression we wrote will only match our log line from start to finish. In reality, what grok is being told is to “find this sequence of elements within a line of text”.
+由于grok插件的用户的自然期望，隐藏在表面上的性能问题显而易见：假设我们编写的 grok 表达式仅从开始到结束与我们的日志行匹配。 实际上，grok 被告知的是“在一行文本中找到这个元素序列”。
 
 Wait, what? That’s right, “within a line of text”. This means that a line such as…
+等一下，什么？就是它了，“在一行文本中”。这意味着比如一行数据...
 
 `OMG OMG OMG EXTRA INFORMATION 220.181.108.96 - - [13/Jun/2015:21:14:28 +0000] "GET /blog/geekery/xvfb-firefox.html HTTP/1.1" 200 10975 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)" OH LOOK EVEN MORE STUFF`
+
 …will still match the grok pattern! The good news is that the fix is simple, we just need to add a couple of Anchors!
+将会依然匹配 grol 模式！好消息是修复很简单，我们只需要添加一些锚！
 
 Anchors allow you to pin the regular expression to a certain position of the string. By adding the start and end of line anchors (^ and $) to our grok expression, we make sure that we’ll only match those patterns against the whole string from start to finish, and nothing else.
 
+锚允许你将正则表达式固定到字符串的某个位置。 通过在我们的 grok 表达式中添加行锚点（^和$）的开始和结束，我们确保我们只会匹配整个字符串从开始到结束，而不包含其他的。
+
 This is very important in the case of failure to match. If the anchors aren’t in place and the regex engine can’t match a line, it will start trying to find the pattern within substrings of the initial string, hence the performance degradation we saw above.
+
+这在匹配失败的情况下非常重要。 如果锚点不在位，并且正则表达式引擎不能匹配一行日志，它将开始尝试在初始字符串的子字符串中查找该模式，因此我们在上面看到了性能下降。
 
 So, to see the performance impact, we benchmarked the previous expression against a new one, now with [anchors](https://ruby-doc.org/core-1.9.3/Regexp.html#class-Regexp-label-Anchors):
 
+因此，为了看到性能影响，我们产生一个新的使用[锚](https://ruby-doc.org/core-1.9.3/Regexp.html#class-Regexp-label-Anchors)的表达式与之前的表达式进行对比：
+
 `^%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "%{WORD:verb} %{DATA:request} HTTP/%{NUMBER:httpversion}" %{NUMBER:response:int} (?:-|%{NUMBER:bytes:int}) %{QS:referrer} %{QS:agent}$`
+
 Here are the results:
+下面是结果：
 
 [![jncKe.md.png](https://s1.ax1x.com/2017/12/21/jncKe.md.png)](https://imgchr.com/i/jncKe)
 
 It’s a pretty dramatic change in behavior for the non matching scenarios! Not only we removed huge performance drops in the middle and end scenarios, but also made the initial match failure detection around 10 times faster. Sweet.
+对于不匹配的场景，这是一个相当显著的变化！ 不仅我们在中端和末端场景中消除了巨大的性能下降，而且使初始匹配失败检测速度提高了 10 倍左右。 赞。
 
 ## Beware of matching the same thing twice
+## 留意两次匹配相同的行
 
 You might be tempted to say: “well, all my lines are correctly formatted so we don’t have failed matched”, but this might not be the case.
 
 Over time, we’ve seen a very common pattern of grok usage, especially when lines from multiple applications come through a single gateway like syslog which adds a common header to all messages. Let’s take an example: imagine that we have three applications which log using a “common_header: payload” format:
+
+你可能会说：“好吧，我的所有行都格式正确，所以我们没有匹配失败”，但情况可能并非如此。
+
+随着时间的推移，我们已经看到了 grok 用法的一个非常常见的模式，尤其是当来自多个应用程序的日志行通过单个网关（如 syslog）向所有消息添加公共头时。 举一个例子：假设我们有三个使用“common_header：payload”格式的应用程序：
 
 ```
 Application 1: '8.8.8.8 process-name[666]: a b 1 2 a lot of text at the end'
@@ -210,6 +239,8 @@ Application 3: '8.8.8.8 process-name[421]: a completely different format | 1111'
 ```
 
 A common grok setup for this would be to match the three formats in one grok:
+
+一个常见的 grok 设置就是在一个 grok 中匹配三种格式：
 
 ```
 grok {
@@ -226,6 +257,12 @@ Now notice that even if your applications log correctly, grok will still sequent
 This means that it’s still important to ensure we skip to the right one as fast as possible, since you’ll always have one failed match for Application 2 and two failed matches for Application 3.
 
 The first tactic we often see is to tier the grok matching: first match the header, overwrite the message field, then match only the bodies:
+
+现在请注意，即使你的应用程序正确日志记录，grok 仍然会依次尝试将传入日志行与三个表达式进行匹配，从而在第一次匹配时中断。
+
+这意味着确保我们尽可能快地跳到正确的位置仍然很重要，因为应用程序2总是有一个失败的匹配，应用程序3有两个失败的匹配。
+
+我们经常看到的第一个策略是对Grok匹配进行分层：首先匹配 header，覆盖 message 字段，然后仅匹配 bodies：
 
 ```
 filter {
