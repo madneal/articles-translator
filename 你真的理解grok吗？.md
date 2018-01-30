@@ -73,7 +73,8 @@ Logstash 允许你将这些事件路由到可以统计和检查的地方。 例�
 input { # ... }
 filter {
   grok {
-  match => { "message" => "%{TIMESTAMP_ISO8601:timestamp} [%{IPV4:ip};%{WORD:environment}] %        {LOGLEVEL:log_level} %{GREEDYDATA:message}" }
+  match => { 
+  "message" => "%{TIMESTAMP_ISO8601:timestamp} [%{IPV4:ip};%{WORD:environment}] %{LOGLEVEL:log_level} %{GREEDYDATA:message}" }
   }
 }
 output {
