@@ -17,7 +17,7 @@
 
 对于 Logstash，这个解构工作由 [logstash-filter-grok](https://www.elastic.co/guide/en/logstash/current/plugins-filters-grok.html) 来承担，它是一个过滤器插件，可以帮助你描述日志格式的结构。
 
-[这里有超过200个 grok 模式](https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns)对于一些概念进行概括，如[IPv6 地址](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L29)，[UNIX 路径](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L38)和[月份名称](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L52。
+[这里有超过200个 grok 模式](https://github.com/logstash-plugins/logstash-patterns-core/tree/master/patterns)对于一些概念进行概括，如[IPv6 地址](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L29)，[UNIX 路径](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L38)和[月份名称](https://github.com/logstash-plugins/logstash-patterns-core/blob/v4.0.2/patterns/grok-patterns#L52)。
 
 为了以 grok 库匹配下列一行的格式，只需要将一些模式组合在一起：
 
