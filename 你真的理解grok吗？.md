@@ -195,7 +195,7 @@ Wait, what? That’s right, “within a line of text”. This means that a line 
 `OMG OMG OMG EXTRA INFORMATION 220.181.108.96 - - [13/Jun/2015:21:14:28 +0000] "GET /blog/geekery/xvfb-firefox.html HTTP/1.1" 200 10975 "-" "Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)" OH LOOK EVEN MORE STUFF`
 
 …will still match the grok pattern! The good news is that the fix is simple, we just need to add a couple of Anchors!
-将会依然匹配 grol 模式！好消息是修复很简单，我们只需要添加一些锚！
+将会依然匹配 grok 模式！好消息是修复很简单，我们只需要添加一些锚！
 
 Anchors allow you to pin the regular expression to a certain position of the string. By adding the start and end of line anchors (^ and $) to our grok expression, we make sure that we’ll only match those patterns against the whole string from start to finish, and nothing else.
 
@@ -281,20 +281,32 @@ filter {
 ```
 
 This alone provides an interesting performance boost, matching lines 2.5x faster than the initial approach. But what if we add our fellow anchors?
+仅仅这一个就是一个有趣的性能提升，匹配行比初始方法快了2.5倍。 但是如果我们添加我们的同伴锚呢？
 
 [![jnTxS.md.png](https://s1.ax1x.com/2017/12/21/jnTxS.md.png)](https://imgchr.com/i/jnTxS)
 
 Interesting! Adding anchors makes both architectures perform equally well! In fact, because of the greatly increased failed match performance, our initial single grok design performs slightly better since there is one less match being executed.
+有意思！添加锚点使得两个架构的性能同样出色！ 事实上，由于失败的匹配性能大大提高，我们最初的单杆设计稍微好一点，因为有一个比较少的匹配正在执行。
+
 
 ## Ok, so how can I know things aren’t going well?
+## 好的，那么我们如何知道事情进行得如何？
 
 We’ve already come to the conclusion that monitoring the existence of “_grokparsefaiure” events is essential, but there is more that you can do:
 
+我们已经得出结论，监控“_grokparsefaiure”事件的存在是必不可少的，但是你可以做更多的事情：
+
 Since version 3.2.0 of the grok plugin, there’s a couple of settings that help you understand when an event is taking a long time to match (or fail to). Using [timeout_millis and tag_on_timeout](https://www.elastic.co/guide/en/logstash/5.0/plugins-filters-grok.html#plugins-filters-grok-timeout_millis) it’s possible to set an upper bound time limit to the execution of the grok match. If this limit is reached, the match is interrupted and the event is tagged by default with _groktimeout.
+
+自从版本 3.2.0 grok 插件，已经有很多设置可以帮助你什么时候事件需要花费长时间来匹配（或者失败匹配）。使用[timeout millis 以及 timeout 标签](https://www.elastic.co/guide/en/logstash/5.0/plugins-filters-grok.html#plugins-filters-grok-timeout_millis)能够对于 grok 匹配的时间设置一个上限。如果达到了限制时间，这次匹配就会被中断并且被打上 `_groktimeout` 标签。
 
 Using the same conditional strategy we presented before, you can redirect those events to a file or a different index in elasticsearch for later analysis.
 
 Another really cool thing that we will be introducing in Logstash 5.0 in the context of metrics is the ability to extract data on the pipeline performance and, most importantly, per plugin statistics. While logstash is running, you can query its API endpoint and see how much cumulative time logstash is spending on a plugin:
+
+使用我们之前介绍的相同的条件策略，你·可以将这些事件重定向到 elasticsearch 中的文件或不同的索引，以供日后分析。
+
+另一个非常酷的事情，我们将在 Logstash 5.0 中引入度量的上下文是能够提取管道性能的数据，最重要的是，每个插件的统计数据。 在 logstash 运行时，你可以查询其 AP I端点，并查看 logstash 在一个插件上花费的累积时间：
 
 ```
 $ curl localhost:9600/_node/stats/pipeline?pretty | jq ".pipeline.plugins.filters"
@@ -326,8 +338,13 @@ $ curl localhost:9600/_node/stats/pipeline?pretty | jq ".pipeline.plugins.filter
 
 With this information, you can see if grok’s “duration_in_millis” is growing rapidly or not and if the number of failures is increasing, which could serve as a warning flag that some pattern is not well designed or consuming more time than expected.
 
+有了这些信息，你可以看到grok的“duration_in_millis”是否快速增长，如果失败的数量在增加，可以作为警告标志，表明某些模式设计不好，或者消耗的时间比预期的多。
+
 ## Conclusion
+## 总结
+
 Hopefully this blog post will help you understand how grok is behaving and how to improve its throughput. To sum up our conclusions:
+希望这篇博文能够帮助你理解 grok 的行为，以及如何提高吞吐量。 总结我们的结论：
 
 Grok may not perform well when a match fails;
 Monitor the occurrence of _grokparsefailures and then benchmark 
@@ -339,3 +356,9 @@ otherwise don’t bother. When in doubt, measure!
 Using either timeout settings or the upcoming Metrics API allows you 
 to get a better look into how grok is behaving, and serve a starting 
 point for performance analysis.
+
+1. grok 匹配失败的时候性能可能表现不好。
+2. 监测发生 `_grokfailures`的情况并且对于他们的消耗进行基准测试。
+3. 使用锚比如 `^` 以及`$` 避免歧义并且帮助正则引擎。
+4. 如果你不使用锚的话使用分层匹配会提高性能。如果怀疑的话，直接测量。
+5. 使用超时设置或者即将推出的 Metrics API 能够让你更好地了解 grok 是如何工作的，并且是性能分析的第一点。
