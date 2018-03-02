@@ -1,3 +1,12 @@
+> 原文：[7 Hacks for ES6 Developers](https://medium.com/dailyjs/7-hacks-for-es6-developers-4e24ff425d0b)
+>
+> 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
+
+
 ![](https://cdn-images-1.medium.com/max/9900/1*xmqGcZXL4t7mJoG1SBvErA.jpeg)
 
 ## 7 Hacks for ES6 Developers
