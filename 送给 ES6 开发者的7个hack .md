@@ -9,7 +9,6 @@
 
 ![](https://cdn-images-1.medium.com/max/9900/1*xmqGcZXL4t7mJoG1SBvErA.jpeg)
 
-## 7 Hacks for ES6 Developers
 
 关注原来的 [JavaScript hacks](https://hackernoon.com/javascript-hacks-for-hipsters-624d50c76e8e)，上面有一些新的好东西。*2018 使用 JavaScript 写代码真的又变得有意思了！*
 
