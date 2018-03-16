@@ -32,6 +32,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [🚀 宣布 Parcel：一个快速，零配置的 Web 应用打包工具 📦](https://github.com/neal1991/articles-translator/blob/master/%F0%9F%9A%80%20%E5%AE%A3%E5%B8%83%20Parcel%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%BF%AB%E9%80%9F%EF%BC%8C%E9%9B%B6%E9%85%8D%E7%BD%AE%E7%9A%84%20Web%20%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E5%B7%A5%E5%85%B7%20%F0%9F%93%A6.md)
 * [你真的理解 grok 吗](https://github.com/neal1991/articles-translator/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3grok%E5%90%97%EF%BC%9F.md?)
 * [送给 ES6 开发者的7个hack](https://github.com/neal1991/articles-translator/blob/master/%E9%80%81%E7%BB%99%20ES6%20%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%847%E4%B8%AAhack%20.md)
+* [从仓库中移除敏感信息](https://github.com/neal1991/articles-translator/blob/master/%E4%BB%8E%E4%BB%93%E5%BA%93%E4%B8%AD%E7%A7%BB%E9%99%A4%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF.md)
 
 ## Articles need translation
 
