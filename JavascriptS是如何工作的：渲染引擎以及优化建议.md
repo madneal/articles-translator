@@ -56,25 +56,33 @@ So, let’s see what the browser main components are:
 
 * **渲染引擎**: it’s responsible for displaying the web page. The rendering engine parses the HTML and the CSS and displays the parsed content on the screen.它负责展示网页。 渲染引擎解析HTML和CSS，并在屏幕上展示解析的内容。
 
-* **网络**: these are network calls such as XHR requests, made by using different implementations for the different platforms, which are behind a platform-independent interface. We talked about the networking layer in more detail in a [previous post](https://blog.sessionstack.com/how-modern-web-browsers-accelerate-performance-the-networking-layer-f6efaf7bfcf4) of this series.
+* **网络**: these are network calls such as XHR requests, made by using different implementations for the different platforms, which are behind a platform-independent interface. We talked about the networking layer in more detail in a [previous post](https://blog.sessionstack.com/how-modern-web-browsers-accelerate-performance-the-networking-layer-f6efaf7bfcf4) of this series.这些是诸如 XHR 请求之类的网络调用，通过对不同的平台使用不同的实现来实现，这些实现在平台无关的接口后面。 在本系列的[前一篇文章](https://blog.sessionstack.com/how-modern-web-browsers-accelerate-performance-the-networking-layer-f6efaf7bfcf4)中，我们更详细地讨论了网络层。
 
-* **UI backend**: it’s used for drawing the core widgets such as checkboxes and windows. This backend exposes a generic interface that is not platform-specific. It uses operating system UI methods underneath.
+* **UI 后端**: it’s used for drawing the core widgets such as checkboxes and windows. This backend exposes a generic interface that is not platform-specific. It uses operating system UI methods underneath.它用于绘制核心小部件，如复选框和窗口。 这个后端公开了一个不是平台特定的通用接口。 它使用底层的操作系统 UI 方法。
 
-* **JavaScript engine**: We’ve covered this in great detail in a [previous post](https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e) from the series. Basically, this is where the JavaScript gets executed.
+* **JavaScript 引擎**: We’ve covered this in great detail in a [previous post](https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e) from the series. Basically, this is where the JavaScript gets executed.我们在该系列的[前一篇文章]((https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e)中详细介绍了这一点。 基本上，这是 JavaScript 执行的地方。
 
-* **Data persistence**: your app might need to store all data locally. The supported types of storage mechanisms include [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), [indexDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API), [WebSQL](https://en.wikipedia.org/wiki/Web_SQL_Database) and [FileSystem](https://developer.mozilla.org/en-US/docs/Web/API/FileSystem).
+* **数据持久化**: your app might need to store all data locally. The supported types of storage mechanisms include [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage), [indexDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API), [WebSQL](https://en.wikipedia.org/wiki/Web_SQL_Database) and [FileSystem](https://developer.mozilla.org/en-US/docs/Web/API/FileSystem).你的应用可能需要在本地存储所有数据。 支持的存储机制类型包括[localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)，[indexDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_AP)，[WebSQL](https://en.wikipedia.org/wiki/Web_SQL_Database)和 [FileSystem](https://developer.mozilla.org/en-US/docs/Web/API/FileSystem)。
 
 In this post, we’re going to focus on the rendering engine, since it’s handling the parsing and the visualization of the HTML and the CSS, which is something that most JavaScript apps are constantly interacting with.
 
-### Overview of the rendering engine
+在这篇文章中，我们将关注渲染引擎，因为它处理 HTML 和 CSS 的解析和可视化，这是大多数 JavaScript 应用程序不断与之交互的东西。
+
+### 渲染引擎的概述
 
 The main responsibility of the rendering engine is to display the requested page on the browser screen.
 
 Rendering engines can display HTML and XML documents and images. If you’re using additional plugins, the engines can also display different types of documents such as PDF.
 
-### Rendering engines
+渲染引擎的主要职责是在浏览器屏幕上显示请求的页面。
+
+渲染引擎可以显示 HTML 和 XML 文档和图像。 如果你使用额外的插件，引擎还可以显示不同类型的文档，如PDF。
+
+### 渲染引擎
 
 Similar to the JavaScript engines, different browsers use different rendering engines as well. These are some of the popular ones:
+
+与 JavaScript 引擎类似，不同的浏览器也使用不同的渲染引擎。 这些是一些流行的：
 
 * **Gecko** — Firefox
 
@@ -82,13 +90,17 @@ Similar to the JavaScript engines, different browsers use different rendering en
 
 * **Blink** — Chrome, Opera (from version 15 onwards)
 
-### The process of rendering
+### 渲染的过程
 
 The rendering engine receives the contents of the requested document from the networking layer.
 
+渲染引擎从网络层接收所请求文档的内容。
+
+![下载.png](http://ozfo4jjxb.bkt.clouddn.com/下载.png)
+
 ![](https://cdn-images-1.medium.com/max/2002/1*9b1uEMcZLWuGPuYcIn7ZXQ.png)
 
-### Constructing the DOM tree
+### 构建 DOM 树
 
 The first step of the rendering engine is parsing the HTML document and converting the parsed elements to actual [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) nodes in a **DOM tree**.
 
