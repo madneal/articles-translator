@@ -40,17 +40,23 @@ So far, in our previous blog posts of the “How JavaScript works” series we�
 
 When you’re building web apps, however, you don’t just write isolated JavaScript code that runs on its own. The JavaScript you write is interacting with the environment. Understanding this environment, how it works and what it is composed of will allow you to build better apps and be well-prepared for potential issues that might arise once your apps are released into the wild.
 
+到目前为止，在我们以前的“JavaScript 如何工作”系列博客文章中，我们一直关注 JavaScript 作为一种语言，它的特性，它在浏览器中的执行方式，如何优化它等。
+
+但是，当你构建 Web 应用程序时，你不只是编写独立运行的独立 JavaScript 代码。 你编写的 JavaScript 与环境进行交互。 理解这种环境，它是如何工作的以及它的组成是什么，将使你能够构建更好的应用程序，并对应用程序发布后可能出现的潜在问题做好充分准备。
+
 ![](https://cdn-images-1.medium.com/max/2000/1*lMBu87MtEsVFqqbfMum-kA.png)
 
 So, let’s see what the browser main components are:
 
-* **User interface**: this includes the address bar, the back and forward buttons, bookmarking menu, etc. In essence, this is every part of the browser display except for the window where you see the web page itself.
+那么，让我们看看浏览器的主要组件是什么：
 
-* **Browser engine**: ****it ****handles the interactions between the user interface and the rendering engine
+* **用户界面**: this includes the address bar, the back and forward buttons, bookmarking menu, etc. In essence, this is every part of the browser display except for the window where you see the web page itself.这包括地址栏，后退和前进按钮，书签菜单等。实质上，这是浏览器显示的每个部分，除了你看到网页本身的窗口。
 
-* **Rendering engine**: it’s responsible for displaying the web page. The rendering engine parses the HTML and the CSS and displays the parsed content on the screen.
+* **浏览器引擎**: it handles the interactions between the user interface and the rendering engine它处理用户界面和渲染引擎之间的交互
 
-* **Networking**: these are network calls such as XHR requests, made by using different implementations for the different platforms, which are behind a platform-independent interface. We talked about the networking layer in more detail in a [previous post](https://blog.sessionstack.com/how-modern-web-browsers-accelerate-performance-the-networking-layer-f6efaf7bfcf4) of this series.
+* **渲染引擎**: it’s responsible for displaying the web page. The rendering engine parses the HTML and the CSS and displays the parsed content on the screen.它负责展示网页。 渲染引擎解析HTML和CSS，并在屏幕上展示解析的内容。
+
+* **网络**: these are network calls such as XHR requests, made by using different implementations for the different platforms, which are behind a platform-independent interface. We talked about the networking layer in more detail in a [previous post](https://blog.sessionstack.com/how-modern-web-browsers-accelerate-performance-the-networking-layer-f6efaf7bfcf4) of this series.
 
 * **UI backend**: it’s used for drawing the core widgets such as checkboxes and windows. This backend exposes a generic interface that is not platform-specific. It uses operating system UI methods underneath.
 
