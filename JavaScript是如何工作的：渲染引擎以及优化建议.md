@@ -170,17 +170,23 @@ The position of the root renderer is 0,0 and its dimensions have the size of the
 
 Starting the layout process means giving each node the exact coordinates where it should appear on the screen.
 
-### Painting the render tree
+### 绘制渲染树
 
 In this stage, the renderer tree is traversed and the renderer’s paint() method is called to display the content on the screen.
 
 Painting can be global or incremental (similar to layout):
 
-* **Global** — the entire tree gets repainted.
+在此阶段中，遍历渲染器树并调用渲染器的 paint() 方法以在屏幕上显示内容。
 
-* **Incremental** — only some of the renderers change in a way that does not affect the entire tree. The renderer invalidates its rectangle on the screen. This causes the OS to see it as a region that needs repainting and to generate a paint event. The OS does it in a smart way by merging several regions into one.
+绘画可以是全局或增量式（与布局类似）：
+
+* **全局的** — the entire tree gets repainted.整个树会被重新绘制。
+
+* **增量的** — only some of the renderers change in a way that does not affect the entire tree. The renderer invalidates its rectangle on the screen. This causes the OS to see it as a region that needs repainting and to generate a paint event. The OS does it in a smart way by merging several regions into one.只有一些渲染器以不影响整个树的方式进行更改。 渲染器使其矩形在屏幕上无效。 这会导致操作系统将其视为需要重绘和生成绘画事件的区域。 操作系统通过将多个区域合并为一个智能方式来实现。
 
 In general, it’s important to understand that painting is a gradual process. For better UX, the rendering engine will try to display the contents on the screen as soon as possible. It will not wait until all the HTML is parsed to start building and laying out the render tree. Parts of the content will be parsed and displayed, while the process continues with the rest of the content items that keep coming from the network.
+
+一般来说，了解绘制是一个渐进的过程是很重要的。 为了更好的用户体验，渲染引擎会尝试尽快在屏幕上显示内容。 它不会等到所有的 HTML 被解析，才开始构建和布置渲染树。 内容的部分内容将被解析并显示，而该过程继续保持来自网络的其余内容项目。
 
 ### 处理脚本和样式表的顺序
 
