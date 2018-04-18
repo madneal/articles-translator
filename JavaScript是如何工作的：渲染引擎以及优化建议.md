@@ -182,13 +182,19 @@ Painting can be global or incremental (similar to layout):
 
 In general, it’s important to understand that painting is a gradual process. For better UX, the rendering engine will try to display the contents on the screen as soon as possible. It will not wait until all the HTML is parsed to start building and laying out the render tree. Parts of the content will be parsed and displayed, while the process continues with the rest of the content items that keep coming from the network.
 
-### Order of processing scripts and style sheets
+### 处理脚本和样式表的顺序
 
 Scripts are parsed and executed immediately when the parser reaches a <script> tag. The parsing of the document halts until the script has been executed. This means that the process is **synchronous**.
 
 If the script is external then it first has to be fetched from the network (also synchronously). All the parsing stops until the fetch completes.
 
 HTML5 adds an option to mark the script as asynchronous so that it gets parsed and executed by a different thread.
+
+当解析器遇到 <script> 标签时，脚本将被立即解析并执行。 文档解析暂停，直到脚本执行完毕。 这意味着该进程是**同步**。
+
+如果脚本是外部的，那么它首先必须从网络获取（也是同步的）。 所有解析都会停止，直到抓取完成。
+
+HTML5 添加了一个选项，将脚本标记为异步，以便它可以被其他线程解析和执行。
 
 ### 优化渲染性能
 
