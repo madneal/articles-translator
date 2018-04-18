@@ -190,25 +190,30 @@ If the script is external then it first has to be fetched from the network (also
 
 HTML5 adds an option to mark the script as asynchronous so that it gets parsed and executed by a different thread.
 
-### Optimizing the rendering performance
+### 优化渲染性能
 
 If you’d like to optimize your app, there are five major areas that you need to focus on. These are the areas over which you have control:
+如果你想优化你的应用，那么你需要关注五个主要方面。 这些是你可以控制的区域：
 
- 1. **JavaScript** — in previous posts we covered the topic of writing optimized code that doesn’t block the UI, is memory efficient, etc. When it comes to rendering, we need to think about the way your JavaScript code will interact with the DOM elements on the page. JavaScript can create lots of changes in the UI, especially in SPAs.
+ 1. **JavaScript** — in previous posts we covered the topic of writing optimized code that doesn’t block the UI, is memory efficient, etc. When it comes to rendering, we need to think about the way your JavaScript code will interact with the DOM elements on the page. JavaScript can create lots of changes in the UI, especially in SPAs.在之前的文章中，我们介绍了优化代码的主题，这些代码不会阻止 UI 渲染，提高内存效率等等。当涉及渲染时，我们需要考虑 JavaScript 代码与页面上 DOM 元素交互的方式。 JavaScript 可以在 UI 中创建大量更改，尤其是在 SPA 中。
 
- 2. **Style calculations **— this is the process of determining which CSS rule applies to which element based on matching selectors. Once the rules are defined, they are applied and the final styles for each element are calculated.
+ 2. **样式计算**— this is the process of determining which CSS rule applies to which element based on matching selectors. Once the rules are defined, they are applied and the final styles for each element are calculated.这是确定哪个 CSS 规则适用于基于匹配选择器的元素的过程。 一旦定义了规则，就会应用这些规则，并计算每个元素的最终样式。
 
- 3. **Layout** — once the browser knows which rules apply to an element, it can begin to calculate how much space the latter takes up and where it is located on the browser screen. The web’s layout model defines that one element can affect others. For example, the width of the <body> can affect the width of its children and so on. This all means that the layout process is computationally intensive. The drawing is done in multiple layers.
+ 3. **布局** — once the browser knows which rules apply to an element, it can begin to calculate how much space the latter takes up and where it is located on the browser screen. The web’s layout model defines that one element can affect others. For example, the width of the <body> can affect the width of its children and so on. This all means that the layout process is computationally intensive. The drawing is done in multiple layers.一旦浏览器知道哪些规则适用于元素，就可以开始计算后者占用的空间以及它在浏览器屏幕上的位置。 Web 的布局模型定义了一个元素可以影响其他元素。 例如，<body> 的宽度会影响其子元素的宽度等等。 这一切都意味着布局过程是计算密集型的。 该绘图是在多个层次完成的。
 
- 4. **Paint** — this is where the actual pixels are being filled. The process includes drawing out text, colors, images, borders, shadows, etc. — every visual part of each element.
+ 4. **绘制** — this is where the actual pixels are being filled. The process includes drawing out text, colors, images, borders, shadows, etc. — every visual part of each element.这是实际像素被填充的位置。 该过程包括绘制文本，颜色，图像，边框，阴影等 - 每个元素的每个视觉部分。
 
- 5. **Compositing** — since the page parts were drawn into potentially multiple layers they need to be drawn onto the screen in the correct order so that the page renders properly. This is very important, especially for overlapping elements.
+ 5. **组装** — since the page parts were drawn into potentially multiple layers they need to be drawn onto the screen in the correct order so that the page renders properly. This is very important, especially for overlapping elements.由于页面部件被划分为多层，因此需要按照正确的顺序将其绘制到屏幕上，以便页面正确渲染。 这非常重要，特别是对于重叠元素。
 
-### Optimizing your JavaScript
+### 优化你的 JavaScript
 
 JavaScript often triggers visual changes in the browser. All the more so when building an SPA.
 
 Here are a few tips on which parts of your JavaScript you can optimize to improve rendering:
+
+JavaScript 经常触发浏览器中的视觉变化。 当建立一个 SPA 时更是如此。
+
+以下是关于 JavaScript 可以优化哪些部分以改善渲染的一些提示：
 
 * Avoid setTimeout or setInterval for visual updates. These will invoke the callback at some point in the frame, possible right at the end. What we want to do is trigger the visual change right at the start of the frame not to miss it.
 
