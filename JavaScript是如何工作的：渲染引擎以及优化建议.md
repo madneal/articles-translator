@@ -224,11 +224,29 @@ You can take a look at the RenderObject’s source code (in WebKit) here:
 
 Let’s just look at some of the core things for this class:
 
- <iframe src="https://medium.com/media/2b55c74b1624ef2333014926f78c88dd" frameborder=0></iframe>
+让我们看一下这个类的核心代码：
+
+```javascript
+class RenderObject : public CachedImageClient {
+  // Repaint the entire object.  Called when, e.g., the color of a border changes, or when a border
+  // style changes.
+  
+  Node* node() const { ... }
+  
+  RenderStyle* style;  // the computed style
+  const RenderStyle& style() const;
+  
+  ...
+}
+```
+
+
 
 Each renderer represents a rectangular area usually corresponding to a node’s CSS box. It includes geometric info such as width, height, and position.
 
-### Layout of the render tree
+每个渲染器代表一个矩形区域，通常对应于一个节点的 CSS 盒子。 它包括几何信息，例如宽度，高度和位置。
+
+### 渲染树的布局
 
 When the renderer is created and added to the tree, it does not have a position and size. Calculating these values is called layout.
 
@@ -239,6 +257,16 @@ Layout is a recursive process — it begins at the root renderer, which correspo
 The position of the root renderer is 0,0 and its dimensions have the size of the visible part of the browser window (a.k.a. the viewport).
 
 Starting the layout process means giving each node the exact coordinates where it should appear on the screen.
+
+当渲染器被创建并添加到树中时，它没有位置和大小。 计算这些值称为布局。
+
+HTML 使用基于 flow 的布局模型，这意味着大部分时间内它可以一次性计算几何。 坐标系相对于根渲染器。 使用顶部和左侧坐标。
+
+布局是一个递归过程 - 它从根渲染器开始，它对应于HTML文档的 <html> 元素。 布局通过部分或整个渲染器层次结构递归地继续递归，为需要它的每个渲染器计算几何信息。
+
+根渲染器的位置是0,0，并且其尺寸具有浏览器窗口（也称为视口）的可见部分的尺寸。
+
+开始布局过程意味着给每个节点确切的坐标，它应该出现在屏幕上。
 
 ### 绘制渲染树
 
