@@ -215,33 +215,38 @@ JavaScript 经常触发浏览器中的视觉变化。 当建立一个 SPA 时更
 
 以下是关于 JavaScript 可以优化哪些部分以改善渲染的一些提示：
 
-* Avoid setTimeout or setInterval for visual updates. These will invoke the callback at some point in the frame, possible right at the end. What we want to do is trigger the visual change right at the start of the frame not to miss it.
+* Avoid setTimeout or setInterval for visual updates. These will invoke the callback at some point in the frame, possible right at the end. What we want to do is trigger the visual change right at the start of the frame not to miss it.避免使用 setTimeout 或 setInterval 来进行视觉更新。 这些将在时间轴中的某个点调用回调，可能在最后阶段执行。 我们想要做的就是在画面开始时触发视觉变化，不要错过它。
 
-* Move long-running JavaScript computations to Web Workers as we have [previously discussed](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a?source=---------3----------------).
+* Move long-running JavaScript computations to Web Workers as we have [previously discussed](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a?source=---------3----------------).正如我们[之前所讨论的](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a?source=---------3----------------)，将长时间运行的 JavacScript 计算移动到 Web Workers。
+* Use micro-tasks to introduce DOM changes over several frames. This is in case the tasks need access to the DOM, which is not accessible by Web Workers. This basically means that you’d break up a big task into smaller ones and run them inside requestAnimationFrame , setTimeout, setInterval depending on the nature of the task.使用微任务在多个 frame 中引入 DOM 更改。 这是为了防止任务需要访问 DOM，Web Worker 无法访问该 DOM。 这基本上意味着你将一个大任务分解成更小的任务，并根据任务的性质在 requestAnimationFrame，setTimeout，setInterval 中运行它们。
 
-* Use micro-tasks to introduce DOM changes over several frames. This is in case the tasks need access to the DOM, which is not accessible by Web Workers. This basically means that you’d break up a big task into smaller ones and run them inside requestAnimationFrame , setTimeout, setInterval depending on the nature of the task.
-
-### Optimize your CSS
+### 优化你的 CSS
 
 Modifying the DOM through adding and removing elements, changing attributes, etc. will make the browser recalculate element styles and, in many cases, the layout of the entire page or at least parts of it.
 
 To optimize the rendering, consider the following:
 
-* Reduce the complexity of your selectors. Selector complexity can take more than 50% of the time needed to calculate the styles for an element, compared to the rest of the work which is constructing the style itself.
+通过添加和删除元素，更改属性等来修改DOM将使浏览器重新计算元素样式，并且在很多情况下还会整个页面的布局或至少部分布局。
 
-* Reduce the number of elements on which style calculation must happen. In essence, make style changes to a few elements directly rather than invalidating the page as a whole.
+要优化渲染，请考虑以下几点：
 
-### Optimize the layout
+* Reduce the complexity of your selectors. Selector complexity can take more than 50% of the time needed to calculate the styles for an element, compared to the rest of the work which is constructing the style itself.减少选择器的复杂性。 选择器的复杂性可能需要计算元素样式所需的时间的50％以上，而构造样式本身的其余工作则需要花费超过50％的时间。
+
+* Reduce the number of elements on which style calculation must happen. In essence, make style changes to a few elements directly rather than invalidating the page as a whole.减少样式计算必须改变的元素数量。 实质上，直接对几个元素进行样式更改，而不是使整个页面无效。
+
+### 优化布局
 
 Layout re-calculations can be very heavy for the browser. Consider the following optimizations:
 
-* Reduce the number of layouts whenever possible. When you change styles the browser checks to see if any of the changes require the layout to be re-calculated. Changes to properties such as width, height, left, top, and in general, properties related to geometry, require layout. So, avoid changing them as much as possible.
+浏览器的布局重新计算可能非常繁重。 考虑以下优化：
 
-* Use flexbox over older layout models whenever possible. It works faster and can create a huge performance advantage for your app.
+* Reduce the number of layouts whenever possible. When you change styles the browser checks to see if any of the changes require the layout to be re-calculated. Changes to properties such as width, height, left, top, and in general, properties related to geometry, require layout. So, avoid changing them as much as possible.尽可能减少布局的数量。 当您更改样式时，浏览器会检查是否有任何更改要求重新计算布局。 对属性（如宽度，高度，左侧，顶部以及通常与几何相关的属性）的更改需要布局。 所以，尽量避免改变它们。
 
-* Avoid forced synchronous layouts. The thing to keep in mind is that while JavaScript runs, all the old layout values from the previous frame are known and available for you to query. If you access box.offsetHeight it won’t be an issue. If you, however, change the styles of the box before it’s accessed (e.g. by dynamically adding some CSS class to the element), the browser will have to first apply the style change and then run the layout. This can be very time-consuming and resource-intensive, so avoid it whenever possible.
+* Use flexbox over older layout models whenever possible. It works faster and can create a huge performance advantage for your app.尽可能使用 flexbox 而不是之前的布局模型。因为它运行得更快并且能够为你的应用带来巨大的性能提升。
 
-**Optimize the paint**
+* Avoid forced synchronous layouts. The thing to keep in mind is that while JavaScript runs, all the old layout values from the previous frame are known and available for you to query. If you access box.offsetHeight it won’t be an issue. If you, however, change the styles of the box before it’s accessed (e.g. by dynamically adding some CSS class to the element), the browser will have to first apply the style change and then run the layout. This can be very time-consuming and resource-intensive, so avoid it whenever possible.避免强制同步布局。 需要注意的是，在 JavaScript 运行时，前一帧中的所有旧布局值都是已知的，可供您查询。 如果你访问 box.offsetHeight 它不会是一个问题。 但是，如果您在访问该框之前更改了框的样式（例如，通过向该元素动态添加一些CSS类），浏览器必须先应用样式更改并运行布局。 这可能非常耗时且耗费资源，因此请尽可能避免。
+
+**优化绘制**
 
 This often is the longest-running of all the tasks so it’s important to avoid it as much as possible. Here is what we can do:
 
