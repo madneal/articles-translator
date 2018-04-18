@@ -8,7 +8,7 @@
 >
 >LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-这是专门探索 JavaScript 及其构建组件的系列 #11。 在识别和描述核心元素的过程中，我们也分享了我们在构建[SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-rendering-engine -intro) 时使用的一些经验法则，SessionStack 是一款 JavaScript 应用程序，利用强大且高性能的特性来帮助用户实时查看和重现其 Web 应用程序缺陷。
+这是专门探索 JavaScript 及其构建组件的系列 #11。 在识别和描述核心元素的过程中，我们也分享了我们在构建[SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-rendering-engine-intro) 时使用的一些经验法则，SessionStack 是一款 JavaScript 应用程序，利用强大且高性能的特性来帮助用户实时查看和重现其 Web 应用程序缺陷。
 
 如果你错过了之前的章节，你可以从这找到他们：
 
