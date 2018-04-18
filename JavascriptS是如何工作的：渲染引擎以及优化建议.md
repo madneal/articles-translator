@@ -106,21 +106,71 @@ The first step of the rendering engine is parsing the HTML document and converti
 
 Imagine you have the following textual input:
 
- <iframe src="https://medium.com/media/c8c8dce0c5ef0f9485948af1f23c1726" frameborder=0></iframe>
+渲染引擎的第一步是解析HTML文档并将解析的元素转换为**DOM 树**中的实际 [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) 节点。
+
+想象一下你有以下的文字输入：
+
+```html
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="theme.css">
+  </head>
+  <body>
+    <p> Hello, <span> friend! </span> </p>
+    <div> 
+      <img src="smiley.gif" alt="Smiley face" height="42" width="42">
+    </div>
+  </body>
+</html>
+```
+
+
 
 The DOM tree for this HTML will look like this:
+
+DOM 树看起来应该是这个样子的：
 
 ![](https://cdn-images-1.medium.com/max/2000/1*ezFoXqgf91umls9FqO0HsQ.png)
 
 Basically, each element is represented as the parent node to all of the elements, which are directly contained inside of it. And this is applied recursively.
 
-### Constructing the CSSOM tree
+基本上，每个元素都被表示为所有元素的父节点，它们直接包含在它的内部。 这是递归应用的。
+
+### 构建 CSSOM 树
 
 CSSOM refers to the **CSS Object Model**. While the browser was constructing the DOM of the page, it encountered a link tag in the head section which was referencing the external theme.css CSS style sheet. Anticipating that it might need that resource to render the page, it immediately dispatched a request for it. Let’s imagine that the theme.css file has the following contents:
 
- <iframe src="https://medium.com/media/24b0764e3c928d5156b60ddbdd5763af" frameborder=0></iframe>
+CSSOM 指的是 **CSS 对象模型**。 当浏览器构建页面的 DOM 时，它在 head 中遇到 link 标签的时候会引用外部theme.css CSS 样式表的。 预计它可能需要该资源来呈现页面，它立即发送请求。 假设 theme.css 文件包含以下内容：
+
+```css
+
+body { 
+  font-size: 16px;
+}
+
+p { 
+  font-weight: bold; 
+}
+
+span { 
+  color: red; 
+}
+
+p span { 
+  display: none; 
+}
+
+img { 
+  float: right; 
+}css
+```
+
+
 
 As with the HTML, the engine needs to convert the CSS into something that the browser can work with — the CSSOM. Here is how the CSSOM tree will look like:
+
+与 HTML 一样，引擎需要将 CSS 转换为浏览器可以使用的东西 - CSSOM。 以下是 CSSOM 树的外观：
 
 ![](https://cdn-images-1.medium.com/max/2014/1*5YU1su2mdzHEQ5iDisKUyw.png)
 
@@ -130,7 +180,13 @@ Let’s work with the specific example that we gave. Any text contained within a
 
 Also, note that the above tree is not the complete CSSOM tree and only shows the styles we decided to override in our style sheet. Every browser provides a default set of styles also known as **“user agent styles”** — that’s what we see when we don’t explicitly provide any. Our styles simply override these defaults.
 
-### Constructing the render tree
+你想知道为什么 CSSOM 有一个树结构？当计算页面上任何对象的最后一组样式时，浏览器从适用于该节点的最通用规则开始（例如，如果它是 body 元素的子元素，则应用所有 body 样式），然后递归地细化通过应用更具体的规则来计算样式。
+
+让我们来看看给出的具体例子。包含在 body 元素中的 span 标签中的任何文本的字体大小为16像素，并且字体颜色是红色。这些样式是从 body 元素继承而来的。如果 span 元素是 p 元素的子元素，则由于正在应用更具体的样式，因此不会显示其内容。
+
+另外请注意，上面的树不是完整的 CSSOM 树，只显示了我们决定在样式表中重写的样式。每个浏览器都提供了一组默认的样式，也称为**“用户代理样式”** - 这是我们在没有明确提供任何样式时看到的。我们的样式简单地覆盖这些默认值。
+
+### 构建渲染树
 
 The visual instructions in the HTML, combined with the styling data from the CSSOM tree, are being used to create a **render tree**.
 
@@ -140,17 +196,31 @@ Each node in the render tree is known as a renderer or a render object in Webkit
 
 This is how the renderer tree of the above DOM and CSSOM trees will look like:
 
+HTML 中的可视指令与 CSSOM 树中的样式数据结合在一起用于创建渲染树。
+
+你可能会问什么是渲染树？ 这是按照它们在屏幕上显示的顺序构建的视觉元素树。 它是 HTML 和相应的 CSS 的可视化表示。 此树的目的是为了以正确的顺序绘制内容。
+
+渲染树中的每个节点都被称为 Webkit 中的渲染器或渲染对象。
+
+这就是上述 DOM 和 CSSOM 树的渲染器树的外观：
+
 ![](https://cdn-images-1.medium.com/max/2000/1*WHR_08AD8APDITQ-4CFDgg.png)
 
 To construct the render tree, the browser does roughly the following:
 
-* Starting at the root of the DOM tree, it traverses each visible node. Some nodes are not visible (for example, script tags, meta tags, and so on), and are omitted since they are not reflected in the rendered output. Some nodes are hidden via CSS and are also omitted from the render tree. For example, the span node — in the example above it’s not present in the render tree because we have an explicit rule that sets the display: none property on it.
+为了构建渲染树，浏览器基本会会做下面的这些事情：
 
-* For each visible node, the browser finds the appropriate matching CSSOM rules and applies them.
+* Starting at the root of the DOM tree, it traverses each visible node. Some nodes are not visible (for example, script tags, meta tags, and so on), and are omitted since they are not reflected in the rendered output. Some nodes are hidden via CSS and are also omitted from the render tree. For example, the span node — in the example above it’s not present in the render tree because we have an explicit rule that sets the display: none property on it.从 DOM 树的根节点开始，遍历每个可见节点。 某些节点不可见（例如，脚本标记，元标记等），并且由于它们未反映在呈现的输出中而被忽略。 一些节点通过CSS隐藏，并且也从渲染树中省略。 例如，span 节点 - 在上面的例子中，它并不存在于渲染树中，因为我们有一个明确的规则来设置 display：none 属性
 
-* It emits visible nodes with content and their computed styles
+* For each visible node, the browser finds the appropriate matching CSSOM rules and applies them.对于每一个可见节点，浏览器会找到合适的匹配 CSSDOM 规则并且加以应用。
 
-You can take a look at the RenderObject’s source code (in WebKit) here: [https://github.com/WebKit/webkit/blob/fde57e46b1f8d7dde4b2006aaf7ebe5a09a6984b/Source/WebCore/rendering/RenderObject.h](https://github.com/WebKit/webkit/blob/fde57e46b1f8d7dde4b2006aaf7ebe5a09a6984b/Source/WebCore/rendering/RenderObject.h)
+* It emits visible nodes with content and their computed styles它会给出带有内容及其计算样式的可见节点
+
+You can take a look at the RenderObject’s source code (in WebKit) here: 
+
+你可以在这里查看 RenderObject 的源代码（在WebKit中）：
+
+[https://github.com/WebKit/webkit/blob/fde57e46b1f8d7dde4b2006aaf7ebe5a09a6984b/Source/WebCore/rendering/RenderObject.h](https://github.com/WebKit/webkit/blob/fde57e46b1f8d7dde4b2006aaf7ebe5a09a6984b/Source/WebCore/rendering/RenderObject.h)
 
 Let’s just look at some of the core things for this class:
 
