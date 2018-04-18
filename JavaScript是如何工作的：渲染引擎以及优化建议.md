@@ -1,4 +1,4 @@
-## JavaScript 是如何工作的以及优化建议
+## JavaScript 是如何工作的：渲染引擎以及优化建议
 
 >原文：[How JavaScript works: the rendering engine and tips to optimize its performance](https://blog.sessionstack.com/how-javascript-works-the-rendering-engine-and-tips-to-optimize-its-performance-7b95553baeda)
 >
