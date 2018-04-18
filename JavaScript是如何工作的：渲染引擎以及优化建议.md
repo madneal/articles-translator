@@ -250,19 +250,23 @@ Layout re-calculations can be very heavy for the browser. Consider the following
 
 This often is the longest-running of all the tasks so it’s important to avoid it as much as possible. Here is what we can do:
 
-* Changing any property other than transforms or opacity triggers a paint. Use it sparingly.
+这通常是所有任务中运行时间最长的，因此尽可能避免这种情况非常重要。 以下是我们可以做的事情：
 
-* If you trigger a layout, you will also trigger a paint, since changing the geometry results in a visual change of the element.
+* Changing any property other than transforms or opacity triggers a paint. Use it sparingly.避免更改 transforms 或者 opacity 这些触发绘制的属性。谨慎使用它。
 
-* Reduce paint areas through layer promotion and orchestration of animations.
+* If you trigger a layout, you will also trigger a paint, since changing the geometry results in a visual change of the element.如果你触发了一个布局，你将会触发一个绘制，因为改变几何形状会导致元素的视觉变化
+
+* Reduce paint areas through layer promotion and orchestration of animations.通过图层提升和动画编排来减少绘制区域。
 
 Rendering is a vital aspect of how [SessionStack ](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-rendering-engine-outro)functions. SessionStack has to recreate as a video everything that happened to your users at the time they experienced an issue while browsing your web app. To do this, SessionStack leverages only the data that was collected by our library: user events, DOM changes, network requests, exceptions, debug messages, etc. Our player is highly optimized to properly render and make use of all the collected data in order to offer a pixel-perfect simulation of your users’ browser and everything that happened in it, both visually and technically.
 
-There is a free plan if you’d like to [give SessionStack a try](https://www.sessionstack.com/signup/).
+渲染是[SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-rendering-engine-outro)功能的重要方面。 SessionStack 必须重新创建视频中的所有内容，以便在浏览您的Web应用时遇到问题时发生。 为此，SessionStack 仅利用我们的库收集的数据：用户事件，DOM 更改，网络请求，异常，调试消息等。我们的播放器经过高度优化，能够按顺序正确呈现和使用所有收集的数据 从视觉和技术两方面为您的用户浏览器及其中发生的一切提供像素完美的模拟。
+
+这是一个免费的计划，你可以[尝试 SessionStack](https://www.sessionstack.com/signup/).
 
 ![](https://cdn-images-1.medium.com/max/NaN/0*h2Z_BnDiWfVhgcEZ.)
 
-### Resources
+### 资源
 
 * [https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/constructing-the-object-model)
 
