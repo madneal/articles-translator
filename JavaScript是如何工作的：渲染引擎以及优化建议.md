@@ -103,7 +103,6 @@ DOM 树看起来应该是这个样子的：
 
 ![](https://cdn-images-1.medium.com/max/2000/1*ezFoXqgf91umls9FqO0HsQ.png)
 
-Basically, each element is represented as the parent node to all of the elements, which are directly contained inside of it. And this is applied recursively.
 
 基本上，每个元素都被表示为所有元素的父节点，它们直接包含在它的内部。 这是递归应用的。
 
@@ -140,9 +139,6 @@ img {
 
 ![](https://cdn-images-1.medium.com/max/2014/1*5YU1su2mdzHEQ5iDisKUyw.png)
 
-Let’s work with the specific example that we gave. Any text contained within a span tag that is placed within the body element, has a font size of 16 pixels and has a red color. Those styles are inherited from the body element. If a span element is a child of a p element, then its contents are not displayed due to the more specific styles that are being applied to it.
-
-Also, note that the above tree is not the complete CSSOM tree and only shows the styles we decided to override in our style sheet. Every browser provides a default set of styles also known as **“user agent styles”** — that’s what we see when we don’t explicitly provide any. Our styles simply override these defaults.
 
 你想知道为什么 CSSOM 有一个树结构？当计算页面上任何对象的最后一组样式时，浏览器从适用于该节点的最通用规则开始（例如，如果它是 body 元素的子元素，则应用所有 body 样式），然后递归地细化通过应用更具体的规则来计算样式。
 
@@ -275,8 +271,6 @@ JavaScript 经常触发浏览器中的视觉变化。 当建立一个 SPA 时更
 * 避免强制同步布局。 需要注意的是，在 JavaScript 运行时，前一帧中的所有旧布局值都是已知的，可供您查询。 如果你访问 box.offsetHeight 它不会是一个问题。 但是，如果您在访问该框之前更改了框的样式（例如，通过向该元素动态添加一些CSS类），浏览器必须先应用样式更改并运行布局。 这可能非常耗时且耗费资源，因此请尽可能避免。
 
 **优化绘制**
-
-
 
 这通常是所有任务中运行时间最长的，因此尽可能避免这种情况非常重要。 以下是我们可以做的事情：
 
