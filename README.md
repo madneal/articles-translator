@@ -35,6 +35,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [你真的理解 grok 吗](https://github.com/neal1991/articles-translator/blob/master/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3grok%E5%90%97%EF%BC%9F.md?)
 * [送给 ES6 开发者的7个hack](https://github.com/neal1991/articles-translator/blob/master/%E9%80%81%E7%BB%99%20ES6%20%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%847%E4%B8%AAhack%20.md)
 * [从仓库中移除敏感信息](https://github.com/neal1991/articles-translator/blob/master/%E4%BB%8E%E4%BB%93%E5%BA%93%E4%B8%AD%E7%A7%BB%E9%99%A4%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF.md)
+* [JavaScript 是如何工作的：渲染引擎以及优化建议](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E6%B8%B2%E6%9F%93%E5%BC%95%E6%93%8E%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE.md)
 
 ## Articles need translation
 
