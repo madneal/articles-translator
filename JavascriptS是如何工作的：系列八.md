@@ -1,15 +1,26 @@
-
 ## How JavaScript works: Service Workers, their lifecycle and use cases
+
+>原文：[How JavaScript works: Service Workers, their lifecycle and use cases](https://blog.sessionstack.com/how-javascript-works-service-workers-their-life-cycle-and-use-cases-52b19ad98b58)
+>
+>译者：[neal1991](https://github.com/neal1991)
+>
+>welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+>LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 This is post # 8 of the series dedicated to exploring JavaScript and its building components. In the process of identifying and describing the core elements, we also share some best practice we use when building [SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=source&utm_content=javascript-series-web-workers-intro), a JavaScript application that has to be robust and highly-performant in order to show you real-time exactly how your users ran into a technical or UX issue in your web app.
 
 If you missed the previous chapters, you can find them here:
 
-* A[n overview of the engine, the runtime, and the call stack](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf?source=collection_home---2------1----------------)
+这是专门探索 JavaScript 及其构建组件的系列 #11。 在识别和描述核心元素的过程中，我们也分享了我们在构建[SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-rendering-engine-intro) 时使用的一些经验法则，SessionStack 是一款 JavaScript 应用程序，利用强大且高性能的特性来帮助用户实时查看和重现其 Web 应用程序缺陷。
+
+如果你错过了之前的章节，你可以从这找到他们：
+
+* [JavaScript是如何工作的：引擎，运行时以及调用栈的概述](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%EF%BC%9A%E7%B3%BB%E5%88%97%E4%B8%80.md)（已翻译）
 
 * [Inside Google’s V8 engine + 5 tips on how to write optimized code](https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12e?source=collection_home---2------2----------------)
 
-* [Memory management + how to handle 4 common memory leaks](https://blog.sessionstack.com/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks-3f28b94cfbec?source=collection_home---2------0----------------)
+* [JavaScript是如何工作的：内存管理以及如何处理四种常见的内存泄漏](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E7%B3%BB%E5%88%97%E4%B8%89.md)（已翻译）
 
 * [The event loop and the rise of Async programming + 5 ways to better coding with async/await](https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5)
 
@@ -27,41 +38,75 @@ One of the main requirements to build a Progressive Web App is to make it very r
 
 In this post, we’ll be deep diving into Service Workers: how they function and what you should care about. At the end, we also list a few unique benefits of the Service Workers that you should take advantage of, and share our own team’s experience here at [SessionStack](https://www.sessionstack.com/).
 
-### Overview
+你可能已经知道，[渐进式 Web 应用](https://developers.google.com/web/progressive-web-apps/)只会越来越受欢迎，因为它们旨在使 Web 应用用户体验更加流畅，创建原生应用程序般的体验，而不是浏览器的外观和感觉。
+
+构建渐进式 Web 应用程序的主要要求之一是使其在网络和加载方面非常可靠 - 它应该可用于不确定或不存在的网络条件。
+
+在这篇文章中，我们将深入探讨 Service Workers：他们如何运作以及你应该关心什么。 最后，我们还列出了你应该利用的 Service Workers 的一些独特优势，并在 [SessionStack](https://www.sessionstack.com/) 中分享我们自己团队的经验。
+
+### 概述
 
 If you want to understand everything about Service Workers, you should start by reading our blog post on [Web Workers](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a).
 
+如果你希望理解关于 Service Workers 的一起，你应该阅读我们关于 [Web Workers](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a) 的博客。
+
 Basically, the Service Worker is a type of Web Worker, and more specifically it’s like a [Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker):
 
-* The Service Worker runs in its own global script context
+基本上，Service Worker 是一种 Web Worker，更特定的来说，他就像是一个 [Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker):
 
-* It isn’t tied to a specific web page
+* The Service Worker runs in its own global script context Serivice Worker 运行在它自己的全局脚本上下文中
 
-* It cannot access the DOM
+* It isn’t tied to a specific web page它不会和特定的 web 页面绑定
+
+* It cannot access the DOM 它不能访问 DOM
 
 One of the main reasons why the Service Worker API is so exciting is that it allows your web apps to support offline experiences, giving developers complete control over the flow.
 
-### Lifecycle of a Service Worker
+Service Worker API 令人兴奋的主要原因之一是它可以让你的网络应用程序支持离线体验，从而使开发人员能够完全控制流程。
+
+### Service Worker 的生命周期
 
 The lifecycle of a service worker is completely separated from your web page one. It consists of the following phases:
 
-* Download
+Service worker 的生命周期完全独立于你的 web 页面。它由以下几步组成：
 
-* Installation
+* 下载
 
-* Activation
+* 安装
 
-### Download
+* 激活
+
+### 下载
 
 This is when the browser downloads the .js file which contains the Service Worker.
 
-### Installation
+这就是浏览器下载包含 Service Worker 的 js 文件的时候。
+
+### 安装
 
 To install a Service Worker for your web app, you have to register it first, which you can do in your JavaScript code. When a Service Worker is registered, it prompts the browser to start a Service Worker install step in the background.
 
 By registering the Service Worker, you tell the browser where your Service Worker JavaScript file lives. Let’s look at the following code:
 
- <iframe src="https://medium.com/media/8cb6eb7ff8df52d6c0a53db5b313a6fd" frameborder=0></iframe>
+要为你的 Web 应用程序安装 Service Worker，你必须先注册它，你可以在 JavaScript 代码中进行注册。 当注册Service Worker 时，它会提示浏览器在后台启动 Service Worker 安装步骤。
+
+通过注册服务工作者，你可以告诉浏览器你的服务工作者JavaScript文件在哪里。 我们来看下面的代码：
+
+```javascript
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js').then(function(registration) {
+      // Registration was successful
+      console.log('ServiceWorker registration successful');
+    }, function(err) {
+      // Registration failed
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
+```
+
+
 
 The code checks whether the Service Worker API is supported in the current environment. If it is, the /sw.js Service Worker is registered.
 
@@ -78,6 +123,22 @@ Why so? Let’s consider a user’s first visit to your web app. There’s no se
 The bottom line is that , if you just install a Service Worker on your page, you’re running the risk of delaying the loading and rendering — not making the page available to your users as quickly as possible.
 
 Note that this is important only for the first page visit. Subsequent page visits don’t get impacted by the Service Worker installation. Once a Service Worker is activated on a first page visit, it can handle loading/caching events for subsequent visits to your web app. This all makes sense, because it needs to be ready to handle limited network connectivity.
+
+该代码检查当前环境中是否支持 Service Worker API。如果是，则注册 /sw.js Service Worker。
+
+你可以在每次加载页面时调用 register() 方法而不用担心 - 浏览器会判断 Service Worker 是否已经注册，并且会正确处理。
+
+register() 方法的一个重要细节是 Service Worker 文件的位置。在这种情况下，你可以看到 Service Worker 文件位于域的根目录。这意味着 Service Worker 的范围将是整个来源。换句话说，这个 Service Worker 将会收到这个域的所有东西的 fetch 事件（我们将在后面讨论）。如果我们在 /example/sw.js 注册 Service Worker 文件，那么 Service Worker 将只能看到 URL 以 /example /（即 /example/page1/，/example/page2/）开头的页面的 fetch 事件。
+
+在安装阶段，最好加载和缓存一些静态资源。资源成功缓存后，Service Worker 安装完成。如果没有（加载失败） - Service Worker 将重试。一旦安装成功，你将知道静态资源位于缓存中。
+
+关于注册是否需要在加载事件之后发生的问题。这不是必须的，但它是绝对推荐的。
+
+为什么这样？让我们考虑用户第一次访问您的网络应用程序。目前还没有服务人员，浏览器无法事先知道是否会有最终安装的服务人员。如果安装了Service Worker，则浏览器需要为这个额外的线程花费额外的CPU和内存，否则浏览器将花费在渲染网页上。
+
+最重要的是，如果你只是在你的页面上安装一个服务工作者，你可能会延迟加载和渲染的风险 - 而不是尽快让你的用户可以使用这个页面。
+
+请注意，这仅在第一次访问页面时很重要。后续页面访问不受Service Worker安装的影响。一旦在第一次访问页面时激活服务工作者，它可以处理加载/缓存事件，以便随后访问您的Web应用程序。这一切都是有道理的，因为它需要准备好处理有限的网络连接。
 
 ### Activation
 
