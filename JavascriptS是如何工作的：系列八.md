@@ -134,39 +134,51 @@ register() 方法的一个重要细节是 Service Worker 文件的位置。在�
 
 关于注册是否需要在加载事件之后发生的问题。这不是必须的，但它是绝对推荐的。
 
-为什么这样？让我们考虑用户第一次访问您的网络应用程序。目前还没有服务人员，浏览器无法事先知道是否会有最终安装的服务人员。如果安装了Service Worker，则浏览器需要为这个额外的线程花费额外的CPU和内存，否则浏览器将花费在渲染网页上。
+为什么这样？让我们考虑用户第一次访问你的网络应用程序。目前还没有 Service Worker ，浏览器无法事先知道是否会有最终安装的 Service Worker 。如果安装了 Service Worker，则浏览器需要为这个额外的线程花费额外的CPU 和内存，否则浏览器将花费在渲染网页上。
 
-最重要的是，如果你只是在你的页面上安装一个服务工作者，你可能会延迟加载和渲染的风险 - 而不是尽快让你的用户可以使用这个页面。
+最重要的是，如果你只是在你的页面上安装一个 Service Worker ，你可能会延迟加载和渲染的风险 - 而不是尽快让你的用户可以使用这个页面。
 
-请注意，这仅在第一次访问页面时很重要。后续页面访问不受Service Worker安装的影响。一旦在第一次访问页面时激活服务工作者，它可以处理加载/缓存事件，以便随后访问您的Web应用程序。这一切都是有道理的，因为它需要准备好处理有限的网络连接。
+请注意，这仅在第一次访问页面时很重要。后续页面访问不受 Service Worker 安装的影响。一旦在第一次访问页面时激活 Service Worker ，它可以处理加载/缓存事件，以便随后访问你的 Web 应用程序。这一切都是有道理的，因为它需要准备好处理有限的网络连接。
 
-### Activation
+### 激活
 
 After the Service Worker is installed, the next step will be its activation. This step is a great opportunity to manage previous caches.
 
 Once activated, the Service Worker will start controlling all pages that fall under its scope. An interesting fact: the page that registered the Service Worker for the first time won’t be controlled until that page is loaded again. Once the Service Worker is in control, it will be in one of the following states:
 
-* It will handle fetch and message events that occur when a network request or message is made from the page
+安装 Service Worker 之后，下一步将是其激活。 这一步是管理之前缓存的好机会。
 
-* It will be terminated to save memory
+一旦激活， Service Worker 将开始控制所有属于其范围的页面。 一个有趣的事实是：首次注册 Service Worker 的页面将不会被控制，直到该页面再次被加载。 一旦 Service Worker 处于控制之下，它将处于以下状态之一：
+
+* It will handle fetch and message events that occur when a network request or message is made from the page它将处理从页面发出网络请求或消息时发生的 fetch 和消息事件
+
+* It will be terminated to save memory 为了节省内存而被终止
 
 Here is how the lifecycle will look like:
 
+生命周期看起来是这个样子的：
+
 ![](https://cdn-images-1.medium.com/max/2000/1*mVOrpKC9pFTMg4EXPozoog.png)
 
-### Handling the installation inside the Service Worker
+### 在 Service Worker 中处理安装
 
 After a page spins up the registration process, let’s see what happens inside the Service Worker script, which handles the install event by adding an event listener to the Service Worker instance.
 
 Those are the steps that need to be taken when the install event is handled:
 
-* Open a cache
+在页面加速注册过程之后，让我们看看在 Service Worker 脚本中发生了什么，它通过向 Service Worker 实例添加事件侦听器来处理安装事件。
 
-* Cache our files
+这些是安装事件处理时需要采取的步骤：
 
-* Confirm whether all of the required assets are cached
+* 打开一个缓存
+
+* 缓存我们的文件
+
+* 确认所有请求的资源是否被缓存
 
 Here is what a simple installation might look like inside a Service Worker:
+
+下面是 Service Worker 中一个简单的安装过程：
 
  <iframe src="https://medium.com/media/8a4c5afca4a07c30b6c791be08bbdbc4" frameborder=0></iframe>
 
