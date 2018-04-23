@@ -188,19 +188,25 @@ Handling the install event is completely optional and you can avoid it, in which
 
 处理安装事件完全是可选的并且你可以避免它，这样你就不需要执行这里的任何步骤。
 
-### Caching requests during runtime
+### 在运行时缓存请求
 
 This part is the real-deal. This is where you’ll see how to intercept requests and return the created caches (and create new ones).
 
+这部分是真正需要处理的部分。你将在这看到请求如何被拦截并且返回创建的缓存（或者新创建的请求）。
+
 After a Service Worker is installed and the user navigates to another page or refreshes the page he’s on, the Service Worker will receive fetch events. Here is an example that demonstrates how to return cached assets or perform a new request and then cache the result:
+
+在 Service Worker 成功安装之后 ，用户浏览其他的页面或者刷新当前页面， Service Worker 都会收到 fetch 事件。下面的例子展示了如何返回缓存的资源或者执行一个新的请求再缓存结果：
 
  <iframe src="https://medium.com/media/636ebc25f8c60b32f15d19ddfafb8736" frameborder=0></iframe>
 
 Here is what happens in a nutshell:
 
-* The event.respondWith() will determine how we’ll respond to the fetch event. We pass a promise from caches.match() which looks at the request and finds if there are any cached results from any of the caches that have been created.
+在 nutshell 中会发生：
 
-* If there is a cache, the response is retrieved.
+* The event.respondWith() will determine how we’ll respond to the fetch event. We pass a promise from caches.match() which looks at the request and finds if there are any cached results from any of the caches that have been created. event.respondWith() 将会决定如何响应 fetch 事件。我们将会从 caches.match() 中传递一个 promise 监听请求并且查看缓存中是否存在命中。
+
+* If there is a cache, the response is retrieved.如果缓存存在，那么就发送响应。
 
 * Otherwise, a fetch will be performed.
 
