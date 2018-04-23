@@ -228,9 +228,11 @@ Once the currently opened pages of your web app are closed, the old Service Work
 
 Why is all this needed? To avoid the problem of having two versions of a web app running simultaneously , in different tabs — something that is actually very common on the web and can create really bad bugs (e.g. cases in which you have different schema while storing data locally in the browser).
 
-### Deleting data from the cache
+### 从缓存中删除数据
 
 The most common step in the activate callback is cache management. You’d want to do this now because if you were to wipe out any old caches in the install step, old Service Workers will suddenly stop being able to serve files from that cache.
+
+在激活回调中最常见的步骤就是缓存管理。你现在就想做这件事因为你打算将安装步骤中的旧缓存删除掉，旧的  Service Worker 就会突然停止为缓存中的文件提供服务。
 
 Here is an example how you can delete some files from the cache that are not whitelisted (in this case, having page-1 or page-2 under their names):
 
