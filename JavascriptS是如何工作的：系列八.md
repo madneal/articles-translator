@@ -106,8 +106,6 @@ if ('serviceWorker' in navigator) {
 }
 ```
 
-
-
 The code checks whether the Service Worker API is supported in the current environment. If it is, the /sw.js Service Worker is registered.
 
 You can call the register() method every time a page loads with no concern — the browser will figure out if the service worker has already been registered, and will handle it properly.
@@ -184,7 +182,11 @@ Here is what a simple installation might look like inside a Service Worker:
 
 If all the files are successfully cached, then the service worker will be installed. If **any** of the files fail to download, then the install step will fail. So be careful what files you put there.
 
+如果所有的文件都被成功地缓存，那么 service worker 就安装成功。如果**任一**文件下载失败，那么安装步骤就会失败。因此留意你放在这的文件。
+
 Handling the install event is completely optional and you can avoid it, in which case you don’t need to perform any of the steps here.
+
+处理安装事件完全是可选的并且你可以避免它，这样你就不需要执行这里的任何步骤。
 
 ### Caching requests during runtime
 
