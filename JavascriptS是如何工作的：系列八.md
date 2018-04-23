@@ -238,17 +238,25 @@ Here is an example how you can delete some files from the cache that are not whi
 
  <iframe src="https://medium.com/media/05d9fbb176b3902e930496d2bcbd53e7" frameborder=0></iframe>
 
-### HTTPS requirement
+### HTTPS 需求
 
 When you’re building your web app, you’ll be able to use Service Workers through localhost, but once you deploy it in production, you need to have HTTPS ready (and that’s the last reason for you to have HTTPS).
 
+当你在构建你的 web 应用的时候，你能够在 localhost 使用 Service Worker ，但是你一旦将其部署到生产环境，那么你必须准备好 HTTPS （并且这是你使用 HTTPS 最后的原因）。
+
 Using a Service Worker, you can hijack connections and fabricate responses. By not using HTTPs, your web app becomes prone to a [man-in-the-middle attacks](https://en.wikipedia.org/wiki/Man-in-the-middle_attack).
+
+通过 Service Worker，你可以劫持连接并且制作响应。如果不使用 HTTPS，你的 web 应用容易导致[中间人攻击](https://en.wikipedia.org/wiki/Man-in-the-middle_attack)。
 
 To make things safer, you’re required to register Service Workers on pages that are served over HTTPS so that you know that the Service Worker which the browser receives, hasn’t been modified while traveling through the network.
 
-### Browser support
+出于安全考虑，你需要在使用 HTTPS的服务上注册 Service Worker，这样才能知道浏览器接收到的 Service Worker 请求没有在网络传输过程中被修改。
+
+### 浏览器支持
 
 The browser support for Service Workers is getting better:
+
+对于 Service Worker 的浏览器支持也越来越好：
 
 ![](https://cdn-images-1.medium.com/max/NaN/1*6o2TRDmrJlS97vh1wEjLYw.png)
 
@@ -280,7 +288,7 @@ There is a free plan if you’d like to [give SessionStack a try](https://www.se
 
 ![](https://cdn-images-1.medium.com/max/NaN/1*YKYHB1gwcVKDgZtAEnJjMg.png)
 
-### Resources
+### 资源
 
 * [https://developers.google.com/web/fundamentals/primers/service-workers/](https://developers.google.com/web/fundamentals/primers/service-workers/)
 
