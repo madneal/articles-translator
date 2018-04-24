@@ -208,9 +208,9 @@ Here is what happens in a nutshell:
 
 * If there is a cache, the response is retrieved.如果缓存存在，那么就发送响应。
 
-* Otherwise, a fetch will be performed.
+* Otherwise, a fetch will be performed.否则就会执行 fetch
 
-* Check if the status is 200. We also check that the response type is **basic, **which indicates that it’s a request from our origin. Requests to third party assets won’t be cached in this case.
+* Check if the status is 200. We also check that the response type is **basic, **which indicates that it’s a request from our origin. Requests to third party assets won’t be cached in this case.检查状态是否是 200。
 
 * The response is added to the cache.
 
