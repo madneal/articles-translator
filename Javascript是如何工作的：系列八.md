@@ -264,9 +264,13 @@ The browser support for Service Workers is getting better:
 
 You can follow the progress of all the browsers here — [https://jakearchibald.github.io/isserviceworkerready/](https://jakearchibald.github.io/isserviceworkerready/).
 
-### Service Workers are opening the doors for great features
+你可以在这参考所有浏览器的进程— [https://jakearchibald.github.io/isserviceworkerready/](https://jakearchibald.github.io/isserviceworkerready/)。
+
+### Service Workers 拥抱更好的特性
 
 Some unique features that a Service Worker provides are:
+
+Service 
 
 * **Push notifications **— allow users to opt-in to timely updates from web apps.
 
