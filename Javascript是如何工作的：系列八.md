@@ -210,11 +210,13 @@ Here is what happens in a nutshell:
 
 * Otherwise, a fetch will be performed.否则就会执行 fetch
 
-* Check if the status is 200. We also check that the response type is **basic, **which indicates that it’s a request from our origin. Requests to third party assets won’t be cached in this case.检查状态是否是 200。
+* Check if the status is 200. We also check that the response type is **basic**, which indicates that it’s a request from our origin. Requests to third party assets won’t be cached in this case.检查状态是否是 200。我们也会检查响应的类型是基本的，这也表示请求是同源请求。对于第三方资源的请求在这种情况下就不会被缓存。
 
-* The response is added to the cache.
+* The response is added to the cache.响应被添加到缓存中。
 
 Requests and responses have to be cloned because they’re [streams](https://streams.spec.whatwg.org/). The body of a stream can be consumed only once. And since we want to consume them, we want to clone them because the browser has to consume them as well.
+
+请求和响应必须被克隆因为它们是[流](https://streams.spec.whatwg.org/)。流的主体只能够被消费一次。并且一旦我们想消费它们，我们
 
 ### Updating a Service Worker
 
