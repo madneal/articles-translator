@@ -270,9 +270,11 @@ You can follow the progress of all the browsers here — [https://jakearchibald.
 
 Some unique features that a Service Worker provides are:
 
-Service 
+Service Worker 提供了一些很特别的特性：
 
-* **Push notifications **— allow users to opt-in to timely updates from web apps.
+服务
+
+* **推送通知**— 允许用户选择从网络应用程序及时更新。
 
 * **Background sync **— allows you to defer actions until the user has stable connectivity. This way, you can make sure that whatever the user wants to send, is actually sent.
 
