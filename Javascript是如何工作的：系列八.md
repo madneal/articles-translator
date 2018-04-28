@@ -8,10 +8,6 @@
 >
 >LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-This is post # 8 of the series dedicated to exploring JavaScript and its building components. In the process of identifying and describing the core elements, we also share some best practice we use when building [SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=source&utm_content=javascript-series-web-workers-intro), a JavaScript application that has to be robust and highly-performant in order to show you real-time exactly how your users ran into a technical or UX issue in your web app.
-
-If you missed the previous chapters, you can find them here:
-
 这是专门探索 JavaScript 及其构建组件的系列 #11。 在识别和描述核心元素的过程中，我们也分享了我们在构建[SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-rendering-engine-intro) 时使用的一些经验法则，SessionStack 是一款 JavaScript 应用程序，利用强大且高性能的特性来帮助用户实时查看和重现其 Web 应用程序缺陷。
 
 如果你错过了之前的章节，你可以从这找到他们：
@@ -32,12 +28,6 @@ If you missed the previous chapters, you can find them here:
 
 ![](https://cdn-images-1.medium.com/max/4872/1*oOcY2Gn-LVt1h-e9xOv5oA.jpeg)
 
-You probably already know that [Progressive Web Apps](https://developers.google.com/web/progressive-web-apps/) will only be getting more popular as they aim at making web app user experience smoother, at creating a native app-like experiences rather than browser look and feel.
-
-One of the main requirements to build a Progressive Web App is to make it very reliable in terms of network and loading — it should be usable in uncertain or non-existent network conditions.
-
-In this post, we’ll be deep diving into Service Workers: how they function and what you should care about. At the end, we also list a few unique benefits of the Service Workers that you should take advantage of, and share our own team’s experience here at [SessionStack](https://www.sessionstack.com/).
-
 你可能已经知道，[渐进式 Web 应用](https://developers.google.com/web/progressive-web-apps/)只会越来越受欢迎，因为它们旨在使 Web 应用用户体验更加流畅，创建原生应用程序般的体验，而不是浏览器的外观和感觉。
 
 构建渐进式 Web 应用程序的主要要求之一是使其在网络和加载方面非常可靠 - 它应该可用于不确定或不存在的网络条件。
@@ -46,27 +36,21 @@ In this post, we’ll be deep diving into Service Workers: how they function and
 
 ### 概述
 
-If you want to understand everything about Service Workers, you should start by reading our blog post on [Web Workers](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a).
-
 如果你希望理解关于 Service Workers 的一起，你应该阅读我们关于 [Web Workers](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a) 的博客。
 
 Basically, the Service Worker is a type of Web Worker, and more specifically it’s like a [Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker):
 
 基本上，Service Worker 是一种 Web Worker，更特定的来说，他就像是一个 [Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker):
 
-* The Service Worker runs in its own global script context Serivice Worker 运行在它自己的全局脚本上下文中
+* Serivice Worker 运行在它自己的全局脚本上下文中
 
-* It isn’t tied to a specific web page它不会和特定的 web 页面绑定
+* 它不会和特定的 web 页面绑定
 
-* It cannot access the DOM 它不能访问 DOM
-
-One of the main reasons why the Service Worker API is so exciting is that it allows your web apps to support offline experiences, giving developers complete control over the flow.
+* 它不能访问 DOM
 
 Service Worker API 令人兴奋的主要原因之一是它可以让你的网络应用程序支持离线体验，从而使开发人员能够完全控制流程。
 
 ### Service Worker 的生命周期
-
-The lifecycle of a service worker is completely separated from your web page one. It consists of the following phases:
 
 Service worker 的生命周期完全独立于你的 web 页面。它由以下几步组成：
 
@@ -78,15 +62,9 @@ Service worker 的生命周期完全独立于你的 web 页面。它由以下几
 
 ### 下载
 
-This is when the browser downloads the .js file which contains the Service Worker.
-
 这就是浏览器下载包含 Service Worker 的 js 文件的时候。
 
 ### 安装
-
-To install a Service Worker for your web app, you have to register it first, which you can do in your JavaScript code. When a Service Worker is registered, it prompts the browser to start a Service Worker install step in the background.
-
-By registering the Service Worker, you tell the browser where your Service Worker JavaScript file lives. Let’s look at the following code:
 
 要为你的 Web 应用程序安装 Service Worker，你必须先注册它，你可以在 JavaScript 代码中进行注册。 当注册Service Worker 时，它会提示浏览器在后台启动 Service Worker 安装步骤。
 
@@ -106,22 +84,6 @@ if ('serviceWorker' in navigator) {
 }
 ```
 
-The code checks whether the Service Worker API is supported in the current environment. If it is, the /sw.js Service Worker is registered.
-
-You can call the register() method every time a page loads with no concern — the browser will figure out if the service worker has already been registered, and will handle it properly.
-
-An important detail of the register() method is the location of the service worker file. In this case you can see that the service worker file is at the root of the domain. This means that the service worker's scope will be the entire origin. In other words, this service worker will receive fetch events (which we’ll discuss later) for everything on this domain. If we register the service worker file at /example/sw.js, then the service worker would only see fetch events for pages which URLs start with /example/ (i.e. /example/page1/, /example/page2/).
-
-During the installation phase, it’s best to load and cache some static assets. Once the assets are successfully cached, the Service Worker installation is complete. If not (the loading fails) — the Service Worker will do a retry. Once installed successfully, you’ll know that the static assets are in the cache.
-
-This answers your question if registration need to happen after the load event. It’s not a must, but it’s definitely recommended.
-
-Why so? Let’s consider a user’s first visit to your web app. There’s no service worker yet, and the browser has no way of knowing in advance whether there will be a service worker that will eventually be installed. If the Service Worker gets installed, the browser will need to spend extra CPU and memory for this additional thread which otherwise the browser will spend on rendering the web page instead.
-
-The bottom line is that , if you just install a Service Worker on your page, you’re running the risk of delaying the loading and rendering — not making the page available to your users as quickly as possible.
-
-Note that this is important only for the first page visit. Subsequent page visits don’t get impacted by the Service Worker installation. Once a Service Worker is activated on a first page visit, it can handle loading/caching events for subsequent visits to your web app. This all makes sense, because it needs to be ready to handle limited network connectivity.
-
 该代码检查当前环境中是否支持 Service Worker API。如果是，则注册 /sw.js Service Worker。
 
 你可以在每次加载页面时调用 register() 方法而不用担心 - 浏览器会判断 Service Worker 是否已经注册，并且会正确处理。
@@ -140,19 +102,13 @@ register() 方法的一个重要细节是 Service Worker 文件的位置。在�
 
 ### 激活
 
-After the Service Worker is installed, the next step will be its activation. This step is a great opportunity to manage previous caches.
-
-Once activated, the Service Worker will start controlling all pages that fall under its scope. An interesting fact: the page that registered the Service Worker for the first time won’t be controlled until that page is loaded again. Once the Service Worker is in control, it will be in one of the following states:
-
 安装 Service Worker 之后，下一步将是其激活。 这一步是管理之前缓存的好机会。
 
 一旦激活， Service Worker 将开始控制所有属于其范围的页面。 一个有趣的事实是：首次注册 Service Worker 的页面将不会被控制，直到该页面再次被加载。 一旦 Service Worker 处于控制之下，它将处于以下状态之一：
 
-* It will handle fetch and message events that occur when a network request or message is made from the page它将处理从页面发出网络请求或消息时发生的 fetch 和消息事件
+* 它将处理从页面发出网络请求或消息时发生的 fetch 和消息事件
 
-* It will be terminated to save memory 为了节省内存而被终止
-
-Here is how the lifecycle will look like:
+* 为了节省内存而被终止
 
 生命周期看起来是这个样子的：
 
@@ -160,9 +116,7 @@ Here is how the lifecycle will look like:
 
 ### 在 Service Worker 中处理安装
 
-After a page spins up the registration process, let’s see what happens inside the Service Worker script, which handles the install event by adding an event listener to the Service Worker instance.
 
-Those are the steps that need to be taken when the install event is handled:
 
 在页面加速注册过程之后，让我们看看在 Service Worker 脚本中发生了什么，它通过向 Service Worker 实例添加事件侦听器来处理安装事件。
 
@@ -174,114 +128,169 @@ Those are the steps that need to be taken when the install event is handled:
 
 * 确认所有请求的资源是否被缓存
 
-Here is what a simple installation might look like inside a Service Worker:
-
 下面是 Service Worker 中一个简单的安装过程：
 
- <iframe src="https://medium.com/media/8a4c5afca4a07c30b6c791be08bbdbc4" frameborder=0></iframe>
+```javascript
+var CACHE_NAME = 'my-web-app-cache';
+var urlsToCache = [
+  '/',
+  '/styles/main.css',
+  '/scripts/app.js',
+  '/scripts/lib.js'
+];
 
-If all the files are successfully cached, then the service worker will be installed. If **any** of the files fail to download, then the install step will fail. So be careful what files you put there.
+self.addEventListener('install', function(event) {
+  // event.waitUntil takes a promise to know how
+  // long the installation takes, and whether it 
+  // succeeded or not.
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
+      })
+  );
+});
+```
+
+
 
 如果所有的文件都被成功地缓存，那么 service worker 就安装成功。如果**任一**文件下载失败，那么安装步骤就会失败。因此留意你放在这的文件。
-
-Handling the install event is completely optional and you can avoid it, in which case you don’t need to perform any of the steps here.
 
 处理安装事件完全是可选的并且你可以避免它，这样你就不需要执行这里的任何步骤。
 
 ### 在运行时缓存请求
 
-This part is the real-deal. This is where you’ll see how to intercept requests and return the created caches (and create new ones).
-
 这部分是真正需要处理的部分。你将在这看到请求如何被拦截并且返回创建的缓存（或者新创建的请求）。
-
-After a Service Worker is installed and the user navigates to another page or refreshes the page he’s on, the Service Worker will receive fetch events. Here is an example that demonstrates how to return cached assets or perform a new request and then cache the result:
 
 在 Service Worker 成功安装之后 ，用户浏览其他的页面或者刷新当前页面， Service Worker 都会收到 fetch 事件。下面的例子展示了如何返回缓存的资源或者执行一个新的请求再缓存结果：
 
- <iframe src="https://medium.com/media/636ebc25f8c60b32f15d19ddfafb8736" frameborder=0></iframe>
+```javascript
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    // This method looks at the request and
+    // finds any cached results from any of the
+    // caches that the Service Worker has created.
+    caches.match(event.request)
+      .then(function(response) {
+        // If a cache is hit, we can return thre response.
+        if (response) {
+          return response;
+        }
 
-Here is what happens in a nutshell:
+        // Clone the request. A request is a stream and
+        // can only be consumed once. Since we are consuming this
+        // once by cache and once by the browser for fetch, we need
+        // to clone the request.
+        var fetchRequest = event.request.clone();
+        
+        // A cache hasn't been hit so we need to perform a fetch,
+        // which makes a network request and returns the data if
+        // anything can be retrieved from the network.
+        return fetch(fetchRequest).then(
+          function(response) {
+            // Check if we received a valid response
+            if(!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Cloning the response since it's a stream as well.
+            // Because we want the browser to consume the response
+            // as well as the cache consuming the response, we need
+            // to clone it so we have two streams.
+            var responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(function(cache) {
+                // Add the request to the cache for future queries.
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          }
+        );
+      })
+    );
+});
+```
+
+
 
 在 nutshell 中会发生：
 
-* The event.respondWith() will determine how we’ll respond to the fetch event. We pass a promise from caches.match() which looks at the request and finds if there are any cached results from any of the caches that have been created. event.respondWith() 将会决定如何响应 fetch 事件。我们将会从 caches.match() 中传递一个 promise 监听请求并且查看缓存中是否存在命中。
+* event.respondWith() 将会决定如何响应 fetch 事件。我们将会从 caches.match() 中传递一个 promise 监听请求并且查看缓存中是否存在命中。
 
-* If there is a cache, the response is retrieved.如果缓存存在，那么就发送响应。
+* 如果缓存存在，那么就发送响应。
 
-* Otherwise, a fetch will be performed.否则就会执行 fetch
+* 否则就会执行 fetch
 
-* Check if the status is 200. We also check that the response type is **basic**, which indicates that it’s a request from our origin. Requests to third party assets won’t be cached in this case.检查状态是否是 200。我们也会检查响应的类型是基本的，这也表示请求是同源请求。对于第三方资源的请求在这种情况下就不会被缓存。
+* 检查状态是否是 200。我们也会检查响应的类型是基本的，这也表示请求是同源请求。对于第三方资源的请求在这种情况下就不会被缓存。
 
-* The response is added to the cache.响应被添加到缓存中。
-
-Requests and responses have to be cloned because they’re [streams](https://streams.spec.whatwg.org/). The body of a stream can be consumed only once. And since we want to consume them, we want to clone them because the browser has to consume them as well.
+* 响应被添加到缓存中。
 
 请求和响应必须被克隆因为它们是[流](https://streams.spec.whatwg.org/)。流的主体只能够被消费一次。并且一旦我们想消费它们，我们就想克隆它们因为浏览器必须消费它们。
 
 ### 更新 Service Worker
 
-When a user visits your web app, the browser tries to re-download the .js file that contains your Service Worker code. This takes place in the background.
-
 当一个用户访问你的 web 应用，浏览器将会尝试重新下载包含你的 Service Worker 的 js 文件。这会在后台进行。
-
-If there is even a single byte difference in the Service Worker’s file that was downloaded now compared to the current Service Worker’s file, the browser will assume that there is a change and a new Service Worker has to be started.
 
 如果现在下载的 Service Worker 文件和现在的 Service Worker 文件有一个字节的差异，这个浏览器就会假设已经发生了变化并且启动新的 Service Worker。
 
-The new Service Worker will be started and the install event will be fired. At this point, however, the old Service Worker is still controlling the pages of your web app which means that the new Service Worker will enter a waiting state.
-
 这个新的 Service Worker 就会被启动并且安装事件就会被触发。然而那个时间点，旧的 Service Worker 依然会控制你的 web 应用，这意味着新的 Service Worker 依然会进入一个等待的状态。
 
-Once the currently opened pages of your web app are closed, the old Service Worker will be killed by the browser and the newly-installed Service Worker will take full control. This is when its activate event will be fired.
-
 一旦现在关闭你之前打开的的 web 应用的页面，旧的 Service Worker 就会被浏览器中止并且新安装的 Service Worker 就会全部接管。这时 active 事件就会被触发。
-
-Why is all this needed? To avoid the problem of having two versions of a web app running simultaneously , in different tabs — something that is actually very common on the web and can create really bad bugs (e.g. cases in which you have different schema while storing data locally in the browser).
 
 为什么所有的都需要？为了避免同时在不同的标签页中运行两种版本的 web 应用--这种事的确经常发生在 web 中并且会产生非常糟糕的 bug。（比如：你在浏览器本地存储了不同结构的数据）
 
 ### 从缓存中删除数据
 
-The most common step in the activate callback is cache management. You’d want to do this now because if you were to wipe out any old caches in the install step, old Service Workers will suddenly stop being able to serve files from that cache.
-
 
 在激活回调中最常见的步骤就是缓存管理。你现在就想做这件事因为你打算将安装步骤中的旧缓存删除掉，旧的  Service Worker 就会突然停止为缓存中的文件提供服务。
 
-Here is an example how you can delete some files from the cache that are not whitelisted (in this case, having page-1 or page-2 under their names):
-
 下面的例子就是你如何从不是白名单的缓存中删除文件（这种情况，page-1 以及 page-2就在他们的）
 
- <iframe src="https://medium.com/media/05d9fbb176b3902e930496d2bcbd53e7" frameborder=0></iframe>
+```javascript
+self.addEventListener('activate', function(event) {
+
+  var cacheWhitelist = ['page-1', 'page-2'];
+
+  event.waitUntil(
+    // Retrieving all the keys from the cache.
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        // Looping through all the cached files.
+        cacheNames.map(function(cacheName) {
+          // If the file in the cache is not in the whitelist
+          // it should be deleted.
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+});
+```
+
+
 
 ### HTTPS 需求
 
-When you’re building your web app, you’ll be able to use Service Workers through localhost, but once you deploy it in production, you need to have HTTPS ready (and that’s the last reason for you to have HTTPS).
-
 当你在构建你的 web 应用的时候，你能够在 localhost 使用 Service Worker ，但是你一旦将其部署到生产环境，那么你必须准备好 HTTPS （并且这是你使用 HTTPS 最后的原因）。
 
-Using a Service Worker, you can hijack connections and fabricate responses. By not using HTTPs, your web app becomes prone to a [man-in-the-middle attacks](https://en.wikipedia.org/wiki/Man-in-the-middle_attack).
-
 通过 Service Worker，你可以劫持连接并且制作响应。如果不使用 HTTPS，你的 web 应用容易导致[中间人攻击](https://en.wikipedia.org/wiki/Man-in-the-middle_attack)。
-
-To make things safer, you’re required to register Service Workers on pages that are served over HTTPS so that you know that the Service Worker which the browser receives, hasn’t been modified while traveling through the network.
 
 出于安全考虑，你需要在使用 HTTPS的服务上注册 Service Worker，这样才能知道浏览器接收到的 Service Worker 请求没有在网络传输过程中被修改。
 
 ### 浏览器支持
 
-The browser support for Service Workers is getting better:
-
 对于 Service Worker 的浏览器支持也越来越好：
 
 ![](https://cdn-images-1.medium.com/max/NaN/1*6o2TRDmrJlS97vh1wEjLYw.png)
 
-You can follow the progress of all the browsers here — [https://jakearchibald.github.io/isserviceworkerready/](https://jakearchibald.github.io/isserviceworkerready/).
-
 你可以在这参考所有浏览器的进程— [https://jakearchibald.github.io/isserviceworkerready/](https://jakearchibald.github.io/isserviceworkerready/)。
 
 ### Service Workers 拥抱更好的特性
-
-Some unique features that a Service Worker provides are:
 
 Service Worker 提供了一些很特别的特性：
 
@@ -289,29 +298,19 @@ Service Worker 提供了一些很特别的特性：
 
 * **推送通知**— 允许用户选择从网络应用程序及时更新。
 
-* **后台同步**— allows you to defer actions until the user has stable connectivity. This way, you can make sure that whatever the user wants to send, is actually sent.允许直到用户具有稳定的连接的时候才执行操作。这样你就可以确定无论用户希望发送什么都会被发送。
+* **后台同步**— 允许直到用户具有稳定的连接的时候才执行操作。这样你就可以确定无论用户希望发送什么都会被发送。
 
-* **周期性同步** (未来) — API that provides functionality for managing periodic background synchronization.API 提供后来周期性同步管理功能。
+* **周期性同步** (未来) — API 提供后来周期性同步管理功能。
 
-* **地理围栏** (未来) — you can define parameters, also referred to as **geofences** which surround the areas of interest. The web app gets a notification when the device crosses a geofence, which allows you to provide useful experience based on the geography of the user.你可以定义参数，也可以认为是**电子围栏**即感兴趣的地区。这个 web 应用就会在设备经过电子围栏的时候发送推送通知，这样就可以允许你基于用户的地理信息提供有意义的体验。
-
-Each of these will be discussed in detail in future blog posts in this series.
+* **地理围栏** (未来) — 你可以定义参数，也可以认为是**电子围栏**即感兴趣的地区。这个 web 应用就会在设备经过电子围栏的时候发送推送通知，这样就可以允许你基于用户的地理信息提供有意义的体验。
 
 在这个系列中的后续博客中我们继续讨论这些特性的细节。
 
-We’re constantly working on making the UX of SessionStack as smooth as possible, optimizing page loading and response times.
-
 目前我们一直让 SessionStack 的 UX 变得更佳顺滑，优化页面加载和响应时间。
-
-When you replay a user session in [SessionStack](https://www.sessionstack.com) (or watch it real-time), the SessionStack front-end will be constantly pulling data from our servers in order to seamlessly create a buffering-like experience for you. To give you a bit of background — once you integrate SessionStack’s library in your web app, it will be continuously collecting data such as DOM changes, user interactions, network requests, unhandled exceptions and debug messages.
 
 如果你在 [SessionStack](https://www.sessionstack.com) 重现一个用户 session （或者实时观察它），SessionStack 的前台将会持续从服务器获取数据，这样可以无缝为你创建一个类似缓存的用户体验。为了给你提供一些背景知识-一旦你将 SessionStack 的库集成到你的 web 应用，它将会持续收集数据，比如 DOM 改变，用户交互，网络请求，未处理的异常以及调试消息。
 
-When a session is being replayed or streamed real-time, SessionStack serves all the data allowing you to see everything that the user experienced in his own browser (both visually and technically). This all needs to take place real quick as we don’t want to make users wait.
-
 当一个 session 被重现或者实时流式展示，SessionStack 将会为所有的数据提供问题，这样就允许你可看到你的用户在浏览器中的所有体验（包括视觉上和技术上）。这个过程必须足够快，因为我们不希望用户等待。
-
-Since data is pulled by our front-end, this is a great place where Service Workers can be leveraged to handle situations like reloading our player and having to stream everything once again. Handling slow network connectivity is also very important.
 
 由于数据是由我们的前端提取的，因此这是一个很好的地方，可以利用 Service Worker 来处理重新加载我们的播放器和再次流式传输等情况。 处理较慢的网络连接也非常重要。
 
