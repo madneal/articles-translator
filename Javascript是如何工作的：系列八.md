@@ -116,8 +116,6 @@ register() 方法的一个重要细节是 Service Worker 文件的位置。在�
 
 ### 在 Service Worker 中处理安装
 
-
-
 在页面加速注册过程之后，让我们看看在 Service Worker 脚本中发生了什么，它通过向 Service Worker 实例添加事件侦听器来处理安装事件。
 
 这些是安装事件处理时需要采取的步骤：
@@ -152,8 +150,6 @@ self.addEventListener('install', function(event) {
   );
 });
 ```
-
-
 
 如果所有的文件都被成功地缓存，那么 service worker 就安装成功。如果**任一**文件下载失败，那么安装步骤就会失败。因此留意你放在这的文件。
 
@@ -214,8 +210,6 @@ self.addEventListener('fetch', function(event) {
 });
 ```
 
-
-
 在 nutshell 中会发生：
 
 * event.respondWith() 将会决定如何响应 fetch 事件。我们将会从 caches.match() 中传递一个 promise 监听请求并且查看缓存中是否存在命中。
@@ -272,8 +266,6 @@ self.addEventListener('activate', function(event) {
 });
 ```
 
-
-
 ### HTTPS 需求
 
 当你在构建你的 web 应用的时候，你能够在 localhost 使用 Service Worker ，但是你一旦将其部署到生产环境，那么你必须准备好 HTTPS （并且这是你使用 HTTPS 最后的原因）。
@@ -286,7 +278,7 @@ self.addEventListener('activate', function(event) {
 
 对于 Service Worker 的浏览器支持也越来越好：
 
-![](https://cdn-images-1.medium.com/max/NaN/1*6o2TRDmrJlS97vh1wEjLYw.png)
+![](http://ozfo4jjxb.bkt.clouddn.com/browser_support.png)
 
 你可以在这参考所有浏览器的进程— [https://jakearchibald.github.io/isserviceworkerready/](https://jakearchibald.github.io/isserviceworkerready/)。
 
@@ -302,7 +294,7 @@ Service Worker 提供了一些很特别的特性：
 
 * **周期性同步** (未来) — API 提供后来周期性同步管理功能。
 
-* **地理围栏** (未来) — 你可以定义参数，也可以认为是**电子围栏**即感兴趣的地区。这个 web 应用就会在设备经过电子围栏的时候发送推送通知，这样就可以允许你基于用户的地理信息提供有意义的体验。
+* **地理围栏** (未来) — 你可以定义参数，也可以认为是**地理围栏**即感兴趣的地区。这个 web 应用就会在设备经过电子围栏的时候发送推送通知，这样就可以允许你基于用户的地理信息提供有意义的体验。
 
 在这个系列中的后续博客中我们继续讨论这些特性的细节。
 
@@ -313,7 +305,6 @@ Service Worker 提供了一些很特别的特性：
 当一个 session 被重现或者实时流式展示，SessionStack 将会为所有的数据提供问题，这样就允许你可看到你的用户在浏览器中的所有体验（包括视觉上和技术上）。这个过程必须足够快，因为我们不希望用户等待。
 
 由于数据是由我们的前端提取的，因此这是一个很好的地方，可以利用 Service Worker 来处理重新加载我们的播放器和再次流式传输等情况。 处理较慢的网络连接也非常重要。
-
 
 这是一个免费的计划，你可以[尝试 SessionStack](https://www.sessionstack.com/signup/).
 
