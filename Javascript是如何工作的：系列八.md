@@ -30,22 +30,18 @@
 
 你可能已经知道，[渐进式 Web 应用](https://developers.google.com/web/progressive-web-apps/)只会越来越受欢迎，因为它们旨在使 Web 应用用户体验更加流畅，创建原生应用程序般的体验，而不是浏览器的外观和感觉。
 
-构建渐进式 Web 应用程序的主要要求之一是使其在网络和加载方面非常可靠 - 它应该可用于不确定或不存在的网络条件。
+构建渐进式 Web 应用程序的主要要求之一是使其在网络和加载方面非常可靠 - 它能够用于不确定或不存在的网络条件。
 
-在这篇文章中，我们将深入探讨 Service Workers：他们如何运作以及你应该关心什么。 最后，我们还列出了你应该利用的 Service Workers 的一些独特优势，并在 [SessionStack](https://www.sessionstack.com/) 中分享我们自己团队的经验。
+在这篇文章中，我们将深入探讨 Service Workers：它们如何运作以及你应该关心什么。 最后，我们还列出了你应该利用的 Service Workers 的一些特性，并在 [SessionStack](https://www.sessionstack.com/) 中分享我们团队的经验。
 
 ### 概述
 
-如果你希望理解关于 Service Workers 的一起，你应该阅读我们关于 [Web Workers](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a) 的博客。
+如果你希望理解关于 Service Workers 的一切，你应该阅读我们关于 [Web Workers](https://blog.sessionstack.com/how-javascript-works-the-building-blocks-of-web-workers-5-cases-when-you-should-use-them-a547c0757f6a) 的博客。
 
-Basically, the Service Worker is a type of Web Worker, and more specifically it’s like a [Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker):
-
-基本上，Service Worker 是一种 Web Worker，更特定的来说，他就像是一个 [Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker):
+基本上，Service Worker 是一种 Web Worker，更特定的来说，它就像是一个 [Shared Worker](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker):
 
 * Serivice Worker 运行在它自己的全局脚本上下文中
-
 * 它不会和特定的 web 页面绑定
-
 * 它不能访问 DOM
 
 Service Worker API 令人兴奋的主要原因之一是它可以让你的网络应用程序支持离线体验，从而使开发人员能够完全控制流程。
@@ -55,9 +51,7 @@ Service Worker API 令人兴奋的主要原因之一是它可以让你的网络�
 Service worker 的生命周期完全独立于你的 web 页面。它由以下几步组成：
 
 * 下载
-
 * 安装
-
 * 激活
 
 ### 下载
@@ -68,7 +62,7 @@ Service worker 的生命周期完全独立于你的 web 页面。它由以下几
 
 要为你的 Web 应用程序安装 Service Worker，你必须先注册它，你可以在 JavaScript 代码中进行注册。 当注册Service Worker 时，它会提示浏览器在后台启动 Service Worker 安装步骤。
 
-通过注册服务工作者，你可以告诉浏览器你的服务工作者JavaScript文件在哪里。 我们来看下面的代码：
+通过注册服务 Service Worker，你可以告诉浏览器你的 Service Worker JavaScript 文件在哪里。 我们来看下面的代码：
 
 ```javascript
 if ('serviceWorker' in navigator) {
@@ -107,7 +101,6 @@ register() 方法的一个重要细节是 Service Worker 文件的位置。在�
 一旦激活， Service Worker 将开始控制所有属于其范围的页面。 一个有趣的事实是：首次注册 Service Worker 的页面将不会被控制，直到该页面再次被加载。 一旦 Service Worker 处于控制之下，它将处于以下状态之一：
 
 * 它将处理从页面发出网络请求或消息时发生的 fetch 和消息事件
-
 * 为了节省内存而被终止
 
 生命周期看起来是这个样子的：
@@ -121,9 +114,7 @@ register() 方法的一个重要细节是 Service Worker 文件的位置。在�
 这些是安装事件处理时需要采取的步骤：
 
 * 打开一个缓存
-
 * 缓存我们的文件
-
 * 确认所有请求的资源是否被缓存
 
 下面是 Service Worker 中一个简单的安装过程：
@@ -213,13 +204,9 @@ self.addEventListener('fetch', function(event) {
 在 nutshell 中会发生：
 
 * event.respondWith() 将会决定如何响应 fetch 事件。我们将会从 caches.match() 中传递一个 promise 监听请求并且查看缓存中是否存在命中。
-
 * 如果缓存存在，那么就发送响应。
-
 * 否则就会执行 fetch
-
 * 检查状态是否是 200。我们也会检查响应的类型是基本的，这也表示请求是同源请求。对于第三方资源的请求在这种情况下就不会被缓存。
-
 * 响应被添加到缓存中。
 
 请求和响应必须被克隆因为它们是[流](https://streams.spec.whatwg.org/)。流的主体只能够被消费一次。并且一旦我们想消费它们，我们就想克隆它们因为浏览器必须消费它们。
@@ -237,7 +224,6 @@ self.addEventListener('fetch', function(event) {
 为什么所有的都需要？为了避免同时在不同的标签页中运行两种版本的 web 应用--这种事的确经常发生在 web 中并且会产生非常糟糕的 bug。（比如：你在浏览器本地存储了不同结构的数据）
 
 ### 从缓存中删除数据
-
 
 在激活回调中最常见的步骤就是缓存管理。你现在就想做这件事因为你打算将安装步骤中的旧缓存删除掉，旧的  Service Worker 就会突然停止为缓存中的文件提供服务。
 
