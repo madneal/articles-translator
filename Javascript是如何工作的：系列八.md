@@ -1,4 +1,4 @@
-## How JavaScript works: Service Workers, their lifecycle and use cases
+## JavaScript 是如何工作的: Service Workers, 它们的生命周期和使用案例
 
 >原文：[How JavaScript works: Service Workers, their lifecycle and use cases](https://blog.sessionstack.com/how-javascript-works-service-workers-their-life-cycle-and-use-cases-52b19ad98b58)
 >
