@@ -216,27 +216,40 @@ Here is what happens in a nutshell:
 
 Requests and responses have to be cloned because they’re [streams](https://streams.spec.whatwg.org/). The body of a stream can be consumed only once. And since we want to consume them, we want to clone them because the browser has to consume them as well.
 
-请求和响应必须被克隆因为它们是[流](https://streams.spec.whatwg.org/)。流的主体只能够被消费一次。并且一旦我们想消费它们，我们
+请求和响应必须被克隆因为它们是[流](https://streams.spec.whatwg.org/)。流的主体只能够被消费一次。并且一旦我们想消费它们，我们就想克隆它们因为浏览器必须消费它们。
 
-### Updating a Service Worker
+### 更新 Service Worker
 
 When a user visits your web app, the browser tries to re-download the .js file that contains your Service Worker code. This takes place in the background.
 
+当一个用户访问你的 web 应用，浏览器将会尝试重新下载包含你的 Service Worker 的 js 文件。这会在后台进行。
+
 If there is even a single byte difference in the Service Worker’s file that was downloaded now compared to the current Service Worker’s file, the browser will assume that there is a change and a new Service Worker has to be started.
+
+如果现在下载的 Service Worker 文件和现在的 Service Worker 文件有一个字节的差异，这个浏览器就会假设已经发生了变化并且启动新的 Service Worker。
 
 The new Service Worker will be started and the install event will be fired. At this point, however, the old Service Worker is still controlling the pages of your web app which means that the new Service Worker will enter a waiting state.
 
+这个新的 Service Worker 就会被启动并且安装事件就会被触发。然而那个时间点，旧的 Service Worker 依然会控制你的 web 应用，这意味着新的 Service Worker 依然会进入一个等待的状态。
+
 Once the currently opened pages of your web app are closed, the old Service Worker will be killed by the browser and the newly-installed Service Worker will take full control. This is when its activate event will be fired.
 
+一旦现在关闭你之前打开的的 web 应用的页面，旧的 Service Worker 就会被浏览器中止并且新安装的 Service Worker 就会全部接管。这时 active 事件就会被触发。
+
 Why is all this needed? To avoid the problem of having two versions of a web app running simultaneously , in different tabs — something that is actually very common on the web and can create really bad bugs (e.g. cases in which you have different schema while storing data locally in the browser).
+
+为什么所有的都需要？为了避免同时在不同的标签页中运行两种版本的 web 应用--这种事的确经常发生在 web 中并且会产生非常糟糕的 bug。（比如：你在浏览器本地存储了不同结构的数据）
 
 ### 从缓存中删除数据
 
 The most common step in the activate callback is cache management. You’d want to do this now because if you were to wipe out any old caches in the install step, old Service Workers will suddenly stop being able to serve files from that cache.
 
+
 在激活回调中最常见的步骤就是缓存管理。你现在就想做这件事因为你打算将安装步骤中的旧缓存删除掉，旧的  Service Worker 就会突然停止为缓存中的文件提供服务。
 
 Here is an example how you can delete some files from the cache that are not whitelisted (in this case, having page-1 or page-2 under their names):
+
+下面的例子就是你如何从不是白名单的缓存中删除文件（这种情况，page-1 以及 page-2就在他们的）
 
  <iframe src="https://medium.com/media/05d9fbb176b3902e930496d2bcbd53e7" frameborder=0></iframe>
 
