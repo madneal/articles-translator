@@ -276,25 +276,36 @@ Service Worker 提供了一些很特别的特性：
 
 * **推送通知**— 允许用户选择从网络应用程序及时更新。
 
-* **Background sync **— allows you to defer actions until the user has stable connectivity. This way, you can make sure that whatever the user wants to send, is actually sent.
+* **后台同步**— allows you to defer actions until the user has stable connectivity. This way, you can make sure that whatever the user wants to send, is actually sent.允许直到用户具有稳定的连接的时候才执行操作。这样你就可以确定无论用户希望发送什么都会被发送。
 
-* **Periodic sync** (future) — API that provides functionality for managing periodic background synchronization.
+* **周期性同步** (未来) — API that provides functionality for managing periodic background synchronization.API 提供后来周期性同步管理功能。
 
-* **Geofencing** (future) — you can define parameters, also referred to as **geofences **which surround the areas of interest. The web app gets a notification when the device crosses a geofence, which allows you to provide useful experience based on the geography of the user.
+* **地理围栏** (未来) — you can define parameters, also referred to as **geofences** which surround the areas of interest. The web app gets a notification when the device crosses a geofence, which allows you to provide useful experience based on the geography of the user.你可以定义参数，也可以认为是**电子围栏**即感兴趣的地区。这个 web 应用就会在设备经过电子围栏的时候发送推送通知，这样就可以允许你基于用户的地理信息提供有意义的体验。
 
 Each of these will be discussed in detail in future blog posts in this series.
 
+在这个系列中的后续博客中我们继续讨论这些特性的细节。
+
 We’re constantly working on making the UX of SessionStack as smooth as possible, optimizing page loading and response times.
+
+目前我们一直让 SessionStack 的 UX 变得更佳顺滑，优化页面加载和响应时间。
 
 When you replay a user session in [SessionStack](https://www.sessionstack.com) (or watch it real-time), the SessionStack front-end will be constantly pulling data from our servers in order to seamlessly create a buffering-like experience for you. To give you a bit of background — once you integrate SessionStack’s library in your web app, it will be continuously collecting data such as DOM changes, user interactions, network requests, unhandled exceptions and debug messages.
 
+如果你在 [SessionStack](https://www.sessionstack.com) 重现一个用户 session （或者实时观察它），SessionStack 的前台将会持续从服务器获取数据，这样可以无缝为你创建一个类似缓存的用户体验。为了给你提供一些背景知识-一旦你将 SessionStack 的库集成到你的 web 应用，它将会持续收集数据，比如 DOM 改变，用户交互，网络请求，未处理的异常以及调试消息。
+
 When a session is being replayed or streamed real-time, SessionStack serves all the data allowing you to see everything that the user experienced in his own browser (both visually and technically). This all needs to take place real quick as we don’t want to make users wait.
+
+当一个 session 被重现或者实时流式展示，SessionStack 将会为所有的数据提供问题，这样就允许你可看到你的用户在浏览器中的所有体验（包括视觉上和技术上）。这个过程必须足够快，因为我们不希望用户等待。
 
 Since data is pulled by our front-end, this is a great place where Service Workers can be leveraged to handle situations like reloading our player and having to stream everything once again. Handling slow network connectivity is also very important.
 
-There is a free plan if you’d like to [give SessionStack a try](https://www.sessionstack.com/?utm_source=medium&utm_medium=source&utm_content=javascript-series-web-workers-try-now).
+由于数据是由我们的前端提取的，因此这是一个很好的地方，可以利用 Service Worker 来处理重新加载我们的播放器和再次流式传输等情况。 处理较慢的网络连接也非常重要。
 
-![](https://cdn-images-1.medium.com/max/NaN/1*YKYHB1gwcVKDgZtAEnJjMg.png)
+
+这是一个免费的计划，你可以[尝试 SessionStack](https://www.sessionstack.com/signup/).
+
+![](http://ozfo4jjxb.bkt.clouddn.com/sessionstack.png)
 
 ### 资源
 
