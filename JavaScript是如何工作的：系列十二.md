@@ -1,9 +1,22 @@
-
 ## How JavaScript Works: Inside the Networking Layer + How to Optimize Its Performance and Security
+
+## JavaScript 是如何工作的：在网络层如何优化性能和安全
+
+>  原文：[How JavaScript Works: Inside the Networking Layer + How to Optimize Its Performance and Security](https://blog.sessionstack.com/how-javascript-works-inside-the-networking-layer-how-to-optimize-its-performance-and-security-f71b7414d34c)
+>
+>  译者：[neal1991](https://github.com/neal1991)
+>
+>  welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+>  LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 This is post # 12 of the series dedicated to exploring JavaScript and its building components. In the process of identifying and describing the core elements, we also share some rules of thumb we use when building [SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-networking-layer-intro), a JavaScript application that needs to be robust and highly-performant to help users see and reproduce their web app defects real-time.
 
+这是专门探索 JavaScript 及其构建组件的系列 #12。 在识别和描述核心元素的过程中，我们还分享了构建SessionStack 时使用的一些经验法则，这是一个需要强大且高性能的 JavaScript 应用程序，可帮助用户实时查看和重现其Web应用程序缺陷。
+
 If you missed the previous chapters, you can find them here:
+
+如果你错过了之前的章节，你可以从这找到他们： 
 
 * A[n overview of the engine, the runtime, and the call stack](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf?source=collection_home---2------1----------------)
 
@@ -27,17 +40,23 @@ If you missed the previous chapters, you can find them here:
 
 * [The rendering engine and tips to optimize its performance](https://blog.sessionstack.com/how-javascript-works-the-rendering-engine-and-tips-to-optimize-its-performance-7b95553baeda)
 
-Just like we mentioned in our previous blog post about the [rendering engine](https://blog.sessionstack.com/how-javascript-works-the-rendering-engine-and-tips-to-optimize-its-performance-7b95553baeda), we believe that the difference between good and great JavaScript developers is that the latter not only understand the nuts and bolts of the language but also its internals and the surrounding environment.
+Just like we mentioned in our previous blog post about the [rendering engine](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E6%B8%B2%E6%9F%93%E5%BC%95%E6%93%8E%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE.md), we believe that the difference between good and great JavaScript developers is that the latter not only understand the nuts and bolts of the language but also its internals and the surrounding environment.
 
-### A little bit of history
+就像我们之前在博客中提到的[渲染引擎](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E6%B8%B2%E6%9F%93%E5%BC%95%E6%93%8E%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE.md)一样，我们认为好的和优秀的 JavaScript 开发人员之间的区别在于，后者不仅了解语言的具体细节，还要了解其内部和周围环境。
+
+### 一小段历史
 
 Forty-nine years ago, a thing called ARPAnet was created. It was [an early packet switching network](https://en.wikipedia.org/wiki/Packet_switching) and the first network [to implement the TCP/IP suite](https://en.wikipedia.org/wiki/Internet_protocol_suite). That network set up a link between University of California and Stanford Research Institute. 20 years later Tim Berners-Lee circulated a proposal for a “Mesh” which later became better known as the World Wide Web. In those 49, years the internet has come a long way, starting from just two computers exchanging packets of data, to reaching more than 75 million servers, 3.8B people using the internet and 1.3B websites.
 
-![](https://cdn-images-1.medium.com/max/NaN/1*x8P3OcgcgKrEEDpgT2IKkQ.jpeg)
+四十九年前，创建了一个名为 ARPAnet 的东西。 这是一个[早期的分组交换网络](https://en.wikipedia.org/wiki/Packet_switching)，也是[实现 TCP/IP 套件](https://en.wikipedia.org/wiki/Internet_protocol_suite)的第一个网络。 该网络在加州大学和斯坦福研究院之间建立了连接。 20年后，Tim Berners-Lee 发布了一个名为“Mesh”的提案，该提案后来更为人称为万维网。 在那49年里，互联网已经走过了漫长的道路，从两台计算机交换数据包开始，到达超过7500万台服务器，38 亿人使用互联网和 1.3B 网站。
+
+![increase_network1_x8P3OcgcgKrEEDpgT2IKkQ.jpeg](http://ozfo4jjxb.bkt.clouddn.com/increase_network1_x8P3OcgcgKrEEDpgT2IKkQ.jpeg)
 
 In this post, we’ll try to analyze what techniques modern browsers employ to automatically boost performance (without you even knowing it), and we’ll specifically zoom in on the browser networking layer. At the end, we’ll provide some ideas on how to help browsers boost even more the performance of your web apps.
 
-## Overview
+在这篇文章中，我们将尝试分析现代浏览器采用哪些技术来自动提升性能（甚至不知道它），并且我们将特别放大浏览器网络层。 最后，我们将提供一些关于如何帮助浏览器提升 Web 应用性能的想法。
+
+## 概述
 
 The modern web browser has been specifically designed for the fast, efficient and secure delivery of web apps/websites. With hundreds of components running on different layers, from process management and security sandboxing to GPU pipelines, audio and video, and many more, the web browser looks more like an operating system rather than just a software application.
 
@@ -45,21 +64,31 @@ The overall performance of the browser is determined by a number of large compon
 
 Engineers often think that the networking stack is a bottleneck. This is frequently the case since all resources need to be fetched from the internet before the rest of the steps are unblocked. For the networking layer to be efficient it needs to play the role of more than just a simple socket manager. It is presented to us as a very simple mechanism for resource fetching but it’s actually an entire platform with its own optimization criteria, APIs, and services.
 
-![](https://cdn-images-1.medium.com/max/NaN/1*WqInzMPQGGcMX9AOONN76g.jpeg)
+现代网络浏览器专为快速，高效和安全地交付网络应用/网站而设计。数百个组件运行在不同的层上，从流程管理和安全沙箱到 GPU 流水线，音频和视频等等，Web 浏览器看起来更像是一个操作系统，而不仅仅是一个软件应用程序。
+
+浏览器的整体性能取决于许多大型组件：解析，布局，样式计算，JavaScript 和 WebAssembly 执行，渲染，当然还有网络堆栈。
+
+工程师经常认为网络堆栈是一个瓶颈。这通常是这种情况，因为在继续其他步骤之前，需要从互联网获取所有资源。为了提高网络层的效率，它不仅需要扮演简单的套接字管理员的角色。它作为一种非常简单的资源获取机制呈现给我们，但它实际上是一个拥有自己的优化标准，API 和服务的整个平台。
+
+![web.jpeg](http://ozfo4jjxb.bkt.clouddn.com/web.jpeg)
 
 As web developers, we don’t have to worry about the individual TCP or UDP packets, request formatting, caching and everything else that’s going on. The entire complexity is taken care of by the browser so we can focus on the application we’re developing. Knowing what’s happening under the hood, however, can help us create faster and more secure applications.
 
 In essence, here’s what’s happening when the user starts interacting with the browser:
 
-* The user enters a URL in the browser address bar
+作为 Web 开发人员，我们不必担心单个 TCP 或 UDP 数据包，请求格式化，缓存和其他所有事情。 整个复杂性由浏览器处理，因此我们可以专注于我们正在开发的应用程序。 但是，了解发生了什么，可以帮助我们创建更快，更安全的应用程序。
 
-* Given the URL of a resource on the web, the browser starts by checking its local and application caches and tries to use a local copy to fulfill the request.
+实质上，用户开始与浏览器交互时发生了以下情况：
 
-* If the cache cannot be used, the browser takes the domain name from the URL and requests the IP address of the server from a [DNS](https://en.wikipedia.org/wiki/Domain_Name_System). If the domain is cached, no DNS query is needed.
+* The user enters a URL in the browser address bar用户在浏览器地址栏中输入 URL
 
-* The browser creates an HTTP packet saying that it requests a web page located on the remote server.
+* Given the URL of a resource on the web, the browser starts by checking its local and application caches and tries to use a local copy to fulfill the request.在给定 Web 上资源的 URL，浏览器首先检查本地和应用程序缓存，并尝试使用本地副本来完成请求。
 
-* The packet is sent to the TCP layer which adds its own information on top of the HTTP packet. This information is required to maintain the started session.
+* If the cache cannot be used, the browser takes the domain name from the URL and requests the IP address of the server from a [DNS](https://en.wikipedia.org/wiki/Domain_Name_System). If the domain is cached, no DNS query is needed.如果缓存无法使用，浏览器将从URL中获取域名，并从 [DNS](https://en.wikipedia.org/wiki/Domain_Name_System) 请求服务器的IP地址。 如果该域被缓存，则不需要 DNS 查询。
+
+* The browser creates an HTTP packet saying that it requests a web page located on the remote server.浏览器会创建一个 HTTP 数据包，说明它请求位于远程服务器的网页。
+
+* The packet is sent to the TCP layer which adds its own information on top of the HTTP packet. This information is required to maintain the started session.数据包被发送到 TCP 层，在 TCP 数据包的顶部添加它自己的信息。 此信息是维护启动会话所必需的。
 
 * The packet is then handed to the IP layer which main job is to figure out a way to send the packet from the user to the remote server. This information is also stored on top of the packet.
 
