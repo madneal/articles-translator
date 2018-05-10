@@ -90,39 +90,51 @@ In essence, here’s what’s happening when the user starts interacting with th
 
 * The packet is sent to the TCP layer which adds its own information on top of the HTTP packet. This information is required to maintain the started session.数据包被发送到 TCP 层，在 TCP 数据包的顶部添加它自己的信息。 此信息是维护启动会话所必需的。
 
-* The packet is then handed to the IP layer which main job is to figure out a way to send the packet from the user to the remote server. This information is also stored on top of the packet.
+* The packet is then handed to the IP layer which main job is to figure out a way to send the packet from the user to the remote server. This information is also stored on top of the packet.然后将数据包交给 IP层，其主要工作是将数据包从用户发送到远程服务器的方式。 这些信息也存储在数据包的顶部。
 
-* The packet is sent to the remote server.
+* The packet is sent to the remote server.数据包被发送到远程服务器。
 
-* Once the packet is received, the response gets sent back in a similar manner.
+* Once the packet is received, the response gets sent back in a similar manner.一旦收到数据包，就会以类似的方式发送响应。
 
 The W3C [Navigation Timing specification](http://www.w3.org/TR/navigation-timing/) provides a browser API as well as visibility into the timing and performance data behind the life of every request in the browser. Let’s inspect the components, as each plays a critical role in delivering the optimal user experience:
+
+[W3C Navigation Timing](http://www.w3.org/TR/navigation-timing/) 规范提供浏览器 API 以及浏览器中每个请求的生命周期背后的时间和性能数据。 让我们来看看这些组件，因为它们在提供最佳用户体验方面起着至关重要的作用：
 
 ![](https://cdn-images-1.medium.com/max/2234/1*rjBdCBwOx5Gp_A6b6FQgfw.png)
 
 The whole networking process is very complex and there are many different layers which can become a bottleneck. This is why browsers strive to improve performance on their side by using various techniques so that the impact of the entire network communication is minimal.
 
-## Socket management
+整个联网过程非常复杂，有许多不同的层次可能会成为瓶颈。 这就是为什么浏览器努力通过使用各种技术来提高性能的原因，以便整个网络通信的影响最小。
+
+## 套接字管理
 
 Let’s start with some terminology:
 
-* **Origin** — A triple of application protocol, domain name and port number (e.g. https, [www.example.com](http://www.example.com), 443)
+让我们从一些术语开始：
 
-* **Socket pool** — a group of sockets belonging to the same origin (all major browsers limit the maximum pool size to 6 sockets)
+* **Origin** — 应用协议，域名和端口号 (比如，https, [www.example.com](http://www.example.com), 443)
+
+* **Socket pool** — a group of sockets belonging to the same origin (all major browsers limit the maximum pool size to 6 sockets)一组属于同源的套接字（所有主流浏览器都将最大池大小限制为6个套接字）
 
 JavaScript and WebAssembly **do not** allow us to manage the lifecycle of individual network sockets, and that’s a good thing! This not only keeps our hands clean but it also allows the browser to automate a lot of performance optimizations some of which include socket reuse, request prioritization and late binding, protocol negotiation, enforcing connection limits, and many other.
 
 Actually, modern browsers go the extra mile to separate the request management cycle from socket management. Sockets are organized in pools, which are grouped by origin, and each pool enforces its own connection limits and security constraints. Pending requests are queued, prioritized, and then bound to individual sockets in the pool. Unless the server intentionally closes the connection, the same socket can be automatically reused across multiple requests!
 
+JavaScript 和 WebAssembly 不允许我们管理单个网络套接字的生命周期，这是一件好事！ 这不仅可以让我们更轻松，而且还可以让浏览器自动进行大量的性能优化，其中一些包括套接字重用，请求优先级和延迟绑定，协议协商，强制连接限制等等。
+
+实际上，现代浏览器会花费更多的时间来将请求管理周期与套接字管理分开。 套接字按池组织，按源分组，每个池强制实施自己的连接限制和安全约束。 待处理的请求排队，优先，然后绑定到池中的单个套接字。 除非服务器有意关闭连接，否则可以在多个请求中自动重用相同的套接字！
+
 ![](https://cdn-images-1.medium.com/max/2000/1*0e8X3UTBpsiBSZKa3l1hXA.png)
 
 Since the opening of a new TCP connection comes at an additional cost, the reuse of connections introduces great performance benefits on its own. By default, browsers use the so-called “keepalive” mechanism which saves time from opening a new connection to the server when a request is made. The average time for opening a new TCP connection is:
 
-* Local requests — 23ms
+由于新的 TCP 连接的开通需要额外的成本，因此连接的重复使用对其本身具有很大的性能优势。 默认情况下，浏览器使用所谓的“keepalive”机制，这可以节省在发出请求时打开新连接到服务器的时间。 打开一个新的 TCP 连接的平均时间是：
 
-* Transcontinental requests — 120ms
+* 局域请求 — 23ms
 
-* Intercontinental requests — 225ms
+* 跨大陆请求— 120ms
+
+* 洲际请求 — 225ms
 
 This architecture opens the door to a number of other optimization opportunities. The requests can be executed in a different order depending on their priority. The browser can optimize the bandwidth allocation across all sockets or it can open sockets in anticipation of a request.
 
@@ -130,19 +142,33 @@ As I mentioned before, this is all managed by the browser and does not require a
 
 Some browsers even go one step further. For example, Chrome can self-teach itself to get faster as you use it. It learns based on the sites visited and the typical browsing patterns so it can anticipate likely user behavior and take action before the user does anything. The simplest example is pre-rendering a page when the user hovers on a link. If you’re interested in learning more about Chrome’s optimizations, you can check out this chapter [https://www.igvita.com/posa/high-performance-networking-in-google-chrome/](https://www.igvita.com/posa/high-performance-networking-in-google-chrome/) of the [High-Performance Browser Networking](https://hpbn.co) book.
 
-## Network Security and Sandboxing
+这种架构创造了一些可能的优化机会。这些请求可以根据其优先级以不同的顺序执行。浏览器可以优化所有套接字上的带宽分配，或者可以在预期请求时打开套接字。
+
+正如我之前提到的，这一切都是由浏览器管理的，并不需要我们的任何工作。但这并不一定意味着我们无能为力。选择正确的网络通信模式，传输类型和频率，选择协议以及调整/优化服务器堆栈可以在提高应用程序的整体性能方面发挥重要作用。
+
+有些浏览器甚至更进一步。例如，Chrome 可以自我学习自己在使用它时变得更快。它根据访问的网站和典型的浏览模式进行学习，以便在用户做任何事情之前预测可能的用户行为并采取行动。最简单的例子是当用户在链接上悬停时预先呈现页面。如果您有兴趣了解更多关于Chrome优化的信息，请参阅本章的 https://www.igvita.com/posa/high-performance-networking-in-google-chrome/ [高性能浏览器](https://hpbn.co/)网络书。
+
+## 网络安全和沙箱
 
 Allowing the browser to manage the individual sockets has another very important purpose: this way the browser enables the enforcement of a consistent set of security and policy constraints on untrusted application resources. For example, the browser does not allow direct API access to raw network sockets as this would enable any malicious application to make arbitrary connections to any host. The browser also enforces connection limits which protect the server as well as the client from resource exhaustion.
 
 The browser formats all outgoing requests to enforce consistent and well-formed protocol semantics to protect the server. Similarly, response decoding is done automatically to protect the user from malicious servers.
 
-### TLS negotiation
+允许浏览器管理单个套接字具有另一个非常重要的目的：通过这种方式，浏览器可以对不可信的应用程序资源执行一致的安全和策略约束。 例如，浏览器不允许直接 API 访问原始网络套接字，因为这可以使任何恶意应用程序与任何主机进行任意连接。 浏览器还强制执行连接限制，以保护服务器以及客户端免受资源耗尽。
+
+浏览器格式化所有传出请求，以强化一致且格式良好的协议语义来保护服务器。 同样，响应解码自动完成，以保护用户免受恶意服务器的侵害。
+
+### TLS 协商
 
 [Transport Layer Security (TLS)](https://en.wikipedia.org/wiki/Transport_Layer_Security) is a cryptographic protocol that provides communication security over a computer network. It finds widespread use in many applications, one of which is web browsing. Websites can use TLS to secure all communications between their servers and web browsers.
 
 The entire TLS handshake consists of the following steps:
 
- 1. The client sends a “Client hello” message to the server, along with the client’s random value and supported cipher suites.
+传输层安全性（TLS）是一种通过计算机网络提供通信安全性的加密协议。 它在许多应用程序中广泛使用，其中之一是网页浏览。 网站可以使用TLS来保护其服务器和Web浏览器之间的所有通信。
+
+整个TLS握手由以下步骤组成：
+
+ 1. The client sends a “Client hello” message to the server, along with the client’s random value and supported cipher suites.客户端向服务器端发送“Client hello”消息，以及客户端的随机值和支持的加密套件。
 
  2. The server responds by sending a “Server hello” message to the client, along with the server’s random value.
 
