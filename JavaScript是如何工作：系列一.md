@@ -1,4 +1,3 @@
-# How JavaScript works: an overview of the engine, the runtime, and the call stack 
 # JavaScript是如何工作的：引擎，运行时以及调用栈的概述
 
 > 原文：[How JavaScript works: an overview of the engine, the runtime, and the call stack](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)
