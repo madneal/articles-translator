@@ -170,31 +170,37 @@ The entire TLS handshake consists of the following steps:
 
  1. The client sends a “Client hello” message to the server, along with the client’s random value and supported cipher suites.客户端向服务器端发送“Client hello”消息，以及客户端的随机值和支持的加密套件。
 
- 2. The server responds by sending a “Server hello” message to the client, along with the server’s random value.
+ 2. The server responds by sending a “Server hello” message to the client, along with the server’s random value.服务器端向客户端回复消息"Server hello"，以及服务器的随机值。
 
- 3. The server sends its certificate for authentication to the client and may request a similar certificate from the client. The server sends the “Server hello done” message.
+ 3. The server sends its certificate for authentication to the client and may request a similar certificate from the client. The server sends the “Server hello done” message.服务器向客户端发送证书从而验证自己的身份同时可能请求客户端发送一个类似的证书。服务器端发送"Server hello done" 消息。
 
- 4. If the server has requested a certificate from the client, the client sends it.
+ 4. If the server has requested a certificate from the client, the client sends it.如果服务器端向客户端请求过证书，那么客户端就会发送证书。
 
- 5. The client creates a random Pre-Master Secret and encrypts it with the public key from the server’s certificate, sending the encrypted Pre-Master Secret to the server.
+ 5. The client creates a random Pre-Master Secret and encrypts it with the public key from the server’s certificate, sending the encrypted Pre-Master Secret to the server.客户端创建一个随机的 Pre-Master 密钥并且使用服务器端证书的公钥进行加密，并且将加密过的 Pre-Master 密钥发送到服务器。
 
- 6. The server receives the Pre-Master Secret. The server and the client each generate the Master Secret and session keys based on the Pre-Master Secret.
+ 6. The server receives the Pre-Master Secret. The server and the client each generate the Master Secret and session keys based on the Pre-Master Secret.服务器接收到 Pre-Master 密钥。服务器端和客户端各自根据 Pre-Master 密钥生成主密钥和会话密钥。
 
- 7. The client sends a “Change cipher spec” notification to the server to indicate that the client will start using the new session keys for hashing and encrypting messages. The client also sends a “Client finished” message.
+ 7. The client sends a “Change cipher spec” notification to the server to indicate that the client will start using the new session keys for hashing and encrypting messages. The client also sends a “Client finished” message.客户端向服务器发送一个"Change cipher spec"的通知表示客户端将会开始使用新的会话密钥对消息进行哈希和加密。客户端也会发送一个"Client finished"的消息。
 
- 8. The server receives the “Change cipher spec” and switches its record layer security state to symmetric encryption using the session keys. The server sends a “Server finished” message to the client.
+ 8. The server receives the “Change cipher spec” and switches its record layer security state to symmetric encryption using the session keys. The server sends a “Server finished” message to the client.服务器端接收到"Change cipher spec"的消息并且将其记录层的安全状态使用会话密钥切换到对称加密。服务器端向客户端发送一个"Server finished"消息。
 
- 9. Client and server can now exchange application data over the secured channel they have established. All messages sent from the client to the server and back are encrypted using the session key.
+ 9. Client and server can now exchange application data over the secured channel they have established. All messages sent from the client to the server and back are encrypted using the session key.客户端和服务器端可以在它们已经建立过的安全通道交换应用数据。所有的消息从客户端发送到服务器端或者返回来的都会使用会话密钥进行加密。
 
 The user is warned in case any of the verifications fail — e.g., the server is using a self-signed certificate.
 
-### Same-origin policy
+在任何验证失败的情况下，用户都会受到警告--比如，服务器使用自己签发的证书。
+
+### 同源策略
 
 Two pages have the same origin if the protocol, port (if one is specified), and host are the same for both pages.
 
+如果两个页面的协议，端口（如果指定了一个）和主机相同，则两个页面则是同源。
+
 Here are some examples of resources which may be embedded cross-origin:
 
-* JavaScript with <script src=”…”></script>. Error messages for syntax errors are only available for same-origin scripts
+以下是可能嵌入跨源的资源的一些示例：
+
+* JavaScript with <script src=”…”></script>. Error messages for syntax errors are only available for same-origin scripts 带有 <script src=”…”></script> 的 JavaScript，
 
 * CSS with <link rel=”stylesheet” href=”…”>. Due to the relaxed syntax rules of CSS, cross-origin CSS requires a correct Content-Type header. Restrictions vary by browser
 
