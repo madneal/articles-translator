@@ -202,67 +202,87 @@ Here are some examples of resources which may be embedded cross-origin:
 
 * JavaScript with <script src=”…”></script>. Error messages for syntax errors are only available for same-origin scripts 带有 <script src=”…”></script> 的 JavaScript，
 
-* CSS with <link rel=”stylesheet” href=”…”>. Due to the relaxed syntax rules of CSS, cross-origin CSS requires a correct Content-Type header. Restrictions vary by browser
+* CSS with <link rel=”stylesheet” href=”…”>. Due to the relaxed syntax rules of CSS, cross-origin CSS requires a correct Content-Type header. Restrictions vary by browser 带有 <link rel =“stylesheet”href =“...”> 的 CSS。 由于 CSS 的宽松语法规则，跨源 CSS 需要正确的 Content-Type 头。 浏览器的限制因人而异
 
-* Images with <img>
+* Images with <img> 带有 <img> 的 images
 
-* Media files with <video> and <audio>
+* Media files with <video> and <audio> 带有 <video> 和 <audio> 的 media
 
-* Plug-ins with <object>, <embed> and <applet>
+* Plug-ins with <object>, <embed> and <applet> 带有 <object>,<embed> 以及 <applet> 的  plug-ins
 
-* Fonts with @font-face. Some browsers allow cross-origin fonts, others require same-origin fonts.
+* Fonts with @font-face. Some browsers allow cross-origin fonts, others require same-origin fonts.带有@ font-face 的字体。 有些浏览器允许使用跨源的字体，其他浏览器则需要同源的字体。
 
-* Anything with <frame> and <iframe>. A site can use the X-Frame-Options header to prevent this form of cross-origin interaction.
+* Anything with <frame> and <iframe>. A site can use the X-Frame-Options header to prevent this form of cross-origin interaction.任何带有 <frame> 和 <iframe> 的东西。 网站可以使用 X-Frame-Options 头来阻止这种形式的跨源交互。
 
 The above list is far from complete; its goal is to highlight the principle of “least privilege” at work. The browser exposes only the APIs and resources that are necessary for the application code: the application supplies the data and the URL, and the browser formats the request and handles the full lifecycle of each connection.
 
 It’s worth noting that there is no single concept of the “same-origin policy.” Instead, there is a set of related mechanisms that enforce restrictions on DOM access, cookie and session state management, networking, and other components of the browser.
 
-## Resource and Client State Caching
+以上列表远非完整; 其目标是突出工作中的“最小特权”原则。 浏览器只公开应用程序代码所需的 API 和资源：应用程序提供数据和 URL，浏览器格式化请求并处理每个连接的完整生命周期。
+
+值得注意的是，“同源策略”没有单一概念。相反，有一组相关机制强制限制 DOM 访问，Cookie 和会话状态管理，网络以及浏览器的其他组件。
+
+## 资源和客户状态缓存
 
 The best and fastest request is a request not made. Prior to dispatching a request, the browser automatically checks its resource cache, performs the necessary validation checks, and returns a local copy of the resources if the specified conditions are met. If a local resource is not available in the cache, then a network request is made and the response is automatically placed in the cache for a subsequent access if such is permitted.
 
-* The browser automatically evaluates caching directives on each resource
+最好和最快的请求是未提出的请求。 在分派请求之前，浏览器会自动检查其资源缓存，执行必要的验证检查，并在满足指定条件时返回资源的本地副本。 如果本地资源在高速缓存中不可用，则会发出网络请求，并且响应会自动放入高速缓存中以供后续访问（如果允许）。
 
-* The browser automatically revalidates expired resources when possible
+* The browser automatically evaluates caching directives on each resource浏览器自动评估每个资源上的缓存指令
 
-* The browser automatically manages the size of the cache and resource eviction
+* The browser automatically revalidates expired resources when possible如果可能，浏览器会自动重新验证过期资源
+
+* The browser automatically manages the size of the cache and resource eviction浏览器会自动管理缓存的大小和清理
 
 Managing an efficient and optimized resource cache is hard. Thankfully, the browser takes care of the entire complexity on our behalf, and all we need to do is ensure that our servers are returning the appropriate cache directives; to learn more, see [Cache Resources on the Client](https://hpbn.co/optimizing-application-delivery/#cache-resources-on-the-client). You do provide Cache-Control, ETag, and Last-Modified response headers for all the resources on your pages, right?
 
 Finally, an often-overlooked but critical function of the browser is its duty to provide authentication, session, and cookie management. The browser maintains separate “cookie jars” for each origin, provides necessary application and server APIs to read and write new cookie, session, and authentication data, and automatically appends and processes appropriate HTTP headers to automate the entire process on our behalf.
 
-### An example:
+管理高效和优化的资源缓存很困难。 值得庆幸的是，浏览器为我们处理了整个复杂性，我们需要做的是确保我们的服务器返回适当的缓存指令; 要了解更多信息，请参阅[客户端上的缓存资源](https://hpbn.co/optimizing-application-delivery/#cache-resources-on-the-client)。 你确实为网页上的所有资源提供了Cache-Control，ETag 和 Last-Modified 响应标头，对吗？
+
+最后，浏览器经常被忽视但关键的功能是提供身份验证，会话和cookie管理。 浏览器为每个来源维护单独的“Cookie JAR”，提供必要的应用程序和服务器API来读取和写入新的Cookie，会话和身份验证数据，并自动附加和处理相应的HTTP头以代表我们自动执行整个过程。
+
+### 一个例子：
 
 A simple but illustrative example of the convenience of deferring session state management to the browser: an authenticated session can be shared across multiple tabs or browser windows, and vice versa; a sign-out action in a single tab will invalidate open sessions in all other open windows.
 
-## Application APIs and Protocols
+用一个简单但却形象的例子说明将会话状态管理交给浏览器的便利性：多个 tab 或者浏览器窗口可以共享一个认证过的会话，反之亦然；在一个 tab 中的登出操错可以让其它打开的窗口的会话失效。
+
+## 应用 API 以及协议
 
 Walking up the ladder of provided network services we finally arrive at the application APIs and protocols. As we saw, the lower layers provide a wide array of critical services: socket and connection management, request and response processing, enforcement of various security policies, caching, and much more. Every time we initiate an HTTP or an XMLHttpRequest, a long-lived Server-Sent Event or WebSocket session, or open a WebRTC connection, we are interacting with some or all of these underlying services.
 
 There is no single best protocol or API. Every non-trivial application will require a mix of different transports based on a variety of requirements: interaction with the browser cache, protocol overhead, message latency, reliability, type of data transfer, and more. Some protocols may offer low-latency delivery (e.g., Server-Sent Events, WebSocket), but may not meet other critical criteria, such as the ability to leverage the browser cache or support efficient binary transfers in all cases.
 
-## A Few Things You Can Do To Improve Your Web App Performance and Security
+走上提供网络服务的阶梯，我们终于到达了应用程序 API 和协议。正如我们所看到的，底层提供了一系列关键服务：套接字和连接管理，请求和响应处理，各种安全策略的执行，缓存等等。每次我们启动一个 HTTP 或一个XMLHttpRequest，一个长期活跃服务器发送的事件或 WebSocket 会话，或打开一个 WebRTC 连接，我们都与这些底层服务的一部分或全部进行交互。
 
-* Always use the “Connection: Keep-Alive” header in your requests. Browsers do this by default. Make sure that the server uses the same mechanism.
+没有单一的最佳协议或 API。每个大型的应用程序都需要根据各种需求混合使用不同的传输：与浏览器缓存的交互，协议开销，消息延迟，可靠性，数据传输类型等等。某些协议可能提供低延迟传输（例如 Server-Sent Events，WebSocket），但可能不符合其他关键条件，例如在所有情况下利用浏览器缓存或支持高效二进制传输的能力。
 
-* Use the proper Cache-Control, Etag and Last-Modified headers so you can save the browser some downloading time.
+## 你可以通过几件事来提高你的 Web 应用性能和安全性
 
-* Spend time tweaking and optimizing your web server. This is where real magic can happen! Bear in mind that the process if is very specific for each web app and the type of data you’re transmitting.
+* Always use the “Connection: Keep-Alive” header in your requests. Browsers do this by default. Make sure that the server uses the same mechanism.在你的请求头中总是使用"Connection: Keep-Alive"。浏览器默认会这样设置。确定服务器使用相同的机制。
 
-* Always use TLS! Especially if you have any type of authentication in your application.
+* Use the proper Cache-Control, Etag and Last-Modified headers so you can save the browser some downloading time.在请求头中使用合适的 Cache-Control, Etag, 以及 Last-Modified 可以帮助你的浏览器节省一些下载时间。
 
-* Research what security policies browsers provide and enforce them in your application.
+* Spend time tweaking and optimizing your web server. This is where real magic can happen! Bear in mind that the process if is very specific for each web app and the type of data you’re transmitting.花时间调整和优化你的 Web 服务器。 这就是真正的魔法发生的地方！ 请记住，该流程是否针对每个 Web 应用程序以及你要传输的数据的类型都非常具体。
+
+* Always use TLS! Especially if you have any type of authentication in your application.始终使用 TLS！ 特别是如果你在应用程序中有任何类型的身份验证。
+
+* Research what security policies browsers provide and enforce them in your application.研究浏览器在你的应用程序中提供并实施哪些安全策略。
 
 Both performance and security are first-class citizens in [SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-networking-layer-outro). The reason why we can’t afford to compromise on either is that once SessionStack is integrated into your web app, it starts monitoring everything from DOM changes and user interaction to network requests, unhandled exceptions and debug messages. All the data is transmitted to our servers real-time which allows you to replay issues from your web apps as videos and see everything that happened to your users. And this all is taking place with minimum latency and no performance overhead to your app.
 
 This is why we strive to employ all the above tips + a few more which we’ll discuss in a future post.
 
-There is a free plan if you’d like to [give SessionStack a try](https://www.sessionstack.com/signup/).
+性能和安全性都是 [SessionStack](https://www.sessionstack.com/?utm_source=medium&utm_medium=blog&utm_content=js-series-networking-layer-outro) 中的一等公民。 我们无法妥协的原因是，一旦 SessionStack 集成到你的Web应用程序中，它就会开始监视从 DOM 更改和用户交互到网络请求，未处理的异常和调试消息的所有内容。 所有数据都会实时传输到我们的服务器上，这样你就可以将视频中的问题作为视频重播，并查看用户发生的一切情况。 而这一切都是以最短的延迟进行的，并且不会对应用程序造成任何性能开销。
 
-![](https://cdn-images-1.medium.com/max/NaN/0*h2Z_BnDiWfVhgcEZ.)
+这就是为什么我们努力采用以上所有建议并且我们将在未来发布的内容中讨论的更多内容。
 
-### Resources
+这是一个免费的计划，你可以[尝试 SessionStack](https://www.sessionstack.com/signup/).
+
+![](http://ozfo4jjxb.bkt.clouddn.com/sessionstack.png)
+
+### 资源
 
 * [https://hpbn.co/](https://hpbn.co/)
 
