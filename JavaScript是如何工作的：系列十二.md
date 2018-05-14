@@ -94,12 +94,6 @@ JavaScript 和 WebAssembly 不允许我们管理单个网络套接字的生命�
 
 * 洲际请求 — 225ms
 
-This architecture opens the door to a number of other optimization opportunities. The requests can be executed in a different order depending on their priority. The browser can optimize the bandwidth allocation across all sockets or it can open sockets in anticipation of a request.
-
-As I mentioned before, this is all managed by the browser and does not require any work on our side. But this doesn’t necessarily mean that we can’t do anything to help. Choosing the right network communication patterns, type, and frequency of transfers, choice of protocols and tuning/optimization of our server stack can play a great role in improving the overall performance of an application.
-
-Some browsers even go one step further. For example, Chrome can self-teach itself to get faster as you use it. It learns based on the sites visited and the typical browsing patterns so it can anticipate likely user behavior and take action before the user does anything. The simplest example is pre-rendering a page when the user hovers on a link. If you’re interested in learning more about Chrome’s optimizations, you can check out this chapter [https://www.igvita.com/posa/high-performance-networking-in-google-chrome/](https://www.igvita.com/posa/high-performance-networking-in-google-chrome/) of the [High-Performance Browser Networking](https://hpbn.co) book.
-
 这种架构创造了一些可能的优化机会。这些请求可以根据其优先级以不同的顺序执行。浏览器可以优化所有套接字上的带宽分配，或者可以在预期请求时打开套接字。
 
 正如我之前提到的，这一切都是由浏览器管理的，并不需要我们的任何工作。但这并不一定意味着我们无能为力。选择正确的网络通信模式，传输类型和频率，选择协议以及调整/优化服务器堆栈可以在提高应用程序的整体性能方面发挥重要作用。
