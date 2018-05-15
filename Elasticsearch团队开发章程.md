@@ -1,10 +1,14 @@
-Elasticsearch Team Development Constitution
+Elasticsearch 团队开发章程
 
-# Preamble
+# 前言
 
 We, the team of Elasticsearch core developers, want to move as fast as we can toward a system that is reliable, robust, secure, scalable, and straightforward to use. We want to strive for innovation, replace legacy constructs and features, remove fragile code, and work toward a better user experience while keeping our users onboard with our rapid changes.
 
+我们作为 Elasticsearch 核心开发人员团队希望尽可能快地向可靠，健壮，安全，可扩展且易于使用的系统迁移。 我们希望争取创新，取代传统的构造和功能，删除脆弱的代码，并致力于改善用户体验，同时让我们的用户随着我们的快速变化而加入。
+
 It’s crucial for us to have a shared vision of where the team is heading and maybe even more importantly why the team is going down a certain path. When Elasticsearch was the *new kid on the block* it shone with endless flexibility, ease of use, and rich APIs. We formed a company around that young kid and suddenly its user base shot through the roof. The support organization could barely keep up with the growing number of customers, which is a good problem to have. Yet as the number of users grew, so did the chance of things going sideways, unfortunately much more quickly than we could ever hire support engineers. We learned that much of the flexibility came from leniency, from features that worked in most cases but not all. For instance, having scripts that users can send with the request is basically a remote code execution engine and if it goes wrong it’s fatal. Even the most basic features, like settings, were very flexible but enormously fragile. Specifying a number without a unit was perfectly fine except that many users didn’t know what the default unit was. We just tried to do the right thing, which turned out to not be the right thing all the time. 
+
+对于我们来说，拥有一个团队的前进方向的共同认识是非常重要的，甚至更重要的是为什么团队要走上一条特定的道路。当 Elasticsearch 创立之初时，它具有无尽的灵活性，易用性和丰富的 API。我们在这帮年轻的团队成立了一家公司，并且突然用户数也井喷式发展。支持组织几乎不能跟上越来越多的客户，这是幸福的烦恼。然而，随着用户数量的增长，事情发生的可能性也越来越大，不幸的是，比我们聘用支持工程师的速度要快得多。我们了解到，大多数灵活性来自宽松处理，从大多数情况下可行的功能，但不是全部。例如，用户可以使用请求发送的脚本基本上是一个远程代码执行引擎，如果出错，它是致命的。即使最基本的功能，比如设置，也非常灵活，但非常脆弱。在没有单位的情况下指定一个数字是很好的，除非许多用户不知道默认单位是什么。我们只是试图做正确的事情，结果一直不是正确的事情。
 
 Today we are in a different position. Our user base is much larger than it was in 2013 but our support organization hasn’t grown at the same rate. Yes, we handle an order of magnitude more support cases than in 2013, but this would not have been possible with the system we had back then. Now we’ve moved from a fragile but flexible system toward software that is narrower in scope. We have defined many more boundaries: stricter input validation, a security model that allows us fine grained control over permissions, and even a plugin model that provides great flexibility to add riskier features. 
 
