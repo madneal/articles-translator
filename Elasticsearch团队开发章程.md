@@ -12,15 +12,25 @@ It’s crucial for us to have a shared vision of where the team is heading and m
 
 Today we are in a different position. Our user base is much larger than it was in 2013 but our support organization hasn’t grown at the same rate. Yes, we handle an order of magnitude more support cases than in 2013, but this would not have been possible with the system we had back then. Now we’ve moved from a fragile but flexible system toward software that is narrower in scope. We have defined many more boundaries: stricter input validation, a security model that allows us fine grained control over permissions, and even a plugin model that provides great flexibility to add riskier features. 
 
+现在我们处于不同的位置。 我们的用户群比 2013 年的用户群大得多，但我们的支持机构并没有以同样的速度增长。 是的，我们处理比 2013 年更多的支持案例，但这在我们当时的系统中是不可能的。 现在我们已经从一个脆弱而灵活的系统转向了范围较窄的软件。 我们定义了更多的边界：更严格的输入验证，允许我们对权限进行细粒度控制的安全模型，甚至还有一个插件模型，可以提供极大的灵活性来添加风险更高的功能。
+
 But hold on, we are not there yet! There are still endless problems that can have fatal consequences. Aggregations can blow up servers with a single request. Users feel the need to run Elasticsearch with 30+ GB heaps. We are still offering 27 different ways of specifying a boolean value. And this list continues…
 
 We have a massive responsibility to our users, the support organization, the cloud hosting teams, and third party providers to offer a system that is reliable, robust, secure, and straightforward to use. For this reason we all should strive for innovation, replace legacy constructs and features, remove fragile code, and improve the user experience. Our advantage over other companies is our innovation, and innovation requires velocity. We must move and embrace change to innovate without leaving the user behind.
 
 The following sections are a collection of principles and guidelines for designing, refactoring, or removing code from the Elasticsearch codebase. These points are unordered and mostly uncategorized and should be seen as a constitution of software development within the Elasticsearch team.
 
-## Designing features
+但等等，我们还差得远呢！仍然有无穷无尽的问题会造成致命的后果。聚合可以通过一个请求来撑爆服务器。用户感觉需要运行 30+ G B堆的 Elasticsearch。我们仍然提供了 27 种指定布尔值的不同方式。这份名单还有其它内容...
+
+我们对我们的用户，支持组织，云托管团队和第三方提供商负有巨大责任，以提供可靠，稳健，安全且易于使用的系统。出于这个原因，我们都应该努力创新，取代传统的构造和功能，删除脆弱的代码，并改善用户体验。我们与其他公司相比的优势是我们的创新，创新需要速度。我们必须在不留下用户的情况下采取行动并接受变革创新。
+
+以下部分是用于设计，重构或从 Elasticsearch 代码库中删除代码的原则和指导原则的集合。这些点是无序的，大部分是未分类的，应该被看作是 Elasticsearch 团队内软件开发的一个组成部分。
+
+## 设计特性
 
 * *Progress over perfection.* We have followed this approach for many years now which allows us to make large changes over time without big bang commits originating from massive pull requests. For example, the completion suggester was added in the early days of Elasticsearch without support for realtime updates and specifically deletes. This means that deleting a document in Elasticsearch wasn’t immediately reflected in the suggestions. It was a hard problem at the time and about three years later we added support for bitset filters to the Lucene suggester as well as to Elasticsearch. Meanwhile it’s been an acceptable solution for many users out there, with many bugs fixed and the evolution toward a document based suggester. It was all about progress over perfection.
+
+* *流程优于一次性完美* 我们多年来一直遵循这种方法，这使我们能够随着时间的推移做出巨大的变化，而不会因大量的请求而产生巨大的响应。 例如，完成建议程序在Elasticsearch的早期版本中添加，而不支持实时更新和特定的删除。 这意味着删除Elasticsearch中的文档不会立即反映在建议中。 这是一个很难的问题，大约三年后，我们增加了对Lucene建议器和Elasticsearch的bitset过滤器的支持。 与此同时，对于许多用户来说，这是一个可以接受的解决方案，修复了许多错误，并朝着基于文档的建议者发展。 这完全是关于完美的进步。
 
 * *Design for today! Use abstractions with care.* Computer Science professors teach students to make extensive use of abstraction layers in the name of flexibility and information hiding. Certainly Elasticsearch makes extensive use of abstractions; no project involving several million lines of code could do otherwise and survive. But experience has shown that excessive or premature abstraction can be just as harmful as premature optimization. Abstraction should be used to the level required and no further.
 
