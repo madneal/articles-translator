@@ -43,11 +43,19 @@ As a simple exercise, consider a function which has an argument which is always 
 
 * *Strict, unambiguous, reliable, and simple.* Elasticsearch has a history of adding lenient, ambiguous, unreliable, and complex options. The direction along those lines has changed a while ago. At first glance it seems to help with being friendly to users but it comes with a high price. It comes with a combinatorial explosion of options and code paths which are not tested and which hide bugs. A perfect example is the gazillion options to specify a boolean value. Someone would think it’s as simple as comparing the value to the string "true" or “false” and if it doesn’t match we throw an exception. No, it accepts the values “false”, “0”, “no”, and “off” and if it doesn’t match any of those it’s interpreted as “true”. What could possibly go wrong? If you add code, do it in the simplest way possible that is also strict, unambiguous, and reliable. 
 
+* *严格，明确，可靠，简单。* Elasticsearch 有添加宽松，模糊，不可靠和复杂选项的历史。 关于这些在不久前发生了变化。 乍一看，它似乎有助于对用户友好，但是其成本巨大。 它带有一些组合式的选项和代码路径，它们没有经过测试，并且隐藏了错误。 一个完美的例子是指定一个布尔值的 gazillion 选项。 有人会认为这与将该值与字符串“true”或“false”进行比较一样简单，如果不匹配，我们会抛出异常。 不，它接受值“false”，“0”，“no”和“off”，如果它们不匹配，则将其解释为“true”。 什么可能会出错？ 如果你添加代码，请尽可能以最简单，最严格，明确和可靠的方式进行。
+
 * *Stick to core responsibilities.* It is crucial to our system that we build *solid* and *reliable* features. To do this, we need to remember our core responsibilities as a distributed scalable search engine. For example, we used to provide a limited web server called site-plugins, but it didn’t represent our core responsibilities, so we removed it. When features align with making Elasticsearch a better distributed scalable search engine, it becomes more solid and reliable. (The same principle applies to all our products.)
+
+* *坚守核心职责* 我们的系统坚持*稳固*和*可靠*特性至关重要。 为此，我们需要牢记我们的核心责任是分布式可扩展搜索引擎。 例如，我们曾经提供一个名为 site-plugins 的有限 Web 服务器，但它并不代表我们的核心职责，所以我们将其删除。 当功能与使 Elasticsearch 成为更好的分布式可扩展搜索引擎相一致时，它变得更加坚实可靠。（同样的原则适用于我们所有的产品。）
 
 * *You are the expert; act like it.* Elasticsearch has become popular. The user base is huge and growing exponentially. The subset of power users is shrinking such that one of our core responsibilities now is to streamline API usage and reduce the risk of "shooting yourself in the foot". Our core APIs offer a lot of flexibility which makes them easy to misuse. The result is often slow performance, cluster outages, and wrong results. Going forward, we should use our experience and deeper knowledge of the system to prevent these pitfalls. Build APIs and features that do their one thing very well. Don’t design it to be a workaround for other problems. 
 
+* *你是专家; 就表现得像一名专家。* Elasticsearch 已经变得流行起来。 用户群非常庞大，呈指数级增长。 高级用户的一部分正在缩小，因此我们现在的核心职责之一就是简化 API 使用并降低“搬起石头砸自己的脚”的风险。 我们的核心 API 提供了很大的灵活性，这使得它们很容易被误用。其结果往往是性能下降，集群中断和错误结果。展望未来，我们应该利用我们的经验和对系统的深入了解来预防这些缺陷。 构建可以很好地完成一件事的 API 和功能。不要将其设计为解决其他问题的解决方法。
+
 * *Build features in isolation.* Always prefer adding a feature as a plugin rather than adding the feature to core. The best way to make clear APIs and extension points is by using them. To arrive at a maintainable core we have to keep it lean. Our plugin model allows classloader isolation as well as dedicated permissions to third party components. An isolated implementation is always preferable. If it needs to ship with the distribution it can be a module.
+
+* *独立构建功能* 始终优先将功能添加为插件，而不是将功能添加到内核。制定明确的 API 和扩展的最好方法就是使用它们。为了达到可维护的核心，我们必须保持其精益。 我们的插件模型允许类加载器隔离以及对第三方组件的专用权限。一个孤立的实现总是可取的。如果需要通过发布来传送，它可以是一个模块。
 
 * *Remove first, fix later.* Often the removal of dangerous or trappy features stalls because there is no replacement for its functionality. We will remove those features and prioritize reimplementing them as though they were new features. If the features were important we’ll make the reimplementation a blocker for the next release. If they weren’t it might be several releases until they are reimplemented. Or they might never be reimplemented, becoming a relic of time long gone by. Removing dangerous features is crucial to the success of the organization. For instance, *delete-by-query* was repeatedly causing massive outages that took days to debug and fix. Its removal has potentially saved us a large amount of money and time that we didn’t spend with our customers. Now given the fact that our user base is growing fast, it’s our responsibility to make the right decision for our users even if that decision is not popular. The *remove first* approach is mandatory when it comes to security, cluster stability, and data corruption. 
 
@@ -113,7 +121,7 @@ Use wise words to explain your objection. Your veto must come with a technical r
 
 * *Solve conflicts by speaking to each other. Accept decisions, even if not yours and move on.* We are all passionate and opinionated people. This is what makes us good at our job and moves the code forward. It also means we will not always agree. Talk things through and try to see the other side. Almost always there is also a third way that will make both parties happy. In the worst case, there will be times that consensus is not reached and leadership has to make a call. [Disagree and commit](https://www.google.com/url?q=https://www.amazon.jobs/principles&sa=D&ust=1470304258318000&usg=AFQjCNEtnDcPw2eh-GlszSmtsrGfZtSoMw). Remember: nothing is final and things can be changed if they have been proven wrong.
 
-Inspired by:
+受启发于：
 
 [Zen of Python](https://en.wikipedia.org/wiki/Zen_of_Python) 
 
