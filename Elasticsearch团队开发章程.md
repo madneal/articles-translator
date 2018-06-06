@@ -53,19 +53,33 @@ As a simple exercise, consider a function which has an argument which is always 
 * *Test bottom up.* If you write code, write unit tests first. Write many of them. Write code so you can write many of them. Integration testing is the last step. Focus on adding more tests that execute fast and are easy to debug, like unit tests. This is crucial for developer velocity. 
 * 自下而上测试。 如果你编写代码，首先编写单元测试。 写很多。 编写单元测试代码，以便可以编写许多代码。 集成测试是最后一步。 专注于添加更多快速执行且易于调试的测试，如单元测试。 这对于开发者的速度来说至关重要。
 * **Consider Java APIs expert APIs**. With the exception of the HTTP-Client and its dedicated APIs, all APIs in Elasticsearch, all extension points and plugins are expert APIs. Accordingly, expert users can handle API changes and removals. The most reliable way to make sure folks don’t use deprecated APIs is to remove them. Don’t hesitate, especially when it’s an internal API. Non-expert users should always go through a REST interface. 
+* *考虑Java API 专家 API*。 除 HTTP 客户端及其专用API，Elasticsearch 中的所有 API 外，所有扩展点和插件都是专业 API。 因此，专家用户可以处理 API更改和清除。 确保人们不使用已弃用的 API 的最可靠方法是将其删除。 不要犹豫，特别是当它是一个内部 API 时。 非专家用户应始终通过 REST 界面。
 * *Be critical, doubt all the code, and embrace mistakes.* Everybody writes code that must be fixed, refactored, or removed at some point. But most of the time the effective half-life of code is pretty short. Add comments describing why things are done in a certain way. We can never know the full extent of a problem or all the use cases when we develop a feature. 
+* *重要的是，对所有的代码保持质疑，并拥抱错误*。 每个人都会编写必须在某个时刻修复，重构或删除的代码。但是大多数情况下，代码的有效半衰期很短。 添加注释，说明为什么以某种方式完成事情。当我们开发一个功能时，我们永远无法知道问题的全部范围或所有用例。
 
 When someone criticizes the code, they are not criticizing you, so don’t take it personally. Help them understand why you wrote it that way. When someone rewrites something you wrote, it’s not a rejection of your ideas. At one point Mike pushed a change to Lucene that Adrien obsoleted just two days later! It’s great when other people take interest in code you wrote: it means the code is alive. See improvements to your code as that code becoming a growing, thriving being.
 
 Don’t fear making a mistake and, more importantly, don’t let fear paralyze you from adding something that might not be totally right. See mistakes and failures as *feedback*, *discovery *and *knowledge* that can make our product better. 
 
+当有人批评代码时，他们不是批评你，所以对事不对人。帮助他们理解你为什么这样写。当有人重写你写的代码时，并不是不认可你的想法。有一次，Mike 向 Lucene 推了一个变化，Adrien 在两天后就将它废弃了！当其他人对你写的代码感兴趣时，这很好，这意味着代码是活的。随着代码成为一个日益增长，蓬勃发展的存在，可以持续看到代码的改进。
+
+不要害怕犯错，更重要的是，不要让恐惧使你无法添加一些不完全正确的东西。 将错误和失败视为*反馈*，*发现*和*知识*可以使我们的产品更好。
+
 * *Don’t be afraid of big changes.* Often the solution to a problem is hard. The hardest part is to solve it correctly. It comes together with tons of work, risk, and changes in the system that will affect others — mostly users. Prefer incremental changes (see *Progress over perfection*), but be willing to make big changes in big chunks where incremental change is impossible. 
+
+* *不要害怕重大改变*。通常解决问题的办法很难。最难的部分是正确解决。它伴随着大量的工作，风险和系统变化，这些变化会影响到其他人- 主要是用户。 优先使用增量更改（请参阅*过程优于结果*），但愿意在不可能进行增量更改的大块中进行大的更改。
 
 * *Don’t be afraid to say no.* Elasticsearch is at a point where it can’t accept every change. If we tried to make everybody happy we would stall and be paralyzed. There are certain things that just don’t work with a system like Elasticsearch. Think of *[joins](https://github.com/elastic/elasticsearch/pull/3278)* or *real type isolation*. To these we have to say *thanks, but no thanks!*
 
+* *不要害怕说不。* Elasticsearch 现在无法接受所有变化。如果我们试图让每个人都快乐，我们就会卡住并瘫痪。有些东西只是不适用于像 Elasticsearch 这样的系统。 考虑 [参加](https://github.com/elastic/elasticsearch/pull/3278)或*实型隔离*。 对于这些，我们必须说*谢谢，但是不用了！*
+
 * *Only accept features that scale.* We often get feature requests that would work fine in the single-node case (e.g., joins or precise cardinality aggregations) but would be a disaster given the distributed nature of Elasticsearch. These feature requests should always be rejected because they violate our core Elasticsearch responsibilities of scalability and distributed nature. In principle we do not add features that only work in the single-node case.
 
+* *只接受可扩展的功能。*我们经常获得在单节点情况下可以正常工作的功能请求（例如，连接或精确基数聚合），但鉴于Elasticsearch的分布式特性，这将是一场灾难。 这些功能请求应始终被拒绝，因为它们违反了我们在可伸缩性和分布式特性方面的核心Elasticsearch责任。 原则上，我们不添加仅适用于单节点情况下的功能。
+
 * *Always start with a dream.* It’s wise to start with an idea of what a perfect solution would look like, even if it involves backward breaks or removing core features and replacing them later with better solutions. Sometimes it’s possible to implement the ideal even if it takes time. By the same token, it’s wise to think about the simplest possible solution, and in many cases the *biggest bang for the buck* is pretty close to the simplest solution.
+
+* *始终从梦想出发。*首先了解什么是完美的解决方案是明智的，即使它涉及向后中断或删除核心功能，并稍后用更好的解决方案替换它们。 有时甚至需要时间才能实现理想。同样的道理，考虑最简单的解决方案是明智的选择，在很多情况下，最大的优势在于最接近最简单的解决方案。
 
 * *Focus on error reporting.* In software development lots of things are binary. If it didn’t work as expected it should fail fast and hard. Focus on good error reporting; avoid swallowing exceptions, declaring checked exceptions, and forcing the caller to handle the situation. Guard preconditions for methods with actual checks. Exceptions are part of a method’s contract! If we don’t know or document what exceptions can happen, and when, then we have no idea really how the method behaves. Add checks/javadocs and try to make this better. Look at the JDK code for examples of this, even Lucene code which we use as a reference often is not a good example here. Understand how this can make your code faster, e.g. checking for array index up front in the method is not only more clear, it fails fast and hard, and can also eliminate bounds checks ("dominating test"). When reporting errors, ask yourself a) what message you would want to see if you are debugging a problem, and b) what information would give the operational production-support team enough insight to diagnose problems.
 
