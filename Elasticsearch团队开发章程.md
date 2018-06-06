@@ -83,29 +83,49 @@ Don’t fear making a mistake and, more importantly, don’t let fear paralyze y
 
 * *Focus on error reporting.* In software development lots of things are binary. If it didn’t work as expected it should fail fast and hard. Focus on good error reporting; avoid swallowing exceptions, declaring checked exceptions, and forcing the caller to handle the situation. Guard preconditions for methods with actual checks. Exceptions are part of a method’s contract! If we don’t know or document what exceptions can happen, and when, then we have no idea really how the method behaves. Add checks/javadocs and try to make this better. Look at the JDK code for examples of this, even Lucene code which we use as a reference often is not a good example here. Understand how this can make your code faster, e.g. checking for array index up front in the method is not only more clear, it fails fast and hard, and can also eliminate bounds checks ("dominating test"). When reporting errors, ask yourself a) what message you would want to see if you are debugging a problem, and b) what information would give the operational production-support team enough insight to diagnose problems.
 
+* *关注错误报告*。在软件开发中，很多东西都是二元的。如果它没有像预期的那样工作，它应该快速而艰难地失败。关注良好的错误报告;避免吞噬异常，声明检查的异常，并强制调用者处理这种情况。保护具有实际检查方法的先决条件。异常是方法合同的一部分！如果我们不知道或记录可能会发生什么异常，那么我们就不知道该方法的行为。添加 check/javadoc 并尽量让这个更好。看看 JDK 代码的例子，甚至我们用作参考的 Lucene 代码在这里也不是一个好例子。理解如何使你的代码更快，例如在该方法中预先检查数组索引不仅更加清晰，而且快速而且坚定地失败，并且还可以消除边界检查（“支配性测试”）。在报告错误时，问问自己： a）如果你正在调试问题，你希望看到什么消息，以及 b）什么信息可以使运营中的生产支持团队有足够的洞察力来诊断问题。
+
 * *Document the code.* You may think your code is obvious, but it may not be. Give a high level overview of it to someone who is unfamiliar with those thousands of lines of code, such that you both would be able to divide and conquer. Document a summary of what things do at package, class, and method level. If you think your own code is tricky or hairy, do even more to try to compensate. Long living code is written once but read and reread many times!
+
+* *为代码提供文档*。你可能认为你的代码是显而易见的，但它可能不是。对那些不熟悉这些成千上万行代码的人给予高层次的概述，这样你们就可以分而治之。记录在包，类和方法级别做什么的总结。 如果你认为你自己的代码是棘手或的，那就更多尝试补偿。 长期存活的代码只写一次，但多次阅读和重读！
 
 * *Private by default.* Java’s access levels are a good way to encapsulate code: separate the interface/contract from the implementation detail. Private is best, package-private is good, public is last resort. Be careful about what you expose, so that your class or API is simple easy to use.
 
+* *默认为私有*。 Java 的访问级别是封装代码的好方法：将接口/合约与实现细节分开。私有的是最好的，私有包装是好的，公众是最后的手段。要小心你公开的内容，以便你的类或 API 简单易用。
+
 * *Every change deserves review.* Our system is complex and every change can have potential side effects. We expect everyone to work hard and think things through but there will be times when implications are missed. Every change should be proposed and receive at least one LGTM. For complex changes, two reviewers are better. On some teams two is the minimum number of LGTMs, three for complex changes. Coders and reviewers share responsibility for failures associated with a change; this encourages careful review. Sometimes a feature fails unexpectedly because something it depends on has changed or broken. We should all take ownership for failures and unexpected problems for customers, rather than blaming a few people.
+
+* *每一个变化都值得审计*。我们的系统很复杂，每一个变化都可能产生潜在的副作用。 我们希望每个人都努力工作并思考问题，但有时候会错过暗示。 每个变更都应该提出并且至少得到一个 LGTM。 对于复杂的变化，两位审阅员更好。 在一些小组中，两个是 LGTM 的最小数量，三个是复杂的变化。编码人员和审阅人分担与变更相关的失败责任;这鼓励仔细审查。有时候某个功能意外失败，因为它依赖的功能已经改变或损坏。我们应该为所有客户承担失败和意外问题，而不是责怪一些人。
 
 * *Rules are meant to be broken.* Sometimes the code has to break the rules. Maybe it’s five times easier to understand if your comment contains a table 150 characters wide. Nasty abstractions to try to enforce "DRY" can end out far worse than a simple duplication of code!
 
-## Interacting with people
+* *规则被打破*。有时代码必须打破规则。如果你的评论包含一个150个字符的表格，可能会更容易理解五次。 试图强制执行“DRY”的恶意抽象可能会比简单的代码重复更糟糕！
+
+## 和人们互动
 
 * *Voice your opinion with precision and respect.* Always share what you have to say but leave room for another opinion. Always explain your reasons. Ultimatums kill conversation. Phrases like "This will never work" and “This is stupid” are lazy and imprecise. Say “I think this will be problematic in the case that ... because … “.  Don’t say “This is wrong”; say “I think this is wrong because…”.  Don’t say “Is this really needed?”; ask “Why is this needed?” Don’t say “I am not open to anything else” or “There is nothing to discuss”. See the point about vetoes instead.
 
+* *精确和尊重地表达你的意见*。总是分享你要说的话，但为另一个意见留下余地。总是解释你的理由。 最后结束对话。 像“这将永远不会工作”和“这是愚蠢的”短语是懒惰和不精确的。说：“我认为这将是有问题的，因为......”。不要说“这是错误的”; 说“我认为这是错误的，因为...”。 不要说“这真的需要吗？”; 问“为什么需要这样做？”不要说“我不打开其他任何东西”或“没有什么可讨论的”。请参阅关于否决权的观点。
+
 * *Be kind.* The written form is hard. What you intend with your words may not be obvious to the reader. Make the effort to explain your reasoning clearly. Be quick to apologise if you haven’t made a good job of explaining. Assume misunderstanding rather than malice. When in any doubt about communicating your idea, get on video or voice chat.
 
-From [Being Kind](http://boz.com/articles/be-kind.html):
+* *保持友善*。书面形式很难。你的意图对于读者可能不是很明显。努力清楚地解释你的推理。如果你没有很好的解释，请尽快道歉。认为是误解而不是恶意。如果对传达你的想法有任何疑问，请进行视频或语音聊天。
 
-*Being kind is fundamentally about taking responsibility for your impact on the people around you. It requires you be mindful of their feelings and considerate of the way your presence affects them. It isn’t the same as being nice. It isn’t about superficial praise. It doesn’t mean dulling your opinions. And it shouldn’t diminish the passion with which you present them.*
+来自于[保持友善](http://boz.com/articles/be-kind.html):
+
+* Being kind is fundamentally about taking responsibility for your impact on the people around you. It requires you be mindful of their feelings and considerate of the way your presence affects them. It isn’t the same as being nice. It isn’t about superficial praise. It doesn’t mean dulling your opinions. And it shouldn’t diminish the passion with which you present them.
+
+* 善待从根本上来说是对你对周围人的影响负责。 它要求你注意自己的感受，并体谅你的存在影响他们的方式。这和表面和善不一样。这不是表面上的赞美。这并不意味着贬低你的意见。它不应该减少你展示他们的激情。
 
 * *Thank people.* Say it when someone has done a good job. Take the time to include some detail on why you think it was a good job to make it sincere and specific.
 
-(Beware of the bad audio of the recording: [How to Delegate, Like a Boss](https://www.youtube.com/watch?v=h3MPewsk5PU&t=5m55s))
+* *感谢人们*。当有人完成了一项好的工作请说出来。花点时间来包含一些细节，说明为什么你认为做出真诚和具体的工作是一件好事。
+
+(意识到一些不是很好的记录视频: [如何像老板一样指派任务](https://www.youtube.com/watch?v=h3MPewsk5PU&t=5m55s))
 
 * *With power comes responsibility.* You have the power to veto. A veto or in other words a `-1` is a strong call. Only use it as a last resort when you are 100% convinced that a certain change should not be made. Don’t use it if you only disagree or do not like a change. **Beware that a veto will kill progress of the issue/change and won’t be overruled unless retracted**, so be conscious of the seriousness of a veto. 
+
+* *权力是责任。*您有权否决。 否决权或换句话说'-1'是一个强烈的呼吁。 只有当你100％确信不应做出某种改变时，才将其作为最后的手段。 如果你只是不同意或不喜欢改变，不要使用它。 **请注意，否决权将杀死问题/改变的进展，除非撤回**，否则不会被否决，因此应意识到否决权的严重性。
 
 Use wise words to explain your objection. Your veto must come with a technical reason. Be prepared to discuss and explain. The vetoed change is guaranteed to be seen as good by the persons who proposed it and they deserve that discussion. Of course, they also deserve the chance to convince you of their reason. In that past, such healthy discussion actually ended with the a veto being pulled back.
 
