@@ -1,37 +1,24 @@
-Elasticsearch 团队开发章程
+# Elasticsearch 团队开发章程
 
-# 前言
+## 前言
 
-We, the team of Elasticsearch core developers, want to move as fast as we can toward a system that is reliable, robust, secure, scalable, and straightforward to use. We want to strive for innovation, replace legacy constructs and features, remove fragile code, and work toward a better user experience while keeping our users onboard with our rapid changes.
+我们作为 Elasticsearch 核心开发人员团队希望尽可能快地向可靠，健壮，安全，可扩展且易于使用的系统迁移。我们希望为创新而努力，取代传统的构造和功能，删除脆弱的代码，并致力于改善用户体验，同时在我们快速变化的同时保持用户增长。
 
-我们作为 Elasticsearch 核心开发人员团队希望尽可能快地向可靠，健壮，安全，可扩展且易于使用的系统迁移。 我们希望争取创新，取代传统的构造和功能，删除脆弱的代码，并致力于改善用户体验，同时让我们的用户随着我们的快速变化而加入。
+对于我们来说，拥有一个团队的前进方向的共同认识是非常重要的，甚至更重要的是为什么团队要走上一条特定的道路。当 Elasticsearch 创立之初时，它具有无尽的灵活性，易用性和丰富的 API。我们这帮年轻的团队成立了一家公司，并且突然用户数井喷式发展。支持组织几乎无法满足越来越多的客户，这是幸福的烦恼。然而，随着用户数量的增长，事情发生的可能性也越来越大，不幸的是，这比我们聘用支持工程师的速度要快得多。我们了解到，大多数灵活性来自宽松处理，从大多数情况下可行的功能，但不是全部。例如，用户可以使用请求发送的脚本基本上是一个远程代码执行引擎，如果出错，它是致命的。即使最基本的功能，比如设置，也非常灵活，但非常脆弱。在没有单位的情况下指定一个数字是很好的，除非许多用户不知道默认单位是什么。我们只是试图做正确的事情，结果证明并不是总是对的。
 
-It’s crucial for us to have a shared vision of where the team is heading and maybe even more importantly why the team is going down a certain path. When Elasticsearch was the *new kid on the block* it shone with endless flexibility, ease of use, and rich APIs. We formed a company around that young kid and suddenly its user base shot through the roof. The support organization could barely keep up with the growing number of customers, which is a good problem to have. Yet as the number of users grew, so did the chance of things going sideways, unfortunately much more quickly than we could ever hire support engineers. We learned that much of the flexibility came from leniency, from features that worked in most cases but not all. For instance, having scripts that users can send with the request is basically a remote code execution engine and if it goes wrong it’s fatal. Even the most basic features, like settings, were very flexible but enormously fragile. Specifying a number without a unit was perfectly fine except that many users didn’t know what the default unit was. We just tried to do the right thing, which turned out to not be the right thing all the time. 
+现在我们处于不同的位置。我们的用户基数比 2013 年的用户基数大得多，但我们的支持机构并没有以同样的速度增长。是的，我们处理比 2013 年更多的支持案例，但这在我们当时的系统中是不可能的。现在我们已经从一个脆弱而灵活的系统转向了范围较窄的软件。我们定义了更多的边界：更严格的输入验证，允许我们对权限进行细粒度控制的安全模型，甚至还有一个插件模型，可以提供极大的灵活性来添加风险更高的功能。
 
-对于我们来说，拥有一个团队的前进方向的共同认识是非常重要的，甚至更重要的是为什么团队要走上一条特定的道路。当 Elasticsearch 创立之初时，它具有无尽的灵活性，易用性和丰富的 API。我们在这帮年轻的团队成立了一家公司，并且突然用户数也井喷式发展。支持组织几乎不能跟上越来越多的客户，这是幸福的烦恼。然而，随着用户数量的增长，事情发生的可能性也越来越大，不幸的是，比我们聘用支持工程师的速度要快得多。我们了解到，大多数灵活性来自宽松处理，从大多数情况下可行的功能，但不是全部。例如，用户可以使用请求发送的脚本基本上是一个远程代码执行引擎，如果出错，它是致命的。即使最基本的功能，比如设置，也非常灵活，但非常脆弱。在没有单位的情况下指定一个数字是很好的，除非许多用户不知道默认单位是什么。我们只是试图做正确的事情，结果一直不是正确的事情。
+但等等，我们还差得远呢！仍然有无穷无尽的问题会造成致命的后果。聚合可以通过一个请求来撑爆服务器。用户感觉需要运行 30+GB 堆的 Elasticsearch。我们仍然提供了 27 种指定布尔值的不同方式。这份名单还有其它内容...
 
-Today we are in a different position. Our user base is much larger than it was in 2013 but our support organization hasn’t grown at the same rate. Yes, we handle an order of magnitude more support cases than in 2013, but this would not have been possible with the system we had back then. Now we’ve moved from a fragile but flexible system toward software that is narrower in scope. We have defined many more boundaries: stricter input validation, a security model that allows us fine grained control over permissions, and even a plugin model that provides great flexibility to add riskier features. 
+我们对我们的用户，支持组织，云托管团队和第三方提供商负有巨大责任，提供可靠，稳健，安全且易于使用的系统。出于这个原因，我们都应该努力创新，取代传统的构造和功能，删除脆弱的代码，并改善用户体验。我们与其他公司相比的优势是我们的创新，创新需要速度。我们必须在留住用户的同时下采取行动并接受变革创新。
 
-现在我们处于不同的位置。 我们的用户群比 2013 年的用户群大得多，但我们的支持机构并没有以同样的速度增长。 是的，我们处理比 2013 年更多的支持案例，但这在我们当时的系统中是不可能的。 现在我们已经从一个脆弱而灵活的系统转向了范围较窄的软件。 我们定义了更多的边界：更严格的输入验证，允许我们对权限进行细粒度控制的安全模型，甚至还有一个插件模型，可以提供极大的灵活性来添加风险更高的功能。
-
-But hold on, we are not there yet! There are still endless problems that can have fatal consequences. Aggregations can blow up servers with a single request. Users feel the need to run Elasticsearch with 30+ GB heaps. We are still offering 27 different ways of specifying a boolean value. And this list continues…
-
-We have a massive responsibility to our users, the support organization, the cloud hosting teams, and third party providers to offer a system that is reliable, robust, secure, and straightforward to use. For this reason we all should strive for innovation, replace legacy constructs and features, remove fragile code, and improve the user experience. Our advantage over other companies is our innovation, and innovation requires velocity. We must move and embrace change to innovate without leaving the user behind.
-
-The following sections are a collection of principles and guidelines for designing, refactoring, or removing code from the Elasticsearch codebase. These points are unordered and mostly uncategorized and should be seen as a constitution of software development within the Elasticsearch team.
-
-但等等，我们还差得远呢！仍然有无穷无尽的问题会造成致命的后果。聚合可以通过一个请求来撑爆服务器。用户感觉需要运行 30+ G B堆的 Elasticsearch。我们仍然提供了 27 种指定布尔值的不同方式。这份名单还有其它内容...
-
-我们对我们的用户，支持组织，云托管团队和第三方提供商负有巨大责任，以提供可靠，稳健，安全且易于使用的系统。出于这个原因，我们都应该努力创新，取代传统的构造和功能，删除脆弱的代码，并改善用户体验。我们与其他公司相比的优势是我们的创新，创新需要速度。我们必须在不留下用户的情况下采取行动并接受变革创新。
-
-以下部分是用于设计，重构或从 Elasticsearch 代码库中删除代码的原则和指导原则的集合。这些点是无序的，大部分是未分类的，应该被看作是 Elasticsearch 团队内软件开发的一个组成部分。
+以下章节是用于设计，重构或从 Elasticsearch 代码库中删除代码的原则和指导原则的集合。这些点是无序的，大部分是未分类的，应该被看作是 Elasticsearch 团队内软件开发的一个组成部分。
 
 ## 设计特性
 
-* *Progress over perfection.* We have followed this approach for many years now which allows us to make large changes over time without big bang commits originating from massive pull requests. For example, the completion suggester was added in the early days of Elasticsearch without support for realtime updates and specifically deletes. This means that deleting a document in Elasticsearch wasn’t immediately reflected in the suggestions. It was a hard problem at the time and about three years later we added support for bitset filters to the Lucene suggester as well as to Elasticsearch. Meanwhile it’s been an acceptable solution for many users out there, with many bugs fixed and the evolution toward a document based suggester. It was all about progress over perfection.
-* *过程优于结果* 我们多年来一直遵循这种方法，这使我们能够随着时间的推移做出巨大的变化，而不会因大量的请求而产生巨大的响应。 例如，完成建议程序在 Elasticsearch 的早期版本中添加，而不支持实时更新和特定的删除。 这意味着删除 Elasticsearch 中的文档不会立即反映在建议中。 这是一个很难的问题，大约三年后，我们增加了对 Lucene 建议器和 Elasticsearch 的 bitset 过滤器的支持。 与此同时，对于许多用户来说，这是一个可以接受的解决方案，修复了许多错误，并朝着基于文档的建议者发展。 这就是过程优于结果。
-* *为今天设计！谨慎使用抽象* Computer Science professors teach students to make extensive use of abstraction layers in the name of flexibility and information hiding. Certainly Elasticsearch makes extensive use of abstractions; no project involving several million lines of code could do otherwise and survive. But experience has shown that excessive or premature abstraction can be just as harmful as premature optimization. Abstraction should be used to the level required and no further.
-* 计算机科学教授教育学生以灵活性和信息隐藏的名义广泛使用抽象层。 当然 Elasticsearch 广泛使用抽象; 没有任何涉及数百万行代码的项目可以以其他方式进行工作并生存 但经验表明，过早或过早的抽象可能与过早优化一样有害。 抽象应该用于所需的级别，不要再进一步。
+* *过程优于结果* 我们多年来一直遵循这种方法，这使我们能够随着时间的推移做出巨大的变化，而不会因大量的请求而产生巨大的响应。例如，完成建议程序在 Elasticsearch 的早期版本中添加，而不支持实时更新和特定的删除。这意味着删除 Elasticsearch 中的文档不会立即反映在建议中。这是一个很难的问题，大约三年后，我们增加了对 Lucene 建议器和 Elasticsearch 的 bitset 过滤器的支持。与此同时，对于许多用户来说，这是一个可以接受的解决方案，修复了许多错误，并朝着基于文档的建议器发展。这就是过程优于结果。
+
+* *为今天设计！谨慎使用抽象*。计算机科学教授教育学生以灵活性和信息隐藏的名义广泛使用抽象层。当然 Elasticsearch 广泛使用抽象; 没有任何涉及数百万行代码的项目可以以其他方式进行工作并生存 但经验表明，过度或过早的抽象可能与过早优化一样有害。抽象应该用于所需的级别，不要再进一步。
 
 As a simple exercise, consider a function which has an argument which is always passed as zero by all callers. One could retain that argument just in case somebody eventually needs to use the extra flexibility that it provides. By that time, though, chances are good that the code never noticed — because it has never been used.  Or when the need for extra flexibility arises, it does not do so in a way which matches the programmer's early expectation. We should routinely submit patches to remove unused arguments; in general they should not be added in the first place. (adopted from [https://www.kernel.org/doc/Documentation/development-process/4.Coding](https://www.kernel.org/doc/Documentation/development-process/4.Coding))
 
