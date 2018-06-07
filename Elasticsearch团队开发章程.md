@@ -72,53 +72,32 @@
 
 ## 和人们互动
 
-* *Voice your opinion with precision and respect.* Always share what you have to say but leave room for another opinion. Always explain your reasons. Ultimatums kill conversation. Phrases like "This will never work" and “This is stupid” are lazy and imprecise. Say “I think this will be problematic in the case that ... because … “.  Don’t say “This is wrong”; say “I think this is wrong because…”.  Don’t say “Is this really needed?”; ask “Why is this needed?” Don’t say “I am not open to anything else” or “There is nothing to discuss”. See the point about vetoes instead.
-
-* *精确和尊重地表达你的意见*。总是分享你要说的话，但为其它意见留下余地。总是解释你的理由。命令的口吻往往会结束对话。 像“这将永远不会工作”和“这是愚蠢的”短语是懒惰和不精确的。说：“我认为这将是有问题的，因为......”。不要说“这是错误的”; 说“我认为这是错误的，因为...”。 不要说“这真的需要吗？”; 问“为什么需要这样做？”不要说“我不打开其他任何东西”或“没有什么可讨论的”。请参阅关于否决权的观点。
-
-* *Be kind.* The written form is hard. What you intend with your words may not be obvious to the reader. Make the effort to explain your reasoning clearly. Be quick to apologise if you haven’t made a good job of explaining. Assume misunderstanding rather than malice. When in any doubt about communicating your idea, get on video or voice chat.
+* *精确和尊重地表达你的意见*。总是分享你要说的话，但为其它意见留下余地。总是解释你的理由。命令的口吻往往会结束对话。像“这将永远不会工作”和“这是愚蠢的”短语是懒惰和不精确的。说：“我认为这将是有问题的，因为......”。不要说“这是错误的”; 说“我认为这是错误的，因为...”。 不要说“这真的需要吗？”; 问“为什么需要这样做？”不要说“我不打开其他任何东西”或“没有什么可讨论的”。请参阅关于否决权的观点。
 
 * *保持友善*。书面形式很难。你的意图对于读者可能不是很明显。努力清楚地解释你的推理。如果你没有很好的解释，请尽快道歉。认为是误解而不是恶意。如果对传达你的想法有任何疑问，请进行视频或语音聊天。
 
 来自于[保持友善](http://boz.com/articles/be-kind.html):
 
-* Being kind is fundamentally about taking responsibility for your impact on the people around you. It requires you be mindful of their feelings and considerate of the way your presence affects them. It isn’t the same as being nice. It isn’t about superficial praise. It doesn’t mean dulling your opinions. And it shouldn’t diminish the passion with which you present them.
-
-* 善待从根本上来说是对你对周围人的影响负责。 它要求你注意自己的感受，并体谅你的存在影响他们的方式。这和表面和善不一样。这不是表面上的赞美。这并不意味着贬低你的意见。它不应该减少你展示他们的激情。
-
-* *Thank people.* Say it when someone has done a good job. Take the time to include some detail on why you think it was a good job to make it sincere and specific.
+* 保持友善从根本上来说是对你对周围人的影响负责。它要求你注意自己的感受，并体谅你的存在影响他们的方式。这和表面友好不一样。这不是表面上的赞美。这并不意味着贬低你的意见。它不应该减少你展示他们的激情。
 
 * *感谢人们*。当有人完成了一项好的工作请说出来。花点时间来包含一些细节，说明为什么你认为做出真诚和具体的工作是一件好事。
 
-(意识到一些不是很好的记录视频: [如何像老板一样指派任务](https://www.youtube.com/watch?v=h3MPewsk5PU&t=5m55s))
-
-* *With power comes responsibility.* You have the power to veto. A veto or in other words a `-1` is a strong call. Only use it as a last resort when you are 100% convinced that a certain change should not be made. Don’t use it if you only disagree or do not like a change. **Beware that a veto will kill progress of the issue/change and won’t be overruled unless retracted**, so be conscious of the seriousness of a veto. 
+(意识到一些视频是反向教材: [如何像老板一样指派任务](https://www.youtube.com/watch?v=h3MPewsk5PU&t=5m55s))
 
 * *权力随之而来的是责任*。你有权否决。否决权或者换句话说'-1'是一个强烈的呼吁。只有当你100％确信不应做出某种改变时，才将其作为最后的手段。如果你只是不同意或不喜欢改变，不要使用它。**请注意，否决权将终止 issue/change 的进展，除非撤回**，因此要意识到否决权的严重性。
 
-Use wise words to explain your objection. Your veto must come with a technical reason. Be prepared to discuss and explain. The vetoed change is guaranteed to be seen as good by the persons who proposed it and they deserve that discussion. Of course, they also deserve the chance to convince you of their reason. In that past, such healthy discussion actually ended with the a veto being pulled back.
 
 用明智的话来解释你的反对意见。你的否决权必须出于技术原因。准备好讨论和解释。被否决的改变被提议者认为是好的，他们值得讨论。 当然，他们也应该有机会用他们的理由来说服你。在过去，这种健康的讨论实际上以撤销否决权而告终。
 
-* *Empathy for passion.* Some of your coworkers have unlimited passion. Unfortunately it doesn’t always come with unlimited patience. It’s always good to change communication channels if discussions go sideways. Face to face communication is crucial in such a development environment. For example, some of our code cleanup efforts last several months. Think of settings refactoring or removing google guice. If you argue on an issue, keep in mind that the other person might have spent months on this and you may be missing something in the big picture. It’s enormously hard to ensure both people are on the same page! If in doubt do /zoom on slack or go on aOn.
+* *珍惜激情*。一些同事拥有无限激情。不幸的是，他们并不总是具有无限的耐心。如果讨论横向进行，改变沟通渠道总是好事。面对面的交流在这样的开发环境中至关重要。例如，我们的一些代码清理工作持续数月。想想设置重构或删除谷歌 guice。如果你在某个问题上争论不休，请记住另一个人可能花了数月的时间，你可能会错过大局。很难确保两个人都在同一步调上！如果有疑问，请在 slack 上深入讨论或者继续。
 
-* *珍惜激情*。一些同事拥有无限激情。不幸的是，他们并不总是具有无限的耐心。如果讨论横向进行，改变沟通渠道总是好事。面对面的交流在这样的开发环境中至关重要。例如，我们的一些代码清理工作持续数月。 想想设置重构或删除谷歌 guice。如果你在某个问题上争论不休，请记住另一个人可能花了数月的时间，你可能会错过大局。很难确保两个人都在同一步调上！如果有疑问，请在 slack 上深入讨论或者继续。
+* *对压力感同身受*。你将面临无休止的争论的情况。你会看到人们不会使用礼貌的声音的情况。不要接受它，但试着在事后谈论它，并原谅。
 
-* *Empathy for the pressured.* You will face situations where an argument goes sideways. You will see situations where people do not use a polite voice. Don’t accept it but try to look behind the scenes, speak about it, and forgive.
-
-* *对压力感同身受*。你将面临争论横向发展的情况。你会看到人们不会使用礼貌的声音的情况。不要接受它，但试着在事后谈论它，并原谅。
-
-* *Report abusive comments to our Code of Conduct team.* If you see abusive comments, even if you are not part of the conversation, please report it (push back). Don’t fuel a discussion, and don’t provide a forum for more abusive comments. End the discussion and notify others to back you up. If you don’t feel like doing this, it’s fine to ping others directly to do this for you. Use github emoji (and reaction emoji) to amplify pushback from others. Then move on with technical arguments. Be the bigger personality and help others to reduce the impact of abusive or aggressive comment.
-
-* *对我们的行为准则小组报告滥用评论*。如果你看到辱骂性评论，即使你不是对话的一部分，请报告（推回）。不要激发讨论，也不要提供更多滥用评论的论坛。 结束讨论并通知他人支持你。如果你不想这样做，那么直接联系其他人为你做这件事很好。使用 github 表情符号（和反应表情符号）放大其他人的反馈。然后继续进行技术论证。保持大度，帮助他人减少滥用或侵略性评论的影响。
-
-* *Ask questions if in doubt.* There are many complex areas in Elasticsearch. If you are in doubt or you are not sure how to fix a certain problem, if you don’t even know how to approach the problem or you are stuck, go and get help. Having zoom sessions to explain the problem to others might even help in realizing that the solution to the problem is a totally different one.
+* *对我们的行为准则小组报告滥用评论*。如果你看到辱骂性评论，即使你不是对话的一部分，请报告（推回）。不要激发讨论，也不要提供更多滥用评论的论坛。结束讨论并通知他人支持你。如果你不想这样做，那么直接联系其他人为你做这件事很好。使用 github 表情符号（和反应表情符号）放大其他人的反馈。然后继续进行技术论证。保持大度，帮助他人减少滥用或侵略性评论的影响。
 
 * *如有疑问，请提问。* Elasticsearch 有很多复杂的领域。如果你有疑问，或者你不确定如何解决某个问题，如果你甚至不知道如何处理问题或者卡住了，请去寻求帮助。通过会话向其他人解释问题甚至可能有助于意识到问题的解决方案是完全不同的解决方案。
 
-* *Solve conflicts by speaking to each other. Accept decisions, even if not yours and move on.* We are all passionate and opinionated people. This is what makes us good at our job and moves the code forward. It also means we will not always agree. Talk things through and try to see the other side. Almost always there is also a third way that will make both parties happy. In the worst case, there will be times that consensus is not reached and leadership has to make a call. [Disagree and commit](https://www.google.com/url?q=https://www.amazon.jobs/principles&sa=D&ust=1470304258318000&usg=AFQjCNEtnDcPw2eh-GlszSmtsrGfZtSoMw). Remember: nothing is final and things can be changed if they have been proven wrong.
-
-* *通过相互交谈来解决冲突。接受决定，即使不是你的，并继续前进*。我们都是充满激情和自信的人。这就是我们擅长工作并推动代码的原因。这也意味着我们不会总是同意。谈论事情并尝试考虑其它方面。几乎总是有其它方式可以让双方都开心。在最糟糕的情况下，有些时候没有达成共识，领导层不得不打电话。 [不同意并提交](https://www.google.com/url?q=https://www.amazon.jobs/principles&sa=D&ust=1470304258318000&usg=AFQjCNEtnDcPw2eh-GlszSmtsrGfZtSoMw)。 记住：没有什么是最终的，只要错了就有可能会发生改变。
+* *通过相互交谈来解决冲突。接受决定，即使不是你的，并继续前进*。我们都是充满激情和自信的人。这就是我们擅长我们的工作并推动代码的原因。这也意味着我们不会总是同意。谈论事情并尝试考虑其它方面。几乎总是有其它方式可以让双方都开心。在最糟糕的情况下，有些时候没有达成共识，领导层不得不打电话。 [不同意并提交](https://www.google.com/url?q=https://www.amazon.jobs/principles&sa=D&ust=1470304258318000&usg=AFQjCNEtnDcPw2eh-GlszSmtsrGfZtSoMw)。 记住：没有什么是最终的，只要错了就有可能会发生改变。
 
 受启发于：
 
