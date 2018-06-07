@@ -38,6 +38,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [JavaScript 是如何工作的：渲染引擎以及优化建议](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E6%B8%B2%E6%9F%93%E5%BC%95%E6%93%8E%E4%BB%A5%E5%8F%8A%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE.md)
 * [JavaScript 是如何工作的: Service Workers, 它们的生命周期和使用案例](https://github.com/neal1991/articles-translator/blob/master/Javascript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E7%B3%BB%E5%88%97%E5%85%AB.md)
 * [JavaScript 是如何工作的：在网络层如何优化性能和安全](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E7%B3%BB%E5%88%97%E5%8D%81%E4%BA%8C.md)
+* [Elasticsearch 团队开发章程](https://github.com/neal1991/articles-translator/blob/master/Elasticsearch%E5%9B%A2%E9%98%9F%E5%BC%80%E5%8F%91%E7%AB%A0%E7%A8%8B.md)
 
 ## Articles need translation
 
