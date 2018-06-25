@@ -124,19 +124,3 @@ Let’s sum up the key points above:
 While an extremely powerful tool for centralized logging, the ELK Stack cannot be used as-is for SIEM. Missing built-in alerting capabilities, correlation rules, and mitigation features — the ELK Stack fails to complete the full toolbox required by a security analyst.
 
 Of course, the ELK Stack can be augmented with other platforms and services. That is precisely what several of the [open source SIEM solutions](https://logz.io/blog/open-source-siem-tools/) on the market do. But this requires a huge engineering feat by the organization. The number of resources and technical know-how required to amalgamate the ELK Stack with other add-ons and platforms, not to mention the financial cost, make the case for opting for a commercial SIEM.
-
-Looking for a secure ELK solution? Try Logz.io!
-
-[Learn More!](https://logz.io/product/soc-2-compliance/)
-
-[Share](http://www.facebook.com/share.php?u=https%3A%2F%2Flogz.io%2Fblog%2Felk-siem%2F)
-
-[Tweet](https://twitter.com/intent/tweet?text=Using+the+ELK+Stack+for+SIEM&url=https%3A%2F%2Flogz.io%2Fblog%2Felk-siem%2F)
-
-[Share](https://www.linkedin.com/cws/share?url=https%3A%2F%2Flogz.io%2Fblog%2Felk-siem%2F)
-
-4 Shares
-
-Tags:
-
-*   [SIEM](https://logz.io/tag/siem/)
