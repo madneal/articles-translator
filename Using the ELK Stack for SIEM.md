@@ -29,15 +29,15 @@ Because of the amount of data involved and the different data sources being tapp
 
 The ELK Stack alone, therefore, will most likely not be enough as your business, and the data it generates grows. An organization looking into using ELK for SIEM must understand that additional components will need to be deployed to augment the stack.
 
-如上所述，SIEM系统涉及汇总来自多个数据源的数据。这些数据源将根据您的环境而有所不同，但很可能您将从您的应用程序，基础设施级别（例如服务器，数据库），安全控制（例如防火墙，VPN），网络基础设施（如路由器，DNS）外部安全数据库（例如线程提要）。
+如上所述，SIEM 系统涉及汇总来自多个数据源的数据。这些数据源将根据你的环境而有所不同，但很可能您将从你的应用程序，基础设施级别（例如服务器，数据库），安全控制（例如防火墙，VPN），网络基础设施（如路由器，DNS）外部安全数据库（例如威胁情报）。
 
-这需要ELK Stack非常适合处理的聚合能力。使用[Beats]（https://logz.io/blog/beats-tutorial/）和[Logstash]（https://logz.io/blog/logstash-tutorial/）的组合，您可以构建日志记录体系结构由多个数据管道组成。 Beats是轻量级日志转发器，可用作边缘主机上的代理来跟踪和转发不同类型的数据，最常见的节拍是用于转发日志文件的Filebeat。 Logstash然后可用于聚合来自节拍的数据，对其进行处理（见下文）并将其转发给流水线中的下一个组件。
+这需要 ELK Stack 非常适合处理的聚合能力。使用[Beats](https://logz.io/blog/beats-tutorial/)和[Logstash](https://logz.io/blog/logstash-tutorial/)的组合，你可以构建日志记录体系结构由多个数据管道组成。 Beats 是轻量级日志转发器，可用作边缘主机上的代理来跟踪和转发不同类型的数据，最常见的 beat 是用于转发日志文件的 Filebeat。 Logstash 然后可用于聚合来自 beat 的数据，对其进行处理（见下文）并将其转发给流水线中的下一个组件。
 
-由于涉及的数据量很大，并且需要挖掘不同的数据源，因此很可能需要多个Logstash实例来确保更具弹性的数据管道。不仅如此，还需要部署排队机制来确保处理数据突发，并且管道中各个组件之间的断开连接不会导致数据丢失。 Kafka通常是在这种情况下使用的工具，在Logstash之前安装（其他工具，如Redis和RabbitMQ也被使用）。
+由于涉及的数据量很大，并且需要挖掘不同的数据源，因此很可能需要多个 Logstash 实例来确保更具弹性的数据管道。不仅如此，还需要部署排队机制来确保处理数据突发，并且管道中各个组件之间的断开连接不会导致数据丢失。 Kafka 通常是在这种情况下使用的工具，在 Logstash 之前安装（其他工具，如 Redis 和 RabbitMQ 也被使用）。
 
-因此，单独使用ELK Stack很可能不足以满足您的业务需求，并且其生成的数据也会增长。希望使用ELK进行SIEM的组织必须了解需要部署其他组件才能增加堆栈。
+因此，单独使用 ELK Stack 很可能不足以满足你的业务需求，并且其生成的数据也会增长。希望使用 ELK 进行 SIEM 的组织必须了解需要部署其他组件才能增加堆栈。
 
-Log processing
+日志处理
 --------------
 
 Collecting data and forwarding it is of course just one part of the job Logstash does in a logging pipeline. Another crucial task, and one extremely important in the context of SIEM as well, is that of processing and parsing the data.
@@ -48,7 +48,15 @@ One cannot over-exaggerate the importance of this step. Without correct parsing,
 
 Again, a logging architecture such as the one required by a SIEM system can get complicated. Specifically, configuring Logstash to process various log types will necessitate multiple Logstash configuration files and Logstash instances. Heavy processing, the result of complex filter configurations, affects Logstash performance. Monitoring Logstash pipelines is important, and monitoring API, such as the Hot Thread API for identifying Java threads with high CPU, is available for this purpose.
 
-Storage and retention
+收集数据并转发它当然只是Logstash在日志记录管道中的一部分。另一个关键任务，也是SIEM中非常重要的一个任务，就是处理和解析数据。
+
+上面概述的所有数据源类型都以不同的格式生成数据。要在下一步中取得成功 - 即搜索数据和分析数据 - 数据需要进行标准化。这意味着将不同的日志消息分解为有意义的字段名称，在Elasticsearch中正确映射字段类型，并在必要时丰富特定字段。
+
+人们不能夸大这一步骤的重要性。如果没有正确的解析，当您试图在Kibana中分析时，您的数据将毫无意义。 Logstash是一个强大的工具，可以帮助您完成此关键任务。 Logstash支持大量不同的过滤器插件，可以分解日志，使用地理信息丰富特定字段，例如，删除字段，添加字段等。
+
+再一次，诸如SIEM系统所需的日志架构可能变得复杂。特别是，配置Logstash以处理各种日志类型将需要多个Logstash配置文件和Logstash实例。重复处理是复杂过滤器配置的结果，会影响Logstash性能。监控Logstash管道非常重要，监控API（例如用于识别具有高CPU的Java线程的Hot Thread API）可用于此目的。
+
+存储和保留
 ---------------------
 
 The log data collected from the different data sources needs to be stored in a data store. In the case of ELK, [Elasticsearch](https://logz.io/blog/elasticsearch-tutorial/) plays that role of data indexing and storage.
