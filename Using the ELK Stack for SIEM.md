@@ -10,7 +10,15 @@ It is no coincidence, therefore, that the ELK Stack — today the world’s most
 
 If log management and log analysis were the only components in SIEM, the ELK Stack could be considered a valid open source solution. But when we defined [what a SIEM system actually is](https://logz.io/blog/what-is-siem/), a long list of components was listed in addition to log management. This article will try and dive deeper into the question of whether the ELK Stack can be used for SIEM, what is missing, and what is required to augment it into a fully-functional SIEM solution.
 
-Log collection
+任何 SIEM 系统的核心都是日志数据。有很多种。无论是来自服务器，防火墙，数据库还是网络路由器，日志都为分析人员提供了深入了解 IT 环境中发生事件的原始资料。
+
+然而，在将这些材料转化为资源之前，需要采取几个关键步骤。数据需要收集，处理，规范化，增强和存储。这些步骤通常在术语“日志管理”下组合在一起，是任何 SIEM系统中必备的组件。
+
+因此，ELK Stack 是当今世界上最流行的开源日志分析和管理平台，这绝非巧合，它是当前大多数[开源 SIEM 解决方案](https://logz.io/blog/open-source-siem-tools)的重要组成部分。 ELK 负责收集，分析，存储和分析，部分架构来源于 OSSEC Wazuh，SIEMonster 和 Apache Metron。
+
+如果日志管理和日志分析是 SIEM 中唯一的组件，则 ELK Stack 可被视为有效的开源解决方案。但是当我们定义[SIEM 系统实际是什么](https://logz.io/blog/what-is-siem/)时，除了日志管理之外，还列出了很多组件列表。本文将尝试深入探讨 ELK Stack 是否可用于S IEM，缺少什么以及将其扩展到全功能 SIEM 解决方案所需的内容。
+
+日志收集
 --------------
 
 As mentioned above, SIEM systems involve aggregating data from multiple data sources. These data sources will vary depending on your environment, but most likely you will be pulling data from your application, the infrastructure level (e.g. servers, databases), security controls (e.g. firewalls, VPN), network infrastructure (e.g. routers, DNS) and external security databases (e.g. thread feeds).
@@ -20,6 +28,14 @@ This requires aggregation capabilities which the ELK Stack is well-suited to han
 Because of the amount of data involved and the different data sources being tapped into, multiple Logstash instances will most likely be required to ensure a more resilient data pipeline. Not only that, a queuing mechanism will need to be deployed to make sure data bursts are handled and disconnects between the various components in the pipeline do not result in data loss. Kafka is often the tool used in this context, installed before Logstash (other tools, such as Redis and RabbitMQ, are also used).
 
 The ELK Stack alone, therefore, will most likely not be enough as your business, and the data it generates grows. An organization looking into using ELK for SIEM must understand that additional components will need to be deployed to augment the stack.
+
+如上所述，SIEM系统涉及汇总来自多个数据源的数据。这些数据源将根据您的环境而有所不同，但很可能您将从您的应用程序，基础设施级别（例如服务器，数据库），安全控制（例如防火墙，VPN），网络基础设施（如路由器，DNS）外部安全数据库（例如线程提要）。
+
+这需要ELK Stack非常适合处理的聚合能力。使用[Beats]（https://logz.io/blog/beats-tutorial/）和[Logstash]（https://logz.io/blog/logstash-tutorial/）的组合，您可以构建日志记录体系结构由多个数据管道组成。 Beats是轻量级日志转发器，可用作边缘主机上的代理来跟踪和转发不同类型的数据，最常见的节拍是用于转发日志文件的Filebeat。 Logstash然后可用于聚合来自节拍的数据，对其进行处理（见下文）并将其转发给流水线中的下一个组件。
+
+由于涉及的数据量很大，并且需要挖掘不同的数据源，因此很可能需要多个Logstash实例来确保更具弹性的数据管道。不仅如此，还需要部署排队机制来确保处理数据突发，并且管道中各个组件之间的断开连接不会导致数据丢失。 Kafka通常是在这种情况下使用的工具，在Logstash之前安装（其他工具，如Redis和RabbitMQ也被使用）。
+
+因此，单独使用ELK Stack很可能不足以满足您的业务需求，并且其生成的数据也会增长。希望使用ELK进行SIEM的组织必须了解需要部署其他组件才能增加堆栈。
 
 Log processing
 --------------
