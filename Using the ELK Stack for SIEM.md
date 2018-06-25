@@ -1,15 +1,6 @@
 # Using the ELK Stack for SIEM
-Jun 20th, 2018 | [Write a comment](#disqusComments) | by Daniel Berman
 
 ![](https://logz.io/wp-content/uploads/2018/06/using_the_elk_stack_for_siem_-_article.jpg)
-
-*   [Home](https://logz.io "Home")
-*   >
-*   [Blog](https://logz.io/blog/)
-*   >
-*   [ELK Stack](https://logz.io/blog/elk-stack/)
-*   >
-*   **Using the ELK Stack for SIEM**
 
 At the heart of any SIEM system is log data. A lot of it. Whether from servers, firewalls, databases,  or network routers — logs provide analysts with the raw material for gaining insight into events taking place in an IT environment.
 
