@@ -127,13 +127,13 @@ Kibana 以其可视化功能而闻名，支持各种不同的可视化类型，�
 
 以下是针对AWS环境在Kibana中构建的SIEM仪表板的示例：
 
-！[仪表盘]（https://logz.io/wp-content/uploads/2018/06/image1.png）
+![仪表盘](https://logz.io/wp-content/uploads/2018/06/image1.png)
 
-在Kibana中创建仪表板不是一项简单的任务，需要熟悉数据和构建日志消息的不同字段。更有甚者，Kibana还缺少特定的功能，例如可视化中的动态链接。有[解决方法]（https://logz.io/blog/kibana-hacks/），但内置功能将是一个巨大的奖励。
+在 Kibana中 创建仪表板不是一项简单的任务，需要熟悉数据和构建日志消息的不同字段。更有甚者，Kibana 还缺少特定的功能，例如可视化中的动态链接。有[解决方法](https://logz.io/blog/kibana-hacks/)，但内置功能将会让你受益良多。
 
-Kibana也不支持安全共享对象。如果您发现安全漏洞并希望与同事共享仪表板或单个可视化文件，则Kibana中的共享链接不会被标记。您可以在Kibana（X-Pack）或可以使用的开源解决方案之上实施商业附加组件。
+Kibana 也不支持安全共享对象。如果你发现安全漏洞并希望与同事共享仪表板或单个可视化文件，则 Kibana 中的共享链接不会被标记。你可以在 Kibana（X-Pack）或可以使用的开源解决方案之上实施商业附加组件。
 
-Correlation
+关联
 -----------
 
 Another key ingredient in SIEM is event correlation. Event correlation, as we already defined it in a [previous post](https://logz.io/blog/what-is-siem/), is the connection of signals coming in from the different data sources into a pattern that could be indicative of a breach in security. A correlation rule defines the specific sequence of events that forms this pattern.
@@ -142,7 +142,13 @@ For example, a rule could be created to identify when more than x amount of requ
 
 These correlation rules are provided by various SIEM tools or predefined for different attack scenarios. The ELK Stack, of course, does not come with built-in correlation rules, and so it is up to the analyst to use Kibana queries, based on the parsing and processing performed using Logstash, to correlate between events.
 
-Alerts
+SIEM 的另一个关键要素是事件关联。 正如我们在[之前的文章](https://logz.io/blog/what-is-siem/)中已经定义的那样，事件关联是将来自不同数据源的信息连接成一种模式， 表明在安全方面有问题。 相关性规则定义了形成这种模式的特定事件序列。
+
+例如，可以创建规则以识别何时在特定时间段内从特定 IP 范围和端口发送超过x个请求量。 关联规则的另一个示例将与特权帐户的创建一起寻找异常数量的失败登录。
+
+这些关联规则由各种 SIEM 工具提供或针对不同的攻击情景预定义。 ELK Stack 当然没有内置的关联规则，因此分析人员可以根据使用 Logstash 执行的解析和处理来使用 Kibana 查询来关联事件。
+
+警报
 ------
 
 Correlation rules mean nothing without alerts. Being alerted when a possible attack pattern is identified is a key ingredient in SIEM systems.
@@ -151,14 +157,24 @@ Continuing on from the examples above, if your system logs a large number of req
 
 The ELK Stack, in its open source form, does not ship with a built-in mechanism for alerting. To add this capability, the ELK Stack needs to be augmented with an alerting plugin or add-on. Again, X-Pack is one option. Another option is adding [ElastAlert](https://github.com/Yelp/elastalert) — an open source framework that can be added on top of Elasticsearch.
 
-Incident management
+没有警报，关联规则就没有什么意义。 在识别可能的攻击模式时发出警报是 SIEM 系统的关键组成部分。
+
+继续上面的例子，如果你的系统记录了来自特定 IP 范围的大量请求或异常数量的登录失败，则需要将警报发送给组织中正确的人员或团队。 速度是关键 - 通知发送得越快，缓解成功的机会就越大。
+
+ELK Stack 以其开放源代码形式，没有提供内置的警报机制。 为了增加这个功能，ELK Stack 需要增加一个警报插件或附件。 再次，X-Pack 是一种选择。 另一个选择是添加 [ElastAlert](https://github.com/Yelp/elastalert）- 一个可以添加到 Elasticsearch 之上的开源框架。
+
+事件管理
 -------------------
 
 Issue identified, analyst alerted. What now? How well your organization responds to the incident will determine the outcome. SIEM systems are designed to help with the next steps of the security analyst — containing the incident, escalating it if necessary, mitigating it and scanning for vulnerabilities.
 
 The ELK Stack is great when it comes to helping the analyst identify an event but does not have much to offer for managing it. Even if an add-on for alerting is implemented on top of the stack, a way for managing the triggered alerts is required for efficient incident management. Otherwise, there is a risk of drowning in alerts and missing on important events. Automating the process of escalation and the creation of tickets is also important for efficient event handling.  
 
-Summing it up
+问题明确后，分析人员发出警报。 现在怎么办？ 你的组织如何对事件做出响应将决定结果。 SIEM 系统旨在帮助安全人员的下一步 - 包含事件，必要时升级它，缓解它并扫描漏洞。
+
+ELK Stack 在帮助分析人员识别事件但对管理事件没有太多帮助时非常棒。 即使在堆栈顶部实施警报附加功能，为了有效管理事件，也需要管理触发警报的方法。 否则，可能会迷失在众多警报中并且错过重要事件。 自动化升级过程和创建票据对于有效的事件处理也很重要
+
+总结
 -------------
 
 So, can the ELK Stack be used for SIEM?
@@ -167,8 +183,18 @@ The answer to this question is simple. In its raw form, consisting of Logstash, 
 
 Let’s sum up the key points above:
 
+那么，ELK Stack 可以用于 SIEM 吗？
+
+这个问题的答案很简单。 在其原始形式中，由 Logstash，Elasticsearch，Kibana 和 Beats 组成 - ELK Stack **不是** SIEM解决方案。
+
+我们来总结一下上面的关键点：
+
 ![chart](https://logz.io/wp-content/uploads/2018/06/chart-1.png)
 
 While an extremely powerful tool for centralized logging, the ELK Stack cannot be used as-is for SIEM. Missing built-in alerting capabilities, correlation rules, and mitigation features — the ELK Stack fails to complete the full toolbox required by a security analyst.
 
 Of course, the ELK Stack can be augmented with other platforms and services. That is precisely what several of the [open source SIEM solutions](https://logz.io/blog/open-source-siem-tools/) on the market do. But this requires a huge engineering feat by the organization. The number of resources and technical know-how required to amalgamate the ELK Stack with other add-ons and platforms, not to mention the financial cost, make the case for opting for a commercial SIEM.
+
+虽然这是一个非常强大的集中日志记录工具，但 ELK Stack 不能直接用于 SIEM。 缺少内置警报功能，关联规则和缓解功能 - ELK Stack 无法完成安全分析人员所需的完整工具箱。
+
+当然，ELK Stack 可以增加其他平台和服务。 这正是市场上的几种[开源SIEM解决方案](https://logz.io/blog/open-source-siem-tools/)所做的。 但是这需要组织的巨大工程技术专长。 将 ELK Stack 与其他附加组件和平台合并所需的资源和技术知识的数量，更不用说财务成本，因此选择商业 SIEM 也成为一个不错的选择。
