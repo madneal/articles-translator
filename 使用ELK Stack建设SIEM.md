@@ -101,7 +101,7 @@ SIEM 的另一个关键要素是事件关联。 正如我们在[之前的文章]
 
 继续上面的例子，如果你的系统记录了来自特定 IP 范围的大量请求或异常数量的登录失败，则需要将警报发送给组织中正确的人员或团队。 速度是关键 - 通知发送得越快，缓解成功的机会就越大。
 
-ELK Stack 以其开放源代码形式，没有提供内置的警报机制。 为了增加这个功能，ELK Stack 需要增加一个警报插件或附件。 再次，X-Pack 是一种选择。 另一个选择是添加 [ElastAlert](https://github.com/Yelp/elastalert）- 一个可以添加到 Elasticsearch 之上的开源框架。
+ELK Stack 以其开放源代码形式，没有提供内置的警报机制。 为了增加这个功能，ELK Stack 需要增加一个警报插件或附件。 再次，X-Pack 是一种选择。 另一个选择是添加 [ElastAlert](https://github.com/Yelp/elastalert)- 一个可以添加到 Elasticsearch 之上的开源框架。
 
 事件管理
 -------------------
