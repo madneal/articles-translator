@@ -67,8 +67,6 @@ Elasticsearch 是目前最流行的数据库之一，事实上 - 它是 Linux �
 仪表盘
 ----------
 
-![dashboard](https://logz.io/wp-content/uploads/2018/06/image1.png)
-
 Kibana 以其可视化功能而闻名，支持各种不同的可视化类型，并允许用户以他们喜欢的任何方式对其数据进行切片和裁切。您可以创建饼图，图表，地图，单个度量标准，数据表等等，结果非常有效。
 
 以下是针对AWS环境在Kibana中构建的SIEM仪表板的示例：
