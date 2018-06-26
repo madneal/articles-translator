@@ -1,5 +1,13 @@
 # 使用ELK Stack建设SIEM
 
+>原文：[Using the ELK Stack for SIEM](https://logz.io/blog/elk-siem/)
+>
+>译者：[neal1991](https://github.com/neal1991)
+>
+>welcome to star my [articles-translator ](https://github.com/neal1991), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+>LICENSE: [MIT](https://opensource.org/licenses/MIT)
+
 ![](https://logz.io/wp-content/uploads/2018/06/using_the_elk_stack_for_siem_-_article.jpg)
 
 任何 SIEM 系统的核心都是日志数据。有很多种。无论是来自服务器，防火墙，数据库还是网络路由器，日志都为分析人员提供了深入了解 IT 环境中发生事件的原始资料。
