@@ -40,6 +40,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [JavaScript 是如何工作的：在网络层如何优化性能和安全](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%E7%9A%84%EF%BC%9A%E7%B3%BB%E5%88%97%E5%8D%81%E4%BA%8C.md)
 * [Elasticsearch 团队开发章程](https://github.com/neal1991/articles-translator/blob/master/Elasticsearch%E5%9B%A2%E9%98%9F%E5%BC%80%E5%8F%91%E7%AB%A0%E7%A8%8B.md)
 * [使用 ELK Stack 建设SIEM](https://github.com/neal1991/articles-translator/blob/master/%E4%BD%BF%E7%94%A8ELK%20Stack%E5%BB%BA%E8%AE%BESIEM.md)
+* [正则表达式入门](https://github.com/neal1991/articles-translator/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%A5%E9%97%A8.md)
 
 ## Articles need translation
 
