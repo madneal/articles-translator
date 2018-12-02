@@ -10,7 +10,7 @@
 
 ![github](https://cdn-images-1.medium.com/max/2000/1*QUPbzsIyIs3QLx6LjGlgPw.jpeg)
 
-freeCodeCamp社区每一周都会产生大量的数据。这个社区最活跃的一部分就是它的聊天系统。成千上万的人会在里面讨论，聊科技并且互相帮助来提高他们的编程技术。
+freeCodeCamp 社区每一周都会产生大量的数据。这个社区最活跃的一部分就是它的聊天系统。成千上万的人会在里面讨论，聊科技并且互相帮助来提高他们的编程技术。
 
 我经常会对这些数据感到疑问。这个礼拜，我很好奇哪一些github仓库人们是觉得和它们学习最为相关的。我从freeCodeCamp[主聊天室](https://gitter.im/freecodecamp/freecodecamp)分析除了大量的聊天历史纪录。
 
@@ -53,7 +53,7 @@ Bootstrap的github账户，非常知名的web响应式设计框架。这个仓�
 
 #### [vinta/awesome-python](https://github.com/vinta/awesome-python)
 
-作为“精心设计的Python框架，库，软件和资源列表”，如果你希望在Python中获得更好的结果，这是一个很好的开始。
+作为“精心设计的 Python 框架，库，软件和资源列表”，如果你希望在Python中获得更好的结果，这是一个很好的开始。
 
 #### [oneuijs/You-Dont-Need-jQuery](https://github.com/oneuijs/You-Dont-Need-jQuery)
 
