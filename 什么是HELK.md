@@ -1,5 +1,5 @@
 
-## What the HELK? SIGMA integration via Elastalert
+## 什么是 HELK? SIGMA integration via Elastalert
 
 ![](https://cdn-images-1.medium.com/max/5524/1*Pn_nk6oHSpmRe1vFgtybZg.png)
 
