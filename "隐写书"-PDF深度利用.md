@@ -24,6 +24,7 @@ After opened, the PDF disguised as an IRS document looked normal.
 Two layers of obfuscation were used in this sample. The first layer is what we have previously disclosed - the method of "this.getPageNumWords()" and "this.getPageNthWord()". The exploit uses "this.getPageNumWords()" and "this.getPageNthWord()" to read and execute the Javascript hidden as "content". The related code can be found in PDF stream-64.
 
 ![](https://lh6.googleusercontent.com/Qa4otHEzSjZlj4B65CmnfgutxzaTfn4EugYFlSf0BaMQdyntnVpxr7qzgwjAdzY3Ue97axGjscZtt2dumd7bKlutVi1aDi9ElBSPm17xJkgmIPM902ailGHvnOGRjtfpy_ADT_-_)
+<p align="center"><b>stream-64</b></p>
 
 The second layer is new and it's our focus in this blog. The "Javascript content" is stored in stream-119, let's see what it looks like.
 
@@ -36,6 +37,8 @@ After beautifying the Javascript, it shows as following:
 In order to figure out what the Javascript have done, we need to learn these two PDF JS APIs, the this.getIcon() and the util.iconStreamFromIcon() at first. Following is an extract from Adobe's reference.
 
 ![](https://2.bp.blogspot.com/-n78eqA8dplg/XEdNwvK8GCI/AAAAAAAAAFM/l4fI0jyNbbUZilcpU2zsNfyHL5holqNgQCLcBGAs/s1600/4.png)
+
+
 
 ![](https://2.bp.blogspot.com/-2-4DtAFE_2c/XEdN0UrwVrI/AAAAAAAAAFc/3q4W0pMMGkwmnhuyXBe-8yCkqUAvWEwYQCLcBGAs/s1600/5.png)
 
@@ -59,10 +62,10 @@ What does the final executed Javascript look like? Here is a piece of the real c
  
 Therefore, we confirmed the exploited vulnerability is CVE-2013-3346.
 
-Furthermore, we deduce that this sample and the previous one were from the same author, for following reasons.
+Furthermore, we deduce that this sample and the [previous one](https://edgespot.io/analysis/6e71c6ff75abf5b7f40a2b1ed7480757af2f4af191797f19d1b4a46e8ecfa448/) were from the same author, for following reasons.
 Both of them exploit the same vulnerability (CVE-2013-3346)
 The similarity of the Javascript code in these two exploits.
-After some googling, we found that the attacker likely copied a project/technique called "steganography.js", which is open sourced here. The project was developed working on browsers. We believe the person behind the PDF samples made their innovation as they successfully leveraged the technique in PDF format.  We could not find any information mentioning such technique in PDF exploits before, so we believe this is the first time that the "steganography" technique is used to hide PDF exploits.
+After some googling, we found that the attacker likely copied a project/technique called "steganography.js", which is open sourced [here](https://www.peter-eigenschink.at/projects/steganographyjs). The project was developed working on browsers. We believe the person behind the PDF samples made their innovation as they successfully leveraged the technique in PDF format.  We could not find any information mentioning such technique in PDF exploits before, so we believe this is the first time that the "steganography" technique is used to hide PDF exploits.
 
 
 ### Conclusion
