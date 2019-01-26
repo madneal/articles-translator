@@ -41,35 +41,36 @@ In order to figure out what the Javascript have done, we need to learn these two
 
 According to the API references, these two APIs, working together, are to read the stream of an image named as "icon" stored in the PDF file.
 
- By examining the above Javascript code, we figured out that the code’s function is to read and decode the "message" hidden in the icon’s stream. Once it read the "message" successfully , it will execute the "message" as Javascript code, via "eval(msg)".
+By examining the above Javascript code, we figured out that the code’s function is to read and decode the "message" hidden in the icon’s stream. Once it read the "message" successfully , it will execute the "message" as Javascript code, via "eval(msg)".
 
- The icon stream named "icon"  in the object-131 could be saved as a "jpg" file and viewed in image viewer without problem. As shown below:
+The icon stream named "icon"  in the object-131 could be saved as a "jpg" file and viewed in image viewer without problem. As shown below:
  
- ![](https://lh3.googleusercontent.com/IPN1eis6eIjQjZsiQR4MRlkGGbw1Zb8P324LrOzw6LFIagc_KB4bsyY8xlc1T1TfSeofYKOkxTbOiXJihanQ9NG2Ky1Ya2CDxjphMhHmwSJJ3ZMl744Xz3DnVGLqDLnXZkMRwF0U)
- 
- The malicious data is hidden in the image while the image is still viewable
- 
- 
- Nevertheless, there’s no suspicious data can be found inside the icon file, since the malicious code data is heavily obfuscated.
+<p align="center"> <img src="https://lh3.googleusercontent.com/IPN1eis6eIjQjZsiQR4MRlkGGbw1Zb8P324LrOzw6LFIagc_KB4bsyY8xlc1T1TfSeofYKOkxTbOiXJihanQ9NG2Ky1Ya2CDxjphMhHmwSJJ3ZMl744Xz3DnVGLqDLnXZkMRwF0U">
 
- What does the final executed Javascript look like? Here is a piece of the real code, after successful de-obfuscating.
+<p align="center">The malicious data is hidden in the image while the image is still viewable</p>
+</p>
  
- https://lh4.googleusercontent.com/Iun-DdCJrtuagzxaB1eYLCX5_Ecu0MCTTV-P3cBxUGlxJKdVSIqFsnCTZFMym2HzpUIvKqpoEDK8gEt6WMmfxWBdgJCqHIRgTC25dDjKOMoxcCstabRGkRsIWMq9BNb6xzd0VqNR
- 
- 
- Therefore, we confirmed the exploited vulnerability is CVE-2013-3346.
+Nevertheless, there’s no suspicious data can be found inside the icon file, since the malicious code data is heavily obfuscated.
 
- Furthermore, we deduce that this sample and the previous one were from the same author, for following reasons.
+What does the final executed Javascript look like? Here is a piece of the real code, after successful de-obfuscating.
+ 
+![](https://lh4.googleusercontent.com/Iun-DdCJrtuagzxaB1eYLCX5_Ecu0MCTTV-P3cBxUGlxJKdVSIqFsnCTZFMym2HzpUIvKqpoEDK8gEt6WMmfxWBdgJCqHIRgTC25dDjKOMoxcCstabRGkRsIWMq9BNb6xzd0VqNR)
+ 
+ 
+Therefore, we confirmed the exploited vulnerability is CVE-2013-3346.
+
+Furthermore, we deduce that this sample and the previous one were from the same author, for following reasons.
 Both of them exploit the same vulnerability (CVE-2013-3346)
 The similarity of the Javascript code in these two exploits.
 After some googling, we found that the attacker likely copied a project/technique called "steganography.js", which is open sourced here. The project was developed working on browsers. We believe the person behind the PDF samples made their innovation as they successfully leveraged the technique in PDF format.  We could not find any information mentioning such technique in PDF exploits before, so we believe this is the first time that the "steganography" technique is used to hide PDF exploits.
 
 
-Conclusion
+### Conclusion
+
 We were impressed by this technique, which is perfect for malicious code obfuscation for PDF exploits. By using this technique, all streams look normal, all images are viewable, everything looks legitimate. This can probably explain why almost all AV engines missed it.
 
- In this blog we researched into the truly advanced "steganography" technique used for obfuscating PDF exploits, which is a demonstration of the power of our EdgeLogic engine as we are able to beat this obfuscation technique, among many others.
+In this blog we researched into the truly advanced "steganography" technique used for obfuscating PDF exploits, which is a demonstration of the power of our EdgeLogic engine as we are able to beat this obfuscation technique, among many others.
 
- Just like the previous one, the "steganography" technique could not only be used to obfuscate this exploit (CVE-2013-3346) but also can be applied to many other PDF exploits including zero-days. We ask security defenders to pay close attention to it.
+Just like the previous one, the "steganography" technique could not only be used to obfuscate this exploit (CVE-2013-3346) but also can be applied to many other PDF exploits including zero-days. We ask security defenders to pay close attention to it.
 
 Follow us @EdgeSpot_io.
