@@ -4,7 +4,7 @@ Shortly after [last week's discovery](https://blog.edgespot.io/2019/01/an-intere
 
 The sample was detected as "exploit CVE-2013-3346" by our EdgeLogic engine, same as the previous one.
 
-* https://blog.edgespot.io/2019/01/an-interesting-obfuscation-method.html
+* https://edgespot.io/analysis/ebc5617447c58c88d52be6218384158ccf96ec7d7755179a31d209a95cd81a69/
 
 ![](https://4.bp.blogspot.com/-Kr-NkDqfyho/XEdDnFNT1EI/AAAAAAAAAEo/d9VFG0l_qDwAB_vhf50p7AHCZjNncLPuQCLcBGAs/s1600/edgespot-detection.png)
 
