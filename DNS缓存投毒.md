@@ -1,4 +1,6 @@
 
+https://medium.com/iocscan/dns-cache-poisoning-bea939b5afaf
+
 ## DNS 缓存投毒
 
 ![](https://cdn-images-1.medium.com/max/2000/1*3kt_t9wSc7MP4Gu2rD7_gw.png)
