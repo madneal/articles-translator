@@ -40,11 +40,18 @@ Many new proposals for enhancing DNS security include source port randomization,
 
 许多增强DNS安全性的新提议包括源端口随机化，0x20 XOR编码，WSEC-DNS，这些都取决于用于身份验证的组件的不对称可访问性。 换句话说，它们通过隐匿而不是通过身份验证和加密的机密性来提供安全性。 他们的唯一目标是如上所述防止盲目攻击。 使用这些安全方法仍然使DNS容易遭受受损服务器和网络窃听者的轻微攻击，以打破默默无闻并执行如上所述的相同攻击，这次没有盲目猜测。 即使在交换环境中，也可以使用ARP中毒和类似技术强制所有数据包进入恶意计算机，并且可以打败默默无闻。
 
-## DNS Cache Poisoning Mitigation
+## DNS 缓存投毒缓解
 
 **DNSSEC**
+
 The best way to prevent Cache Poisoning of DNS revolvers is to implement a secure method of cryptography and authentication. DNS as a protocol is antiquated and as a backbone of the entire internet is surprisingly still an unencrypted protocol without any form of validation for entries and responses it receives.
 
 The solution, of course, is to provide a method of verification and authentication known as DNS Secure or [DNSSEC](https://medium.com/iocscan/how-dnssec-works-9c652257be0). The protocol creates a unique cryptographic signature stored alongside the DNS records. The signature is then used by the DNS resolver to authenticate a DNS response ensuring the record was not tampered with. Additionally, it provides a chain of trust from the TLD all the way down to the domain authoritative zone, ensuring the whole process of DNS resolution is secured.
 
 Despite these apparent benefits, DNSSEC has been slow to be adopted, and many of the less popular TLDs still do not make use of the security DNSSEC provides. The main issue is that DNSSEC is complex to set up and requires upgraded appliances to handle the new protocol, additionally due to the rarity and impotence of most DNS spoofing attacks historically, implementation of DNSSEC is not seen as a priority and is usually only performed once appliances reach the end of their life cycle.
+
+防止 DNS 缓存被投毒的最佳方法是实现加密和身份验证的安全方法。 DNS 作为一种过时的协议以及整个互联网的支柱，令人惊讶的是仍然是一种未加密的协议，没有对它收到的条目和响应进行任何形式的验证。
+
+当然，解决方案是提供一种称为 DNS Secure 或 [DNSSEC](https://medium.com/iocscan/how-dnssec-works-9c652257be0)的验证和身份验证方法。该协议创建了与 DNS 记录一起存储的唯一加密签名。然后 DNS 解析器使用签名来验证 DNS 响应，确保记录未被篡改。此外，它还提供了从 TLD 到域权威区域的信任链，确保了 DNS 解析的整个过程是安全的。
+
+尽管有这些明显的好处，但 DNSSEC 的采用速度很慢，许多不那么受欢迎的 TLD 仍然没有利用 DNSSEC 来保证安全。主要问题是 DNSSEC 设置复杂，需要升级设备来处理新协议，另外由于历史上大多数 DNS 欺骗攻击的罕见和不可知性，DNSSEC 的实现不被视为优先级，通常只执行一次应用就达到其生命周期的终点。
