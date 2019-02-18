@@ -1,7 +1,13 @@
-
-https://medium.com/iocscan/dns-cache-poisoning-bea939b5afaf
-
 ## DNS 缓存投毒
+
+> 原文：[DNS Cache Poisoning](
+https://medium.com/iocscan/dns-cache-poisoning-bea939b5afaf)
+>
+> 译者：[neal1991](https://github.com/neal1991)
+>
+> welcome to star my [articles-translator](https://github.com/neal1991/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>
+> LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 ![](https://cdn-images-1.medium.com/max/2000/1*3kt_t9wSc7MP4Gu2rD7_gw.png)
 
