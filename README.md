@@ -43,6 +43,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [正则表达式入门](https://github.com/neal1991/articles-translator/blob/master/%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%85%A5%E9%97%A8.md)
 * ["隐写术" - 深入研究 PDF混淆漏洞](https://github.com/neal1991/articles-translator/blob/master/%E9%9A%90%E5%86%99%E6%9C%AF-%E6%B7%B1%E5%85%A5%E7%A0%94%E7%A9%B6PDF%E6%B7%B7%E6%B7%86%E6%BC%8F%E6%B4%9E.md)
 * [2019 年针对 API 安全的 4 点建议](https://github.com/neal1991/articles-translator/blob/master/2019%E5%B9%B4%E9%92%88%E5%AF%B9API%E5%AE%89%E5%85%A8%E7%9A%844%E7%82%B9%E5%BB%BA%E8%AE%AE.md)
+* [DNS 缓存投毒](https://github.com/neal1991/articles-translator/blob/master/DNS%E7%BC%93%E5%AD%98%E6%8A%95%E6%AF%92.md)
 
 ## Articles need translation
 
