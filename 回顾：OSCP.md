@@ -18,9 +18,9 @@ Offensive Security 已经在很长一段时间内提供业内最好的安全课�
 
 Penetration Testing with Kali Linux (PWK) is the most popular course offered by Offensive Security which when completed and passing the exam, gives you the OSCP certificate. It has a very high regard in the Information Security industry. An OSCP, by definition, is able to identify existing vulnerabilities and execute organized attacks in a controlled and focused manner, write simple Bash or Python scripts, modify existing exploit code to their advantage, perform network pivoting and data ex-filtration, and compromise poorly written PHP web applications.
 
-基于 Kali Linux 进行渗透测试（PWK）是 Offensive Security 提供的最受欢迎的课程，在完成并通过考试后，会为你提供 OSCP 证书。 它在信息安全行业备受推崇。 根据定义，OSCP能够以受控且集中的方式识别现有漏洞并执行有组织的攻击，编写简单的Bash或Python脚本，修改现有漏洞利用代码，执行网络透视和数据过滤，以及妥协妥协 编写PHP Web应用程序。
+基于 Kali Linux 进行渗透测试（PWK）是 Offensive Security 提供的最受欢迎的课程，在完成并通过考试后，会为你提供 OSCP 证书。 它在信息安全行业备受推崇。 根据定义，OSCP 能够以受控且集中的方式识别现有漏洞并执行有组织的攻击，编写简单的 Bash 或 Python 脚本，修改现有漏洞利用代码，执行网络透视和数据过滤，以及攻击编写得差得 PHP Web 应用程序。
 
-## Registration Process
+## 注册流程
 
 Unlike OSCE/CTP, you are not required to complete a registration task before signing up for the course. Offensive Security asks for the following from the students taking PWK and they are not joking!
 
