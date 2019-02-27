@@ -29,6 +29,10 @@ Unlike OSCE/CTP, you are not required to complete a registration task before sig
 **学生要求**：
 
 * 学生需要熟悉 Linux 环境。我们将使用 Kali Linux 作为整个课程的攻击平台。浏览目录，执行脚本和工具以及编写基本的 bash 脚本是所有学生所需要的技能。
+* 对于 TCP/IP 以及多种网络服务（DNS, DHCP 等）有较强的理解。
+* 了解脚本语言（Perl，Python, Ruby）是推荐的，但不是必须的。
+* 需要对信息安全细节以及概念有较强的理解。
+* 耐心并且能够坚持。这不是开玩笑，我们是想让你通过。
 
 ![](https://aminbohio.com/storage/2019/02/2019-02-15T1630060500.png)
 
