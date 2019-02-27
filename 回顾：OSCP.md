@@ -24,6 +24,12 @@ Penetration Testing with Kali Linux (PWK) is the most popular course offered by 
 
 Unlike OSCE/CTP, you are not required to complete a registration task before signing up for the course. Offensive Security asks for the following from the students taking PWK and they are not joking!
 
+与 OSCE/CTP 不同，你无需在注册课程之前完成注册任务。 Offensive Security 要求接受 PWK学生遵守以下内容，他们不是在开玩笑！
+
+**学生要求**：
+
+* 学生需要熟悉 Linux 环境。我们将使用 Kali Linux 作为整个课程的攻击平台。浏览目录，执行脚本和工具以及编写基本的 bash 脚本是所有学生所需要的技能。
+
 ![](https://aminbohio.com/storage/2019/02/2019-02-15T1630060500.png)
 
 Following is the pricing structure for PWK
