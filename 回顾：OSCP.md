@@ -38,17 +38,27 @@ Unlike OSCE/CTP, you are not required to complete a registration task before sig
 
 Following is the pricing structure for PWK
 
+下面是 PWK 的价格介绍
+
 ![](https://aminbohio.com/storage/2019/02/2019-02-15T1559160500.png)
 
 I personally went with 30 days labs as I felt confident enough to put in the required time but I would recommend 60 or 90 days labs depending upon the experience you have being a penetration tester. If you are good with scripting, logic building, and have worked with exploits and shells, you are good to go with 30 days. To get the most out of this course, I would encourage you to put in maximum time in the labs and try everything you can.
 
-## Course Material
+我自己注册了 30 天的 lab，因为我有足够的信心投入所需的时间，但我建议 60 或 90天 的 lab，这取决于你渗透测试的经验。如果你擅长脚本编写，逻辑构建，并且已经使用了漏洞利用程序和 shell，那么你可以使用 30 天。 为了充分利用这门课程，我鼓励你在 lab 中投入最多时间并尝试一切。
+
+## 课程资料
 
 Once you have registered yourself, it takes about 15 days for your course work to start. You get downloadable course material which comprises of a PDF book and a set of videos both of which are watermarked with your name and OSID. You are not allowed to share this course material with anyone at all because you can be permanently banned for doing so.
 
 The PDF guide and the video tutorials are almost identical but the PDF guide has much more detailing to cover the topics in a very good depth. The course in itself is very nicely designed but you are assumed to know a lot of things beforehand like Networking, Linux, etc.
 
 Although I cannot share the exact content with you, you can get an idea about what to expect in the course and the labs through this syllabus made available by Offensive Security.
+
+你一旦注册了，你的课程大概会 15 天后开始。你可以获得可下载的课程资料，其中包含 PDF 书籍和一组视频，这些视频都带有你的姓名和 OSID 的水印。你不得与任何人共享此课程资料，因为这是被永久禁止的行为。
+
+PDF 指南和视频教程几乎完全相同，但 PDF 指南有更多细节，以深入介绍主题。该课程本身设计得非常好，但你可以事先了解很多事情，比如网络，Linux等。
+
+虽然我无法与你分享确切的内容，但您可以通过 Offensive Security 提供的课程大纲了解课程和实验中的内容。
 
 Penetration Testing: What You Should Know
 Getting Comfortable with Kali Linux
