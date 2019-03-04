@@ -84,6 +84,8 @@ Assembling the Pieces: Penetration Test Breakdown
 
 The labs are nicely designed to simulate a real corporate network where you have different departments and several machines across multiple networks behind a firewall and you have to compromise them. Following is the network diagram of the lab network where you practice and implement the tricks taught in the course material.
 
+Labs 经过巧妙涉及可以模拟真实的企业网络，在防火墙后面有多个网络的不同部门和多台机器，你可以占领它们。以下是实验室网络的网络图，你可以在其中练习和实施课程材料中教授的技巧。
+
 ![](https://aminbohio.com/storage/2019/02/pwk-lab-network.png)
 
 Students are given a VPN pack through which you login to these labs and the initial starting point is through the Public Network where you have got several machines waiting to be pawned. The end goal is to reach the administrative department by exploiting and gaining access to other networks.
