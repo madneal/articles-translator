@@ -1,0 +1,1 @@
+https://www.peerlyst.com/posts/burpsuite-basic-use-cases-burpsuite-mobile-mitm-attacks-ben-johnson-cissp-gmob-gwapt?utm_campaign=peerlyst_shared_post&utm_content=peerlyst_post&utm_medium=social&utm_source=twitter
