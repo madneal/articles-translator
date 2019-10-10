@@ -79,7 +79,16 @@ I’ve definitely seen a lot of improvements on every single aspect of the front
 * We love the new IntersectionObserver API, very useful for a more efficient way to load images
 * We started playing with the Picture-in-Picture API  as well, to have that floating video on some of our pages, mainly to get user feedback about the idea.
 
+我肯定在前端世界的每个方面都看到了很多改进；
+
+* 从纯 CSS 到最终使用 LESS 和 Mixins，再到使用具有媒体查询和图片标签的灵活 Grid 系统，以适应不同的分辨率和屏幕尺寸
+* jQuery 和 jQueryUI 慢慢地被淘汰，因此我们将回到 vanilla JS 中更高效的面向对象编程。在某些情况下，框架也非常有趣
+* 我们喜欢新的 IntersectionObserver API，对于以更有效的方式加载图像非常有用
+* 我们也开始使用画中画 API，以便在我们的某些页面上播放该浮动视频，主要是为了获得用户对该想法的反馈。
+
 **Looking forward, are there any Web APIs that you’d love changed, improved, or even created?**
+
+**展望未来，有没有你想要更改，改进甚至创建的 Web API？**
 
 Some of them that we would like changed or improved; Beacon, WebRTC, Service Workers and Fetch:
 
@@ -88,13 +97,28 @@ Some of them that we would like changed or improved; Beacon, WebRTC, Service Wor
 * WebRTC:  Simulcast layers are limited even for screenshare, if the resolution is not big enough
 * Service Workers: Making calls to navigator.serviceWorker.register isn't intercepted by any service worker's Fetch event handlers
 
+其中有一些是我们希望改变或改进的；Beacon，WebRTC, Service Workers 以及 Fetch：
+
+* Beacon：在 IOS 上存在 pageHide 事件无正常工作的问题
+* Fetch：没有下载进度，也没有提供拦截请求的方法
+* WebRTC：如果分辨率不够大，则即使进行屏幕共享，Simulcast 层也会受到限制
+* Service Workers：调用 navigator.serviceWorker.register 不会被任何 Service Workers 的 Fetch 事件处理程序拦截
+
 **WebVR is has been improving in the past few years -- how useful is WebVR in its current state and how much of an effort are adult sites putting into support for VR content?  Do haptics have a role in WebVR on your sites?**
+
+**WebVR 在过去几年中一直在进步--WebVR 在当前状态下作用有多大，成人网站为支持 VR 内容付出了多少努力？触觉在你们网站上的 WebVR 中有起到作用吗？**
 
 We’re investigating webXR and how to best adapt to emerging spatial computing use cases, and as the largest distribution platform we need to support creators and users however they want to experience our content. But we’re still exploring what content and platforms should be like in these new mediums.
 
 We were the first major platform to support VR, computer vision, and virtual performers, and will continue to push new technology and the open web. 
 
+我们正在研究 webXR 以及如何最好地适应新兴的空间计算用例，作为最大的发布平台，我们需要支持创作者和用户，无论他们想体验我们的内容如何。但是，我们仍在探索这些新媒体应具有什么样的内容和平台。
+
+我们是第一个支持 VR，计算机视觉和虚拟表演者的主要平台，并将继续推动新技术和开放互联网的发展。
+
 **With so many different types of media and content on each page, what are the biggest considerations when it comes to desktop vs. mobile, if any?** 
+
+**每个页面上的媒体和内容种类繁多，那么桌面设备与移动设备之间最大的考虑是什么？**
 
 Functionality restricted by operating system and browsers type mainly. iOS vs Android is the perfect example when it comes to a completely different set of access and features. 
 
@@ -102,11 +126,23 @@ For example, some iOS Mobile devices don’t allow us to have a custom video pla
 
 Adaptive streaming in HLS is also another example, IE and Edge are picky when it comes to HLS streaming quality, in that we need to prevent certain of the higher qualities, otherwise the video would constantly stutter and have artifacts.
 
+功能主要受操作系统和浏览器类型的限制。当涉及一组套完全不同的访问和功能时，iOS 对比 Android 是一个完美的例子。
+
+例如，某些 iOS 移动设备不允许我们在全屏模式下使用自定义视频播放器，而是强制使用本机 QuickTime 播放器。我们提出新想法时必须考虑这一点。另一方面，Android 为我们提供了完全的控制权，我们可以将功能在全屏模式实现。
+
+HLS 中的自适应流式传输也是另一个示例，当涉及到 HLS 流式传输质量时，IE 和 Edge 需要有所顾虑，因为我们需要防止某些更高质量的内容，否则视频将不断卡顿并出现伪像。
+
 **What is the current minimum browser support for the adult sites you work on?  Is Internet Explorer phased out?**
 
+**当前针对你工作的成人网站的最低浏览器版本支持是什么？ IE 浏览器上是否已淘汰？**
+
 We supported IE for a very long time but recently dropped support for anything older than IE11. With it we also stopped working with Flash for the video player. We are focusing on Chrome, Firefox and Safari mainly. 
+ 
+我们对 IE 的支持时间很长，但是最近放弃了对 IE11 之前的任何版本的支持。有了它，我们也停止了为视频播放器使用 Flash。我们主要关注 Chrome，Firefox 和 Safari。
 
 **More broadly, can you share a little about the typical adult site’s stack?  Server and/or front-end? Which libraries are you using?**
+
+**更广泛地说，你能否分享一些有关典型成人网站技术栈的信息？服务器和/或前端？你正在使用哪些库？**
 
 Most of our sites use the following as a base:
 
@@ -119,7 +155,20 @@ Other technologies like Varnish, ElasticSearch, NodeJS, Go, Vertica are used whe
 
 For frontend, we run mostly vanilla Javascript, we’re slowly getting rid of jQuery and we are just beginning to play with frameworks, mostly Vue.js
 
+我们的大多数网站都以以下内容为基础：
+
+* Nginx
+* PHP
+* MySQL
+* Memcached 和/或 Redis
+
+在适当的地方使用其他技术，例如 Varnish，ElasticSearch，NodeJS，Go，Vertica。
+
+对于前端，我们主要运行原生 Javascript，我们逐渐摆脱了 jQuery，我们才刚刚开始使用框架，主要是Vue.js
+
 **From an outsider’s perspective, adult sites generally seem to be very much alike:  lots of video thumbnails, aggregated video content, cam performers, adverts. As someone who works on them, what are the differentiating features that make adult sites unique?**
+
+**从局外人的角度来看，成人网站通常看起来很相似：很多视频缩略图，聚合的视频内容，摄像头表演，广告。作为从事这些工作的人，使成人网站与众不同的特征是什么？**
 
 We work very hard to give each brand some uniqueness at different levels; content library, UX and features sets, and across a lot of different algorithms. 
 
