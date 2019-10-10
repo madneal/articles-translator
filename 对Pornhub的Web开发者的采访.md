@@ -10,19 +10,35 @@
 
 Regardless of your stance on pornography, it would be impossible to deny the massive impact the adult website industry has had on pushing the web forward. From pushing the browser's video limits to [pushing ads through WebSocket](https://medium.com/thebugreport/pornhub-bypasses-ad-blockers-with-websockets-cedab35a8323) so ad blockers don't detect them, you have to be clever to innovate at the bleeding edge of the web.
 
+无论你对色情内容采取何种立场，都无法否认成人网站行业对推动互联网发展具有巨大影响。从将浏览器的视频限制推送到[通过WebSocket推送广告](https://medium.com/thebugreport/pornhub-bypasses-ad-blockers-with-websockets-cedab35a8323)，以便广告拦截器无法检测到它们，你必须足够聪明才能在互联网的前沿进行创新。
+
 I was recently lucky enough to interview a Web Developer at the web's largest adult website: Pornhub. I wanted to learn about the tech, how web APIs can improve, and what it's like working on adult websites. Enjoy!
+
+最近，我很有幸采访互联网最大的成人网站 Pornhub 的一名 Web 开发者。我想了解技术，Web API 如何改进以及在成人网站上工作的感受。请享用！
 
 *Note: The adult industry is very competitive so there were a few questions they could not answer.  I respect their need to keep their tricks close to the vest.*
 
+*注意：成人产业竞争激烈，因此有一些他们无法回答的问题。我尊重他们保守商业机密的需要。*
+
 **Adult sites obviously display lots of graphic content.  During the development process, are you using lots of placeholder images and videos?  How far is the development content and experience from the end product?**  
+
+**成人网站显然会显示许多图形内容。在开发过程中，你是否使用了大量的占位符图像和视频？最终产品和开发时的内容和经验有什么区别？**
 
 We actually don’t use placeholders when we are developing the sites! In the end, what matters is the code and functionality, the interface is something we are very used to at this point. There’s definitely a little bit of a learning curve at first, but we all got used to it pretty quickly. 
 
+实际上，我们在开发网站时不使用占位符！最后，重要的是代码和功能，接口是我们现在非常习惯的东西。一开始肯定会有一些学习曲线，但是我们大家很快就习惯了。
+
 **When it comes to cam streams and third party ad scripts, how do you mock such important, dynamic resources during site and feature development?**
+
+**对于网络流和第三方广告脚本，你如何在网站和功能开发过程中模拟这些重要的动态资源？**
 
 For development, the player is broken into two components.  The basic player implements the core functionality and fires events.  Development is done in a clean room. For integration on the sites, we want those third-party scripts and ads running so we can find problems as early in the process as possible.  For special circumstances we’ll work with advertisers to allow us to manually trigger events that might normally be random.
 
+为了进行开发，播放器分为两个部分。基本播放器实现核心功能并触发事件。开发不会受其他因素干扰。为了在网站上进行集成，我们希望运行那些第三方脚本和广告，以便我们尽早发现问题。在特殊情况下，我们将与广告客户合作，允许我们手动触发通常可能是随机的事件。
+
 **An average page probably has at least one video, GIF advertisements, a few cam performer previews, and thumbnails of other videos.  How do you measure page performance and how do you keep the page as performant as possible? Any tricks you can share?**
+
+**平均每个页面可能至少包含一个视频，GIF 广告，一些 cam 表演者预览以及其他视频的缩略图。你如何测量页面性能以及如何使页面保持最佳性能？有什么你可已分享的技巧吗？**
 
 We use a few measurement systems. 
 
@@ -30,15 +46,31 @@ We use a few measurement systems.
 * A third-party RUM system for general site performance.
 * WebpageTest private instances to script tests in the available AWS data centers.  We use this mostly for seeing what might have been going on at a given time. It also allows us to view the “waterfall” from different locations and providers.
 
+我们使用一些测量系统。
+
+* 我们的播放器会向我们报告有关视频播放性能和一般用法的指标
+* 用于一般站点性能的第三方 RUM 系统。
+* WebpageTest 私有实例，用于在可用的 AWS 数据中心中编写测试脚本。我们主要将其用于查看给定时间可能发生的情况。它还使我们能够查看来自不同位置和提供者的“瀑布”。
+
 **I have to assume the most important and complex feature on the front-end is the video player.  From incorporating ads before videos, marking highlight moments of the video, changing video speed, and other features, how do you maintain the performance, functionality, and stability of this asset?**
+
+**我必须假设前端最重要，最复杂的功能是视频播放器。从在视频之前加入广告，标记视频的精彩时刻，更改视频速度和其他功能，你如何维护该资产的性能，功能和稳定性？**
 
 We have a dedicated team working strictly on the video player, their first priority is to constantly monitor for performance and efficiency. To do so we use pretty much everything that is available to us; browsers performance tools, web page tests, metrics  etc. The stability and quality is assured by a solid QA round for any updates we do. 
 
+我们有一支专门致力于视频播放器的团队，他们的首要任务是持续监控性能和效率。我们为此几乎使用了所有可用的东西；浏览器性能工具，网页测试，指标等。我们进行的所有更新均通过可靠的质量检查来确保稳定性和质量。
+
 **How many people are on the dedicated video team?  How many front-end developers are on the team?**
 
-I’d say given the size of the product the team size is lean to average. 
+**专门的视频团队有多少人？团队中有多少前端开发人员？**
+
+I’d say given the size of the product the team size is lean to average.
+
+我要说的是，团队规模倾向于基于产品规模的平均水平。
 
 **During your time working on adult websites, how have you seen the front-end landscape change?  What new Web APIs have made your life easier?**
+
+**在成人网站上工作期间，你如何看待前端未来的变化？哪些新的 Web API 使你的生活更轻松？**
 
 I’ve definitely seen a lot of improvements on every single aspect of the frontend world;
 
