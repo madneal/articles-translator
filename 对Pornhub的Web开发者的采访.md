@@ -172,21 +172,39 @@ For frontend, we run mostly vanilla Javascript, we’re slowly getting rid of jQ
 
 We work very hard to give each brand some uniqueness at different levels; content library, UX and features sets, and across a lot of different algorithms. 
 
+我们非常努力地为每个品牌赋予不同层次的独特性；内容库，UX 和功能集，以及许多不同的算法。
+
 **Before applying and interviewing for your current employer, what were your thoughts on potentially working on adult sites?  Did you have any hesitations? If so, how were your fears to put rest?**
+
+**在你申请这份工作和面试之前，你对在成人场所工作的想法是什么？你有犹豫吗？如果是这样，你如何释怀的？**
 
 It never really bothered me, in the end the challenge was so appealing. The idea of millions of people potentially interacting with features I worked on was really motivating. That proved to be true very quickly, the first time something I worked on went live, I was super proud, and I indeed told all my friends to go check it out! The fact that porn will never die is reassuring for job stability as well!
 
+这真的从来没有困扰过我，最终挑战是如此吸引人。数以百万计的人会使用我正在开发的功能确实令人鼓舞。事实证明，这很快就成立了，我第一次的工作成果上线了，我感到非常自豪，我的确告诉所有朋友去看看！色情片永远不会消失的事实也使工作稳定得到了保证！
+
 **In as far as end product, sharing that you work on adult sites may not be the same as working at a local web agency.  Is there a stigma attached to telling friends, family, and acquaintances you work on adult sites? Is there any hesitance in telling people you work on adult sites?**
+
+**就最终产品而言，分享下你在成人网站上工作可能与在本地互联网公司上工作不同。你会羞于告诉朋友，家人和熟人在成人网站工作吗？你是否会犹豫告诉别人你在成人网站工作？**
 
 I’m very proud to work on these products, those close to me are aware and fascinated by it. It’s always an amazing source of conversation, jokes and is genuinely interesting. 
 
+我为能够为这些产品工作而感到自豪，与我亲近的人都知道并着迷于这些产品。它始终是交谈，笑话的绝佳来源，而且非常有趣。
+
 **Having worked at agencies outside the adult industry, is there a difference in atmosphere when working on adult sites?**
+
+**曾在成人产业以外的机构工作过，和在成人网站工作时气氛有差异吗？**
 
 The atmosphere here is very relaxed and friendly. I don’t notice any major differences with respect to work culture at other agencies, other than the fact that it’s much bigger here than anywhere I have worked previously. 
 
 Being a front-end developer, which teams do you work most closely with?  What are the most common daily communication methods?
 
 We work equally with backend developers, QA testers and product managers - most of the time we simply go up to each other’s desk and talk. If not, chat (MS Teams) is very common. Then come emails.
+
+这里的气氛非常轻松友好。除了在这里比我以前工作过的任何地方都大得多的事实外，我没有注意到和其他机构在工作文化方面的任何重大差异。
+
+作为前端开发人员，你与哪些团队合作最紧密？最常见的日常交流方式是什么？
+
+我们与后端开发人员，QA 测试人员和产品经理平等地合作--大多数时候，我们只是在彼此的办公桌旁交谈。另外使用 cat（MS Teams）非常普遍。然后就是电子邮件。
 
 **Lastly, is there anything you’d like to share as a front-end developer working on adult sites?**
 
@@ -198,3 +216,12 @@ I found our interview really enlightening. I was a bit surprised they didn't use
 
 I really wish I'd have been able to get more specific tech tips out of them; performance and clever hacks especially. I'm sure there's a wealth of knowledge to be learned behind their source code! What questions would you have asked?
 
+**最后，作为在成人网站上工作的前端开发人员，你有什么想分享的吗？**
+
+作为创造用户如何体验如此广泛使用的产品的一部分，确实令人兴奋。随着技术的不断发展，我们通常处于趋势和技术重大变革的最前沿，这使它保持乐趣和挑战性。
+
+*访谈结束*
+
+我发现我们的采访确实很有启发性。我很惊讶他们在开发功能和设计时没有使用图像。很高兴看到 Pornhub 继续使用 WebXR，WebRTC 和 Intersection Observer 推动互联网的前沿发展。我也很高兴看到他们认为当前的 Web API足够了从而开始移除 jQuery。
+
+我真的希望我能够从中获得更多具体的技术提示；性能和巧妙的技巧。我敢肯定，他们的源代码背后有很多知识要学习！你会问什么问题？
