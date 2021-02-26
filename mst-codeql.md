@@ -1,4 +1,4 @@
-微软开源对于 Solorigate 活动捕获的开源 CodeQL 查询
+# 微软开源对于 Solorigate 活动捕获的开源 CodeQL 查询
 
 >原文：[Microsoft open sources CodeQL queries used to hunt for Solorigate activity](https://www.microsoft.com/security/blog/2021/02/25/microsoft-open-sources-codeql-queries-used-to-hunt-for-solorigate-activity/)
 >
@@ -22,29 +22,28 @@ Microsoft has long had integrity controls in place to verify that the final comp
 
 Microsoft’s contribution during Solorigate investigations reflects our commitment to a community-based sharing vision described in Githubification of InfoSec. In keeping with our vision to grow defender knowledge and speed community response to sophisticated threats, Microsoft teams have openly and transparently shared indicators of compromise, detailed attack analysis and MITRE ATT&CK techniques, advanced hunting queries, incident response guidance, and risk assessment workbooks during this incident. Microsoft encourages other security organizations that share the “Githubification” vision to open source their own threat knowledge and defender techniques to accelerate defender insight and analysis. As we have shared before, we have compiled a comprehensive resource for technical details of the attack, indicators of compromise, and product guidance at https://aka.ms/solorigate. As part of Microsoft’s sweeping investigation into Solorigate, we reviewed our own environment. As we previously shared, these investigations found activity with a small number of internal accounts, and some accounts had been used to view source code, but we found no evidence of any modification to source code, build infrastructure, compiled binaries, or production environments.
 
+## A primer on CodeQL and how Microsoft utilizes it
 
-
-A primer on CodeQL and how Microsoft utilizes it
 CodeQL is a powerful semantic code analysis engine that is now part of GitHub. Unlike many analysis solutions, it works in two distinct stages. First, as part of the compilation of source code into binaries, CodeQL builds a database that captures the model of the compiling code. For interpreted languages, it parses the source and builds its own abstract syntax tree model, as there is no compiler. Second, once constructed, this database can be queried repeatedly like any other database. The CodeQL language is purpose-built to enable the easy selection of complex code conditions from the database.
 
 One of the reasons we find so much utility from CodeQL at Microsoft is specifically because this two-stage approach unlocks many useful scenarios, including being able to use static analysis not just for proactive Secure Development Lifecycle analysis but also for reactive code inspection across the enterprise. We aggregate the CodeQL databases produced by the various build systems or pipelines across Microsoft to a centralized infrastructure where we have the capability to query across the breadth of CodeQL databases at once. Aggregating CodeQL databases allows us to search semantically across our multitude of codebases and look for code conditions that may span between multiple assemblies, libraries, or modules based on the specific code that was part of a build. We built this capability to analyze thousands of repositories for newly described variants of vulnerabilities within hours of the variant being described, but it also allowed us to do a first-pass investigation for Solorigate implant patterns similarly, quickly.
-
-
 
 We are open sourcing several of the C# queries that assess for these code-level IoCs, and they can currently be found in the CodeQL GitHub repository. The Solorigate-Readme.md within that repo contains detailed descriptions of each query and what code-level IoCs each one is attempting to find. It also contains guidance for other query authors on making adjustments to those queries or authoring queries that take a different tactic in finding the patterns.
 
 GitHub will shortly publish guidance on how they are deploying these queries for existing CodeQL customers. As a reminder, CodeQL is free for open-source projects hosted by GitHub.
 
-Our approach to finding code-level IoCs with CodeQL queries
+## Our approach to finding code-level IoCs with CodeQL queries
+
 We used two different tactics when looking for code-level Solorigate IoCs. One approach looks for particular syntax that stood out in the Solorigate code-level IoCs; the other approach looks for overall semantic patterns for the techniques present in the code-level IoCs.
 
 The syntactic queries are very quick to write and execute while offering several advantages over comparable regular expression searches; however, they are brittle to the malicious actor changing the names and literals they use. The semantic patterns look for the overall techniques used in the implant, such as hashing process names, time delays before contacting the C2 servers, etc. These are durable to substantial variation, but they are more complicated to author and more compute-intensive when analyzing many codebases at once.
 
-Sample technique from implant with corresponding CodeQL query
+## Sample technique from implant with corresponding CodeQL query
 
 By combining these two approaches, the queries are able to detect scenarios where the malicious actor changed techniques but used similar syntax, or changed syntax but employed similar techniques. Because it’s possible that the malicious actor could change both syntax and techniques, CodeQL was but one part of our larger investigative effort.
 
-Next steps with CodeQL
+## Next steps with CodeQL
+
 The queries we shared in this blog and described in Solorigate-Readme.md target patterns specifically associated with the Solorigate code-level IoCs, but CodeQL also provides many other options to query for backdoor functionality and detection-evasion techniques.
 
 These queries were relatively quick to author, and we were able to hunt for patterns much more accurately across our CodeQL databases and with far less effort to manually review the findings, compared to using text searches of source code. CodeQL is a powerful developer tool, and our hope is that this post inspires organizations to explore how it can be used to improve reactive security response and act as a compromise detection tool.
