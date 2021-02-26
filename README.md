@@ -49,6 +49,8 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [DNS 缓存投毒](https://github.com/neal1991/articles-translator/blob/master/DNS%E7%BC%93%E5%AD%98%E6%8A%95%E6%AF%92.md)
 * [理解跨域资源共享](https://github.com/neal1991/articles-translator/blob/master/%E7%90%86%E8%A7%A3%E8%B7%A8%E5%9F%9F%E8%B5%84%E6%BA%90%E5%85%B1%E4%BA%AB.md)
 * [Pornhub Web 开发者访谈](https://github.com/neal1991/articles-translator/blob/master/%E5%AF%B9Pornhub%E7%9A%84Web%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E9%87%87%E8%AE%BF.md)
+* [GMail 中的 XSS 漏洞](https://github.com/neal1991/articles-translator/blob/master/XSS.md)
+* [火眼红队工具遭窃](https://github.com/madneal/articles-translator/blob/master/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E7%81%AB%E7%9C%BC%E7%BA%A2%E9%98%9F%E5%B7%A5%E5%85%B7.md)
 
 ## Articles need translation
 
