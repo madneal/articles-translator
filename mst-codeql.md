@@ -1,6 +1,6 @@
 # 微软开源对于 Solorigate 活动捕获的开源 CodeQL 查询
 
->原文：[Microsoft open sources CodeQL queries used to hunt for Solorigate activity](https://www.microsoft.com/security/blog/2021/02/25/microsoft-open-sources-codeql-queries-used-to-hunt-for-solorigate-activity/)
+>原文：[微软 open sources CodeQL queries used to hunt for Solorigate activity](https://www.微软.com/security/blog/2021/02/25/微软-open-sources-codeql-queries-used-to-hunt-for-solorigate-activity/)
 >
 >译者：[madneal](https://github.com/madneal)
 >
@@ -10,27 +10,37 @@
 
 A key aspect of the Solorigate attack is the supply chain compromise that allowed the attacker to modify binaries in SolarWinds’ Orion product. These modified binaries were distributed via previously legitimate update channels and allowed the attacker to remotely perform malicious activities, such as credential theft, privilege escalation, and lateral movement, to steal sensitive information. The incident has reminded organizations to reflect not just on their readiness to respond to sophisticated attacks, but also the resilience of their own codebases.
 
-Solorigate攻击的一个关键方面是供应链折衷，这使攻击者可以修改SolarWinds Orion产品中的二进制文件。 这些经过修改的二进制文件是通过以前合法的更新渠道分发的，并允许攻击者远程执行恶意活动，例如窃取凭据，特权升级和横向移动，以窃取敏感信息。 该事件提醒组织不仅要考虑是否准备好应对复杂的攻击，还需要考虑自己代码库的弹性。
+Solorigate 攻击的一个关键方面是供应链攻击，这使攻击者可以修改 SolarWinds Orion 产品中的二进制文件。这些经过修改的二进制文件是通过以前合法的更新渠道分发的，并允许攻击者远程执行恶意活动，例如窃取凭据，提权和横向移动，以窃取敏感信息。该事件提醒组织不仅要考虑是否准备好应对复杂的攻击，还需要考虑自己代码库的弹性。
 
-Microsoft believes in leading with transparency and sharing intelligence with the community for the betterment of security practices and posture across the industry as a whole. In this blog, we’ll share our journey in reviewing our codebases, highlighting one specific technique: the use of CodeQL queries to analyze our source code at scale and rule out the presence of the code-level indicators of compromise (IoCs) and coding patterns associated with Solorigate. We are open sourcing the CodeQL queries that we used in this investigation so that other organizations may perform a similar analysis. Note that the queries we cover in this blog simply serve to home in on source code that shares similarities with the source in the Solorigate implant, either in the syntactic elements (names, literals, etc.) or in functionality. Both can occur coincidentally in benign code, so all findings will need review to determine if they are actionable. Additionally, there is no guarantee that the malicious actor is constrained to the same functionality or coding style in other operations, so these queries may not detect other implants that deviate significantly from the tactics seen in the Solorigate implant. These should be considered as just a part in a mosaic of techniques to audit for compromise.
+微软 believes in leading with transparency and sharing intelligence with the community for the betterment of security practices and posture across the industry as a whole. In this blog, we’ll share our journey in reviewing our codebases, highlighting one specific technique: the use of CodeQL queries to analyze our source code at scale and rule out the presence of the code-level indicators of compromise (IoCs) and coding patterns associated with Solorigate. We are open sourcing the CodeQL queries that we used in this investigation so that other organizations may perform a similar analysis. Note that the queries we cover in this blog simply serve to home in on source code that shares similarities with the source in the Solorigate implant, either in the syntactic elements (names, literals, etc.) or in functionality. Both can occur coincidentally in benign code, so all findings will need review to determine if they are actionable. Additionally, there is no guarantee that the malicious actor is constrained to the same functionality or coding style in other operations, so these queries may not detect other implants that deviate significantly from the tactics seen in the Solorigate implant. These should be considered as just a part in a mosaic of techniques to audit for compromise.
 
-Microsoft坚信以透明的方式进行领导，并与社区共享情报，以改善整个行业的安全实践和状况。在此博客中，我们将分享审查代码库的过程，重点介绍一种特定的技术：使用CodeQL查询来大规模分析我们的源代码，并排除存在危害代码（IoC）和编码的代码级指标与Solorigate相关的模式。我们正在公开采购本调查中使用的CodeQL查询，以便其他组织可以执行类似的分析。请注意，我们在此博客中介绍的查询仅可用于查找与Solorigate植入程序中的源代码具有相似之处的源代码，无论是在语法元素（名称，文字等）还是功能上。两者可能在良性代码中同时发生，因此所有发现都需要进行审查以确定它们是否可行。此外，不能保证恶意行为者在其他操作中被约束为相同的功能或编码样式，因此这些查询可能无法检测到与在Solorigate植入物中看到的策略有明显差异的其他植入物。这些应被视为只是审计折衷技术的一部分。
+微软坚信以透明的方式进行领导，并与社区共享情报，从而改善整个行业的安全实践和状况。在此博客中，我们将分享审查代码库的过程，重点介绍一种特定的技术：使用 CodeQL 查询来大规模分析我们的源代码，并排除存在代码级别的危威胁情报（IoC）和与 Solorigate 相关的模式。我们正在将本次本调查中使用的 CodeQL 查询开源，以便其他组织可以执行类似的分析。请注意，我们在此博客中介绍的查询仅可用于查找与 Solorigate 植入程序中的源代码具有相似之处的源代码，无论是在语法元素（名称，文字等）还是功能上。两者可能在良性代码中同时发生，因此所有发现都需要进行审查以确定它们是否可行。此外，不能保证恶意行为者在其他操作中被约束为相同的功能或编码样式，因此这些查询可能无法检测到与在 Solorigate 植入代码中看到的策略有明显差异的其他植入代码。这些应被视为只是审计折衷技术的一部分。
 
-Microsoft has long had integrity controls in place to verify that the final compiled binaries distributed to our servers and to our customers have not been maliciously modified at any point in the development and release cycle. For example, we verify that the source file hashes generated by the compiler match the original source files. Still, at Microsoft, we live by the “assume breach” philosophy, which tells us that regardless of how diligent and expansive our security practices are, potential adversaries can be equally as clever and resourced. As part of the Solorigate investigation, we used both automated and manual techniques to validate the integrity of our source code, build environments, and production binaries and environments.
+微软 has long had integrity controls in place to verify that the final compiled binaries distributed to our servers and to our customers have not been maliciously modified at any point in the development and release cycle. For example, we verify that the source file hashes generated by the compiler match the original source files. Still, at 微软, we live by the “assume breach” philosophy, which tells us that regardless of how diligent and expansive our security practices are, potential adversaries can be equally as clever and resourced. As part of the Solorigate investigation, we used both automated and manual techniques to validate the integrity of our source code, build environments, and production binaries and environments.
 
-长期以来，Microsoft一直采用完整性控制来验证分发给我们的服务器和客户的最终编译二进制文件在开发和发布周期的任何时候都没有被恶意修改。 例如，我们验证编译器生成的源文件散列是否与原始源文件匹配。 尽管如此，在Microsoft，我们仍然秉承“承担违约”的理念，该理念告诉我们，无论我们的安全实践多么勤奋和广泛，潜在的对手都可以同样地聪明和充裕。 作为Solorigate调查的一部分，我们使用了自动和手动技术来验证我们的源代码，构建环境以及生产二进制文件和环境的完整性。
+长期以来，微软一直采用完整性控制来验证分发给我们的服务器和客户的最终编译二进制文件在开发和发布周期的任何时候都没有被恶意修改。例如，我们验证编译器生成的源文件哈希是否与原始源文件匹配。尽管如此，在微软，我们仍然秉承 “assume breach” 的理念，该理念告诉我们，无论我们的安全实践多么勤奋和广泛，潜在的对手都可以同样地聪明并拥有大量资源。作为 Solorigate 调查的一部分，我们使用了自动和手动技术来验证我们的源代码，构建环境以及生产二进制文件和环境的完整性。
 
-Microsoft’s contribution during Solorigate investigations reflects our commitment to a community-based sharing vision described in Githubification of InfoSec. In keeping with our vision to grow defender knowledge and speed community response to sophisticated threats, Microsoft teams have openly and transparently shared indicators of compromise, detailed attack analysis and MITRE ATT&CK techniques, advanced hunting queries, incident response guidance, and risk assessment workbooks during this incident. Microsoft encourages other security organizations that share the “Githubification” vision to open source their own threat knowledge and defender techniques to accelerate defender insight and analysis. As we have shared before, we have compiled a comprehensive resource for technical details of the attack, indicators of compromise, and product guidance at https://aka.ms/solorigate. As part of Microsoft’s sweeping investigation into Solorigate, we reviewed our own environment. As we previously shared, these investigations found activity with a small number of internal accounts, and some accounts had been used to view source code, but we found no evidence of any modification to source code, build infrastructure, compiled binaries, or production environments.
+微软’s contribution during Solorigate investigations reflects our commitment to a community-based sharing vision described in Githubification of InfoSec. In keeping with our vision to grow defender knowledge and speed community response to sophisticated threats, 微软 teams have openly and transparently shared indicators of compromise, detailed attack analysis and MITRE ATT&CK techniques, advanced hunting queries, incident response guidance, and risk assessment workbooks during this incident. 微软 encourages other security organizations that share the “Githubification” vision to open source their own threat knowledge and defender techniques to accelerate defender insight and analysis. As we have shared before, we have compiled a comprehensive resource for technical details of the attack, indicators of compromise, and product guidance at https://aka.ms/solorigate. As part of 微软’s sweeping investigation into Solorigate, we reviewed our own environment. As we previously shared, these investigations found activity with a small number of internal accounts, and some accounts had been used to view source code, but we found no evidence of any modification to source code, build infrastructure, compiled binaries, or production environments.
 
-## A primer on CodeQL and how Microsoft utilizes it
+微软在 Solorigate 调查期间的贡献反映了我们对InfoSec的Githubification中描述的基于社区的共享愿景的承诺。为了保持我们对防御者知识的了解并加快社区对复杂威胁的响应的愿景，微软团队在此期间公开透明地共享了危害指标，详细的攻击分析和MITER ATT＆CK技术，高级狩猎查询，事件响应指南以及风险评估工作簿事件。 微软鼓励拥有“ Githubification”愿景的其他安全组织开源自己的威胁知识和防御者技术，以加速防御者的见解和分析。如前所述，我们已在https://aka.ms/solorigate上收集了全面的资源，以提供有关攻击的技术详细信息，危害指标和产品指南。作为微软全面调查Solorigate的一部分，我们检查了自己的环境。正如我们之前所分享的那样，这些调查发现有少量内部帐户存在活动，并且一些帐户已用于查看源代码，但是我们没有发现任何对源代码，构建基础结构，已编译的二进制文件或生产环境进行任何修改的证据。
+
+## A primer on CodeQL and how 微软 utilizes it
 
 CodeQL is a powerful semantic code analysis engine that is now part of GitHub. Unlike many analysis solutions, it works in two distinct stages. First, as part of the compilation of source code into binaries, CodeQL builds a database that captures the model of the compiling code. For interpreted languages, it parses the source and builds its own abstract syntax tree model, as there is no compiler. Second, once constructed, this database can be queried repeatedly like any other database. The CodeQL language is purpose-built to enable the easy selection of complex code conditions from the database.
 
-One of the reasons we find so much utility from CodeQL at Microsoft is specifically because this two-stage approach unlocks many useful scenarios, including being able to use static analysis not just for proactive Secure Development Lifecycle analysis but also for reactive code inspection across the enterprise. We aggregate the CodeQL databases produced by the various build systems or pipelines across Microsoft to a centralized infrastructure where we have the capability to query across the breadth of CodeQL databases at once. Aggregating CodeQL databases allows us to search semantically across our multitude of codebases and look for code conditions that may span between multiple assemblies, libraries, or modules based on the specific code that was part of a build. We built this capability to analyze thousands of repositories for newly described variants of vulnerabilities within hours of the variant being described, but it also allowed us to do a first-pass investigation for Solorigate implant patterns similarly, quickly.
+CodeQL是功能强大的语义代码分析引擎，现已成为GitHub的一部分。 与许多分析解决方案不同，它在两个不同的阶段工作。 首先，作为将源代码编译为二进制文件的一部分，CodeQL建立了一个捕获编译代码模型的数据库。 对于解释型语言，由于没有编译器，因此它将解析源并构建自己的抽象语法树模型。 其次，该数据库一旦构建，便可以像其他任何数据库一样反复查询。 CodeQL语言是专用于构建的，可轻松从数据库中选择复杂的代码条件。
+
+One of the reasons we find so much utility from CodeQL at 微软 is specifically because this two-stage approach unlocks many useful scenarios, including being able to use static analysis not just for proactive Secure Development Lifecycle analysis but also for reactive code inspection across the enterprise. We aggregate the CodeQL databases produced by the various build systems or pipelines across 微软 to a centralized infrastructure where we have the capability to query across the breadth of CodeQL databases at once. Aggregating CodeQL databases allows us to search semantically across our multitude of codebases and look for code conditions that may span between multiple assemblies, libraries, or modules based on the specific code that was part of a build. We built this capability to analyze thousands of repositories for newly described variants of vulnerabilities within hours of the variant being described, but it also allowed us to do a first-pass investigation for Solorigate implant patterns similarly, quickly.
+
+我们从微软的CodeQL中发现如此多的实用性的原因之一，尤其是因为这种两阶段的方法释放了许多有用的场景，包括不仅可以将静态分析用于主动安全开发生命周期分析，而且还可以用于整个企业的反应性代码检查。 。我们将微软的各种构建系统或管道生成的CodeQL数据库聚合到一个集中式基础结构中，在该基础结构中，我们能够立即查询整个CodeQL数据库的范围。聚合CodeQL数据库使我们能够在众多代码库中进行语义搜索，并根据构建的一部分特定代码查找可能跨越多个程序集，库或模块的代码条件。我们建立了此功能，可以在描述的变体后数小时内分析成千上万的资源库，以查找新描述的漏洞变体，但是它也使我们能够类似地，快速地对Solorigate植入模式进行首次通过调查。
 
 We are open sourcing several of the C# queries that assess for these code-level IoCs, and they can currently be found in the CodeQL GitHub repository. The Solorigate-Readme.md within that repo contains detailed descriptions of each query and what code-level IoCs each one is attempting to find. It also contains guidance for other query authors on making adjustments to those queries or authoring queries that take a different tactic in finding the patterns.
 
 GitHub will shortly publish guidance on how they are deploying these queries for existing CodeQL customers. As a reminder, CodeQL is free for open-source projects hosted by GitHub.
+
+我们正在公开采购评估这些代码级IoC的多个C＃查询，目前可以在CodeQL GitHub存储库中找到它们。 该仓库中的Solorigate-Readme.md包含每个查询的详细说明以及每个查询试图查找的代码级IoC。 它还包含其他查询作者的指南，这些指南涉及对那些查询进行调整或编写在查找模式时采用不同策略的查询。
+
+GitHub即将发布有关如何为现有CodeQL客户部署这些查询的指南。 提醒一下，CodeQL对于GitHub托管的开源项目是免费的。
 
 ## Our approach to finding code-level IoCs with CodeQL queries
 
@@ -38,9 +48,15 @@ We used two different tactics when looking for code-level Solorigate IoCs. One a
 
 The syntactic queries are very quick to write and execute while offering several advantages over comparable regular expression searches; however, they are brittle to the malicious actor changing the names and literals they use. The semantic patterns look for the overall techniques used in the implant, such as hashing process names, time delays before contacting the C2 servers, etc. These are durable to substantial variation, but they are more complicated to author and more compute-intensive when analyzing many codebases at once.
 
+在寻找代码级Solorigate IoC时，我们使用了两种不同的策略。 一种方法是寻找在Solorigate代码级IoC中脱颖而出的特定语法。 另一种方法则针对代码级IoC中存在的技术寻找整体语义模式。
+
+与可比较的正则表达式搜索相比，语法查询的编写和执行速度非常快，同时具有许多优势。 但是，它们对于恶意角色更改其使用的名称和文字很脆弱。 语义模式寻找植入程序中使用的总体技术，例如哈希处理名称，联系C2服务器之前的时间延迟等。这些持久性可以承受实质性的变化，但是它们在编写时更加复杂并且在计算时更加耗费计算资源 一次有很多代码库。
+
 ## Sample technique from implant with corresponding CodeQL query
 
 By combining these two approaches, the queries are able to detect scenarios where the malicious actor changed techniques but used similar syntax, or changed syntax but employed similar techniques. Because it’s possible that the malicious actor could change both syntax and techniques, CodeQL was but one part of our larger investigative effort.
+
+通过组合这两种方法，查询能够检测到恶意行为者更改了技术但使用了相似语法，或者更改了语法但采用了相似技术的场景。 由于恶意行为者可能会更改语法和技术，因此CodeQL只是我们较大的调查工作的一部分。
 
 ## Next steps with CodeQL
 
@@ -48,7 +64,13 @@ The queries we shared in this blog and described in Solorigate-Readme.md target 
 
 These queries were relatively quick to author, and we were able to hunt for patterns much more accurately across our CodeQL databases and with far less effort to manually review the findings, compared to using text searches of source code. CodeQL is a powerful developer tool, and our hope is that this post inspires organizations to explore how it can be used to improve reactive security response and act as a compromise detection tool.
 
-In future blog posts, we’ll share more ways that Microsoft uses CodeQL. We’ll also continue open-sourcing queries and utilities that build upon CodeQL so that others may benefit from them and further build upon them.
+In future blog posts, we’ll share more ways that 微软 uses CodeQL. We’ll also continue open-sourcing queries and utilities that build upon CodeQL so that others may benefit from them and further build upon them.
+
+我们在此博客中共享并在Solorigate-Readme.md目标模式中描述的查询特别与Solorigate代码级IoC相关联，但CodeQL还提供了许多其他选项来查询后门功能和逃避检测技术。
+
+这些查询的编写速度相对较快，与使用源代码的文本搜索相比，我们能够在我们的CodeQL数据库中更准确地寻找模式，并且用更少的精力手动审查发现的结果。 CodeQL是一个功能强大的开发人员工具，我们希望这篇文章能激发组织探索如何使用它来改善反应式安全响应并充当入侵检测工具。
+
+在以后的博客文章中，我们将分享微软使用CodeQL的更多方式。 我们还将继续在CodeQL的基础上进行开放源代码的查询和实用程序，以便其他人可以从中受益并进一步建立在它们之上。
 
 Filed under:
 Cybersecurity, Incident response, Security intelligence
