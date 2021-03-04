@@ -1,6 +1,6 @@
 # 微软开源对于 Solorigate 活动捕获的开源 CodeQL 查询
 
->原文：[微软 open sources CodeQL queries used to hunt for Solorigate activity](https://www.微软.com/security/blog/2021/02/25/微软-open-sources-codeql-queries-used-to-hunt-for-solorigate-activity/)
+>原文：[微软 open sources CodeQL queries used to hunt for Solorigate activity](https://www.microsoft.com/security/blog/2021/02/25/microsoft-open-sources-codeql-queries-used-to-hunt-for-solorigate-activity/)
 >
 >译者：[madneal](https://github.com/madneal)
 >
@@ -22,25 +22,26 @@ Solorigate 攻击的一个关键方面是供应链攻击，这使攻击者可以
 
 微软’s contribution during Solorigate investigations reflects our commitment to a community-based sharing vision described in Githubification of InfoSec. In keeping with our vision to grow defender knowledge and speed community response to sophisticated threats, 微软 teams have openly and transparently shared indicators of compromise, detailed attack analysis and MITRE ATT&CK techniques, advanced hunting queries, incident response guidance, and risk assessment workbooks during this incident. 微软 encourages other security organizations that share the “Githubification” vision to open source their own threat knowledge and defender techniques to accelerate defender insight and analysis. As we have shared before, we have compiled a comprehensive resource for technical details of the attack, indicators of compromise, and product guidance at https://aka.ms/solorigate. As part of 微软’s sweeping investigation into Solorigate, we reviewed our own environment. As we previously shared, these investigations found activity with a small number of internal accounts, and some accounts had been used to view source code, but we found no evidence of any modification to source code, build infrastructure, compiled binaries, or production environments.
 
-微软在 Solorigate 调查期间的贡献反映了我们对InfoSec的Githubification中描述的基于社区的共享愿景的承诺。为了保持我们对防御者知识的了解并加快社区对复杂威胁的响应的愿景，微软团队在此期间公开透明地共享了危害指标，详细的攻击分析和MITER ATT＆CK技术，高级狩猎查询，事件响应指南以及风险评估工作簿事件。 微软鼓励拥有“ Githubification”愿景的其他安全组织开源自己的威胁知识和防御者技术，以加速防御者的见解和分析。如前所述，我们已在https://aka.ms/solorigate上收集了全面的资源，以提供有关攻击的技术详细信息，危害指标和产品指南。作为微软全面调查Solorigate的一部分，我们检查了自己的环境。正如我们之前所分享的那样，这些调查发现有少量内部帐户存在活动，并且一些帐户已用于查看源代码，但是我们没有发现任何对源代码，构建基础结构，已编译的二进制文件或生产环境进行任何修改的证据。
+微软在 Solorigate 调查期间的贡献反映了我们对 InfoSec 的 Githubification 中描述的基于社区的共享愿景的承诺。为了保持我们对防御者知识的了解并加快社区对复杂威胁的响应的愿景，微软团队在此期间公开透明地共享了威胁情报，详细的攻击分析和 MITER ATT＆CK 技术，高级狩猎查询，事件响应指南以及风险评估工作簿事件。微软鼓励其他安全组织开源自己的威胁知识和防御者技术来共享 “Githubification” 愿景，以加速防御者的洞察力和分析。如前所述，我们已在 https://aka.ms/solorigate 上收集了全面的资源，以提供有关攻击的技术详细信息，威胁情报和产品指南。作为微软全面调查 Solorigate 的一部分，我们检查了自己的环境。正如我们之前所分享的那样，这些调查发现有少量内部帐户存在活动，并且一些帐户已用于查看源代码，但是我们没有发现任何对源代码，构建基础结构，已编译的二进制文件或生产环境进行任何修改的证据。
 
 ## A primer on CodeQL and how 微软 utilizes it
+## CodeQL 入门以及微软如何使用它
 
 CodeQL is a powerful semantic code analysis engine that is now part of GitHub. Unlike many analysis solutions, it works in two distinct stages. First, as part of the compilation of source code into binaries, CodeQL builds a database that captures the model of the compiling code. For interpreted languages, it parses the source and builds its own abstract syntax tree model, as there is no compiler. Second, once constructed, this database can be queried repeatedly like any other database. The CodeQL language is purpose-built to enable the easy selection of complex code conditions from the database.
 
-CodeQL是功能强大的语义代码分析引擎，现已成为GitHub的一部分。 与许多分析解决方案不同，它在两个不同的阶段工作。 首先，作为将源代码编译为二进制文件的一部分，CodeQL建立了一个捕获编译代码模型的数据库。 对于解释型语言，由于没有编译器，因此它将解析源并构建自己的抽象语法树模型。 其次，该数据库一旦构建，便可以像其他任何数据库一样反复查询。 CodeQL语言是专用于构建的，可轻松从数据库中选择复杂的代码条件。
+CodeQL 是一种功能强大的语义代码分析引擎，现已成为 GitHub 的一部分。与许多分析解决方案不同，它在两个不同的阶段工作。首先，作为将源代码编译为二进制文件的一部分，CodeQL 建立了一个捕获编译代码模型的数据库。 对于解释型语言，由于没有编译器，因此它将解析源并构建自己的抽象语法树模型。其次，该数据库一旦构建，便可以像其他任何数据库一样反复查询。CodeQL 语言是专用于构建可轻松从数据库中选择复杂的代码条件。
 
 One of the reasons we find so much utility from CodeQL at 微软 is specifically because this two-stage approach unlocks many useful scenarios, including being able to use static analysis not just for proactive Secure Development Lifecycle analysis but also for reactive code inspection across the enterprise. We aggregate the CodeQL databases produced by the various build systems or pipelines across 微软 to a centralized infrastructure where we have the capability to query across the breadth of CodeQL databases at once. Aggregating CodeQL databases allows us to search semantically across our multitude of codebases and look for code conditions that may span between multiple assemblies, libraries, or modules based on the specific code that was part of a build. We built this capability to analyze thousands of repositories for newly described variants of vulnerabilities within hours of the variant being described, but it also allowed us to do a first-pass investigation for Solorigate implant patterns similarly, quickly.
 
-我们从微软的CodeQL中发现如此多的实用性的原因之一，尤其是因为这种两阶段的方法释放了许多有用的场景，包括不仅可以将静态分析用于主动安全开发生命周期分析，而且还可以用于整个企业的反应性代码检查。 。我们将微软的各种构建系统或管道生成的CodeQL数据库聚合到一个集中式基础结构中，在该基础结构中，我们能够立即查询整个CodeQL数据库的范围。聚合CodeQL数据库使我们能够在众多代码库中进行语义搜索，并根据构建的一部分特定代码查找可能跨越多个程序集，库或模块的代码条件。我们建立了此功能，可以在描述的变体后数小时内分析成千上万的资源库，以查找新描述的漏洞变体，但是它也使我们能够类似地，快速地对Solorigate植入模式进行首次通过调查。
+在微软我们发现 CodeQL 中发现如此多的实用性的原因之一，尤其是因为这种两阶段的方法释放了许多有用的场景，包括不仅可以将静态分析用于主动安全开发生命周期分析，而且还可以用于整个企业的反应性代码检查。 。我们将微软的各种构建系统或管道生成的CodeQL数据库聚合到一个集中式基础结构中，在该基础结构中，我们能够立即查询整个 CodeQL 数据库的范围。聚合 CodeQL 数据库使我们能够在众多代码库中进行语义搜索，并根据构建的一部分特定代码查找可能跨越多个程序集，库或模块的代码条件。我们拥有可以在描述的变体后数小时内分析成千上万的资源库的能力，以查找新描述的漏洞变体，但是它也使我们能够同样快速地对 Solorigate 植入模式进行首次通过调查。
 
 We are open sourcing several of the C# queries that assess for these code-level IoCs, and they can currently be found in the CodeQL GitHub repository. The Solorigate-Readme.md within that repo contains detailed descriptions of each query and what code-level IoCs each one is attempting to find. It also contains guidance for other query authors on making adjustments to those queries or authoring queries that take a different tactic in finding the patterns.
 
 GitHub will shortly publish guidance on how they are deploying these queries for existing CodeQL customers. As a reminder, CodeQL is free for open-source projects hosted by GitHub.
 
-我们正在公开采购评估这些代码级IoC的多个C＃查询，目前可以在CodeQL GitHub存储库中找到它们。 该仓库中的Solorigate-Readme.md包含每个查询的详细说明以及每个查询试图查找的代码级IoC。 它还包含其他查询作者的指南，这些指南涉及对那些查询进行调整或编写在查找模式时采用不同策略的查询。
+我们正在开源这些代码级 IoC 的多个 C# 查询，目前可以在 CodeQL GitHub 存储库中找到它们。该仓库中的 Solorigate-Readme.md 包含每个查询的详细说明以及每个查询试图查找的代码级 IoC。它还包含给其他查询作者的指南，这些指南涉及对那些查询进行调整或编写在查找模式时采用不同策略的查询。
 
-GitHub即将发布有关如何为现有CodeQL客户部署这些查询的指南。 提醒一下，CodeQL对于GitHub托管的开源项目是免费的。
+GitHub 即将发布有关如何为现有 CodeQL 客户部署这些查询的指南。提醒一下，CodeQL 对于 GitHub 托管的开源项目是免费的。
 
 ## Our approach to finding code-level IoCs with CodeQL queries
 
