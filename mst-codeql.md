@@ -44,22 +44,25 @@ GitHub will shortly publish guidance on how they are deploying these queries for
 GitHub 即将发布有关如何为现有 CodeQL 客户部署这些查询的指南。提醒一下，CodeQL 对于 GitHub 托管的开源项目是免费的。
 
 ## Our approach to finding code-level IoCs with CodeQL queries
+## 我们使用 CodeQL 寻找代码级威胁情报的方法
 
 We used two different tactics when looking for code-level Solorigate IoCs. One approach looks for particular syntax that stood out in the Solorigate code-level IoCs; the other approach looks for overall semantic patterns for the techniques present in the code-level IoCs.
 
 The syntactic queries are very quick to write and execute while offering several advantages over comparable regular expression searches; however, they are brittle to the malicious actor changing the names and literals they use. The semantic patterns look for the overall techniques used in the implant, such as hashing process names, time delays before contacting the C2 servers, etc. These are durable to substantial variation, but they are more complicated to author and more compute-intensive when analyzing many codebases at once.
 
-在寻找代码级Solorigate IoC时，我们使用了两种不同的策略。 一种方法是寻找在Solorigate代码级IoC中脱颖而出的特定语法。 另一种方法则针对代码级IoC中存在的技术寻找整体语义模式。
+在寻找代码级 Solorigate 威胁情报时，我们使用了两种不同的策略。一种方法是寻找在 Solorigate 代码级威胁情报中脱颖而出的特定语法。另一种方法则针对代码级威胁情报中存在的技术寻找整体语义模式。
 
-与可比较的正则表达式搜索相比，语法查询的编写和执行速度非常快，同时具有许多优势。 但是，它们对于恶意角色更改其使用的名称和文字很脆弱。 语义模式寻找植入程序中使用的总体技术，例如哈希处理名称，联系C2服务器之前的时间延迟等。这些持久性可以承受实质性的变化，但是它们在编写时更加复杂并且在计算时更加耗费计算资源 一次有很多代码库。
+与可比较的正则表达式搜索相比具有很多优势，语法查询的编写和执行速度非常快。但是，它们对于恶意角色更改其使用的名称和文字很弱。语义模式寻找植入程序中使用的总体技术，例如哈希处理名称，联系 C2 服务器之前的时间延迟等。这些可以承受实质性的变化，但是它们在编写时更加复杂并且在一次分析很多代码库时更加耗费计算资源。
 
 ## Sample technique from implant with corresponding CodeQL query
+## 通过相应的 CodeQL 查询注入的采样技术
 
 By combining these two approaches, the queries are able to detect scenarios where the malicious actor changed techniques but used similar syntax, or changed syntax but employed similar techniques. Because it’s possible that the malicious actor could change both syntax and techniques, CodeQL was but one part of our larger investigative effort.
 
-通过组合这两种方法，查询能够检测到恶意行为者更改了技术但使用了相似语法，或者更改了语法但采用了相似技术的场景。 由于恶意行为者可能会更改语法和技术，因此CodeQL只是我们较大的调查工作的一部分。
+通过组合这两种方法，查询能够检测到恶意行为者更改了技术但使用了相似语法，或者更改了语法但采用了相似技术的场景。由于恶意行为者可能会更改语法和技术，因此 CodeQL 只是我们大量调查工作的一部分。
 
 ## Next steps with CodeQL
+## 使用 CodeQL 的下一步
 
 The queries we shared in this blog and described in Solorigate-Readme.md target patterns specifically associated with the Solorigate code-level IoCs, but CodeQL also provides many other options to query for backdoor functionality and detection-evasion techniques.
 
