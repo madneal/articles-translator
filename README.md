@@ -51,6 +51,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [Pornhub Web 开发者访谈](https://github.com/neal1991/articles-translator/blob/master/%E5%AF%B9Pornhub%E7%9A%84Web%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84%E9%87%87%E8%AE%BF.md)
 * [GMail 中的 XSS 漏洞](https://github.com/neal1991/articles-translator/blob/master/XSS.md)
 * [火眼红队工具遭窃](https://github.com/madneal/articles-translator/blob/master/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E7%81%AB%E7%9C%BC%E7%BA%A2%E9%98%9F%E5%B7%A5%E5%85%B7.md)
+* [微软开源对于 Solorigate 活动捕获的开源 CodeQL 查询](https://github.com/madneal/articles-translator/blob/master/mst-codeql.md) 
 
 ## Articles need translation
 
