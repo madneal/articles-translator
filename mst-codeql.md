@@ -39,7 +39,7 @@ We are open sourcing several of the C# queries that assess for these code-level 
 
 GitHub will shortly publish guidance on how they are deploying these queries for existing CodeQL customers. As a reminder, CodeQL is free for open-source projects hosted by GitHub.
 
-我们正在开源这些代码级 IoC 的多个 C# 查询，目前可以在 CodeQL GitHub 存储库中找到它们。该仓库中的 Solorigate-Readme.md 包含每个查询的详细说明以及每个查询试图查找的代码级 IoC。它还包含给其他查询作者的指南，这些指南涉及对那些查询进行调整或编写在查找模式时采用不同策略的查询。
+我们正在开源这些代码级威胁情报的多个 C# 查询，目前可以在 CodeQL GitHub 存储库中找到它们。该仓库中的 Solorigate-Readme.md 包含每个查询的详细说明以及每个查询试图查找的代码级威胁情报。它还包含给其他查询作者的指南，这些指南涉及对那些查询进行调整或编写在查找模式时采用不同策略的查询。
 
 GitHub 即将发布有关如何为现有 CodeQL 客户部署这些查询的指南。提醒一下，CodeQL 对于 GitHub 托管的开源项目是免费的。
 
@@ -70,11 +70,9 @@ These queries were relatively quick to author, and we were able to hunt for patt
 
 In future blog posts, we’ll share more ways that 微软 uses CodeQL. We’ll also continue open-sourcing queries and utilities that build upon CodeQL so that others may benefit from them and further build upon them.
 
-我们在此博客中共享并在Solorigate-Readme.md目标模式中描述的查询特别与Solorigate代码级IoC相关联，但CodeQL还提供了许多其他选项来查询后门功能和逃避检测技术。
+我们在此博客中共享并在 Solorigate-Readme.md 目标模式中描述特别与 Solorigate 代码级IoC相关联的查询，但 CodeQL 还提供了许多其他选项来查询后门功能和逃避检测技术。
 
-这些查询的编写速度相对较快，与使用源代码的文本搜索相比，我们能够在我们的CodeQL数据库中更准确地寻找模式，并且用更少的精力手动审查发现的结果。 CodeQL是一个功能强大的开发人员工具，我们希望这篇文章能激发组织探索如何使用它来改善反应式安全响应并充当入侵检测工具。
+这些查询的编写速度相对较快，与使用源代码的文本搜索相比，我们能够在我们的 CodeQL 数据库中更准确地寻找模式，并且用更少的精力手动审查发现的结果。CodeQL 是一个功能强大的开发人员工具，我们希望这篇文章能激发组织探索如何使用它来改善反应式安全响应并充当入侵检测工具。
 
-在以后的博客文章中，我们将分享微软使用CodeQL的更多方式。 我们还将继续在CodeQL的基础上进行开放源代码的查询和实用程序，以便其他人可以从中受益并进一步建立在它们之上。
+在以后的博客文章中，我们将分享微软使用 CodeQL 的更多方式。我们还将继续在CodeQL的基础上进行开放源代码的查询和实用程序，以便其他人可以从中受益并进一步建立在它们之上。
 
-Filed under:
-Cybersecurity, Incident response, Security intelligence
