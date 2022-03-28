@@ -1,6 +1,4 @@
-# articles-translator [:memo:](https://github.com/neal1991/articles-translator/edit/master/README.md)
-
-![m1jSLd.jpg](https://s2.ax1x.com/2019/08/19/m1jSLd.jpg)
+# articles-translator [:memo:](https://github.com/madneal/articles-translator/edit/master/README.md)
 
 Translate distinct technical blogs. 
 
