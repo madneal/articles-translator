@@ -8,105 +8,102 @@
 >
 >LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
-[On January 4, 2023, we alerted customers](https://circleci.com/blog/january-4-2023-security-alert/) to a security incident. Today, we want to share with you what happened, what we’ve learned, and what our plans are to continuously improve our security posture for the future.
+[2023 年 1 月 4 日，我们提醒客户](https://circleci.com/blog/january-4-2023-security-alert/) 一起安全事件。 今天，我们想与您分享发生的事情、我们学到的知识以及我们未来不断改善安全态势的计划。
 
-We would like to thank our customers for your attention to rotating and revoking secrets, and apologize for any disruption this incident may have caused to your work. We encourage customers who have yet to take action to do so in order to prevent unauthorized access to third-party systems and stores. Additionally, we want to thank our customers and our community for your patience while we have been conducting a thorough investigation. In aiming for responsible disclosure, we have done our best to balance speed in sharing information with maintaining the integrity of our investigation.
+我们要感谢我们的客户对于重置密钥的关注，并对此次事件可能对您的工作造成的任何干扰表示歉意。我们鼓励尚未采取行动的客户采取行动，以防止未经授权访问第三方系统和存储。此外，我们要感谢我们的客户和社区在我们进行彻底调查期间的耐心等待。为了实现负责任的披露，我们已尽最大努力在共享信息的速度与保持调查的完整性之间取得平衡。
 
-**This report will cover:**
+**本报告包含:**
 
-* What happened?
-* How do we know this attack vector is closed and it’s safe to build?
-* Communication and support for customers
-* How do I know if I was impacted?
-* Details that may help your team with internal investigations
-* What we learned from this incident and what we will do next
-* A note on employee responsibility vs. systems safeguards
-* Security best practices
-* Closing thoughts
+* 发生了什么？
+* 我们怎么知道这个攻击向量已经关闭并且可以安全构建？
+* 与客户的沟通和支持
+* 如何判断我是否受影响？
+* 可能有助于您的团队进行内部调查的详细信息
+* 我们从这次事件中学到了什么以及我们下一步将做什么
+* 关于员工责任与系统保障措施的说明
+* 安全最佳实践
+* 结语
 
-## What happened?
+## 发生了什么？
 
-*All dates and times are reported in UTC, unless otherwise noted.*
+*除非另有说明，否则所有日期和时间均以 UTC 报告。*
 
-On December 29, 2022, we were alerted to suspicious GitHub OAuth activity by one of our customers. This notification kicked off a deeper review by CircleCI’s security team with GitHub.
+2022 年 12 月 29 日，我们的一位客户提醒我们注意可疑的 GitHub OAuth 活动。此通知启动了 CircleCI 的安全团队与 GitHub 的更深入审查。
 
-On December 30, 2022, we learned that this customer’s GitHub OAuth token had been compromised by an unauthorized third party. Although that customer was able to quickly resolve the issue, out of an abundance of caution, on December 31, 2022, we proactively initiated the process of rotating all GitHub OAuth tokens on behalf of our customers. Despite working with GitHub to increase API rate limits, the rotation process took time. While it was not clear at this point whether other customers were impacted, we continued to expand the scope of our analysis.
+2022 年 12 月 30 日，我们了解到该客户的 GitHub OAuth 令牌已被未经授权的第三方泄露。尽管该客户能够迅速解决问题，但出于谨慎考虑，我们在 2022 年 12 月 31 日代表客户主动启动了更换所有 GitHub OAuth 令牌的流程。尽管与 GitHub 合作提高 API 速率限制，但轮换过程需要时间 虽然目前尚不清楚其他客户是否受到影响，但我们继续扩大分析范围。
 
-By January 4, 2023, our internal investigation had determined the scope of the intrusion by the unauthorized third party and the entry path of the attack. To date, we have learned that an unauthorized third party leveraged malware deployed to a CircleCI engineer’s laptop in order to steal a valid, 2FA-backed SSO session. This machine was compromised on December 16, 2022. The malware was not detected by our antivirus software. Our investigation indicates that the malware was able to execute session cookie theft, enabling them to impersonate the targeted employee in a remote location and then escalate access to a subset of our production systems.
+到 2023 年 1 月 4 日，我们的内部调查已经确定了未经授权的第三方入侵的范围和攻击的进入路径。迄今为止，我们了解到未经授权的第三方利用部署到 CircleCI 工程师笔记本电脑上的恶意软件来窃取有效的、支持 2FA 的 SSO session。这台机器于 2022 年 12 月 16 日遭到入侵。我们的防病毒软件未检测到该恶意软件。我们的调查表明，该恶意软件能够执行 session cookie 盗窃，使他们能够在远程位置冒充目标员工，然后升级为对我们生产系统子集的访问。
 
-Because the targeted employee had privileges to generate production access tokens as part of the employee’s regular duties, the unauthorized third party was able to access and exfiltrate data from a subset of databases and stores, including customer environment variables, tokens, and keys. We have reason to believe that the unauthorized third party engaged in reconnaissance activity on December 19, 2022. On December 22, 2022, exfiltration occurred, and that is our last record of unauthorized activity in our production systems. Though all the data exfiltrated was encrypted at rest, the third party extracted encryption keys from a running process, enabling them to potentially access the encrypted data.
+由于目标员工有权生成生产访问令牌作为员工日常职责的一部分，因此未经授权的第三方能够从数据库和存储的子集访问和泄露数据，包括客户环境变量、令牌和密钥。我们有理由相信，未经授权的第三方在 2022 年 12 月 19 日进行了侦察活动。2022 年 12 月 22 日 发生了泄露事件，这是我们生产系统中最后一次未经授权活动的记录。尽管所有泄露的数据都是静态加密的，但第三方从正在运行的进程中提取了加密密钥，使他们能够访问加密数据。
 
-While we are confident in the findings of our internal investigation, we have engaged third-party cyber security specialists to assist in our investigation and to validate our findings. Our findings to date are based on analyses of our authentication, network, and monitoring tools, as well as system logs and log analyses provided by our partners.
+虽然我们对内部调查的结果充满信心，但我们已聘请第三方网络安全专家协助我们进行调查并验证我们的调查结果。我们迄今为止的发现基于对我们的身份验证、网络和监控工具的分析，以及我们合作伙伴提供的系统日志和日志分析。
 
-In response to this incident, we took the following actions:
+针对这一事件，我们采取了以下行动：
 
-* On January 4, 2023, at 16:35 UTC, we shut down all access for the employee whose account was compromised.
-* On January 4, 2023, at 18:30 UTC, we shut down production access to nearly all employees, limiting access to an extremely small group for operational issues. At no time during this investigation did we have any evidence that the credentials of any other employees or their devices had been compromised, but we took this action in order to limit the potential surface area.
-* On January 4, 2023, at 22:30 UTC, we rotated all potentially exposed production hosts to ensure clean production machines.
-* On January 5, 2023, at 03:26 UTC, we revoked all Project API Tokens.
-* On January 6, 2023, at 05:00 UTC, we revoked all Personal API Tokens that had been created prior to 00:00 UTC on January 5, 2023.
-* On January 6, 2023, at 06:40 UTC we began work with our partners at Atlassian to rotate all Bitbucket tokens on behalf of our customers. This work was completed on January 6, 2023, at 10:15 UTC.
-* On January 7, 2023, at 07:30 UTC, we completed the rotation of GitHub OAuth tokens that we began on December 31, 2022, at 04:00 UTC.
-* On January 7, 2023, at 18:30 UTC, we began working with our partners at AWS to notify customers of potentially affected AWS tokens. We understand that those notifications were complete as of January 12, 2023, at 00:00 UTC.
-In the intervening time, we have continued our forensic investigation with the support of external investigators, rolled out additional layers of security on our platform, and built and distributed additional tools (more details below) to support our customers in securing their secrets.
+* 2023 年 1 月 4 日 16:35 UTC，我们关闭了帐户被盗员工的所有访问权限。
+* 2023 年 1 月 4 日 28:30 UTC，我们关闭了几乎所有员工的生产访问权限，限制了极少数群体的访问权限以解决运营问题。在此调查期间，我们从未有任何证据表明任何其他员工或他们的设备的凭证已被泄露，但我们采取此行动是为了限制潜在的攻击面。
+* 2023 年 1 月 4 日 22:30 UTC，我们修改了了所有可能暴露的生产主机，以确保安全的生产机器。
+* 2023 年 1 月 5 日 03:26 UTC，我们撤销了所有项目 API 令牌。
+* 2023 年 1 月 6 日 05:00 UTC，我们撤销了在 2023 年 1 月 5 日 00:00 UTC 之前创建的所有个人 API 令牌。
+* 2023 年 1 月 6 日 06:40 UTC，我们开始与 Atlassian 的合作伙伴合作，代表我们的客户轮换所有 Bitbucket token。这项工作于 2023 年 1 月 6 日 10:15 UTC 完成。
+* 2023 年 1 月 7 日 07:30 UTC，我们完成了 GitHub OAuth 令牌的修改，该修改是我们于 2022 年 12 月 31 日 04:00 UTC 开始的。
+* 2023 年 1 月 7 日 18:30 UTC，我们开始与 AWS 的合作伙伴合作，通知客户可能受影响的 AWS token。据我们了解，这些通知已于 2023 年 1 月 12 日 00:00 UTC 时完成。
 
+在此期间，我们在外部调查人员的支持下继续进行取证调查，在我们的平台上推出额外的安全层，并构建和分发额外的工具（更多详情见下文）以支持我们的客户保护他们的 secrets。
 
-## How do we know this attack vector is closed and it’s safe to build?
+## 我们怎么知道这个攻击向量已经关闭并且可以安全构建？
 
-We are confident that customers can safely build on CircleCI.
+我们相信客户可以安全地在 CircleCI 上构建。
 
-We have taken many steps since becoming aware of this attack, both to close the attack vector and add additional layers of security, including the following:
+自从意识到这种攻击以来，我们采取了许多措施，既关闭了攻击向量，又增加了额外的安全层，包括：
 
-* Added detection and blocking through our MDM and A/V solutions for the specific behaviors exhibited by the malware used in this attack.
-* Restricted access to production environments to a very limited number of employees as we implement additional security measures. We’re confident in our platform’s security, and we have no indication that any other employee’s device has been compromised.
-* For the employees who retain production access, we have added additional step-up authentication steps and controls. This will help us prevent possible unauthorized production access, even in the case of a stolen 2FA-backed SSO session.
-* Implemented monitoring and alerting for the specific behavior patterns we identified in this scenario, across multiple triggers and via a variety of third-party vendors.
+* 通过我们的 MDM 和 A/V 解决方案添加了针对此次攻击中使用的恶意软件表现出的特定行为的检测和阻止。
+* 由于我们实施了额外的安全措施，因此仅限极少数员工访问生产环境 我们对我们平台的安全性充满信心，并且没有迹象表明任何其他员工的设备遭到入侵。
+* 对于保留生产访问权限的员工，我们添加了额外的升级身份验证步骤和控制。 这将帮助我们防止可能的未经授权的生产访问，即使在 2FA 支持的 SSO session 被盗的情况下也是如此。
+* 跨多个触发器并通过各种第三方供应商对我们在此场景中确定的特定行为模式实施监控和警报。
 
-We know that security work is never done. In addition to closing this particular vector, we have also performed enhanced and ongoing reviews to ensure a stronger defense against potential attacks.
+我们知道安全工作永远不会结束。除了关闭这个特定的向量，我们还进行了增强和持续的审查，以确保加强对潜在攻击的防御。
 
+## 与客户的沟通和支持
 
-## Communication and support for customers
+在 2023 年 1 月 4 日 22:30 UTC 完成所有生产主机的轮换后，我们确信我们已经消除了攻击向量和破坏主机的可能性。
 
-Upon completion of the rotation of all production hosts on January 4, 2023 at 22:30 UTC, we were confident that we had eliminated both the attack vector and the potential of a lingering corrupted host.
+2023 年 1 月 5 日 02:30 UTC，我们发送了披露电子邮件，[在我们的博客上发布了安全通知](https://circleci.com/blog/january-4-2023-security-alert/)，通过我们的社交媒体帐户和我们的讨论论坛通知客户，并创建了一篇关于如何执行建议的安全步骤的支持文章。
 
-On January 4, 2023, at 6:30 PM PST / January 5, 2023, at 02:30 UTC, we sent disclosure emails, [posted a security notification on our blog](https://circleci.com/blog/january-4-2023-security-alert/), notified customers via our social media accounts and our Discuss forum, and created a support article on how to perform the recommended security steps.
+我们建议所有客户更改他们的 secrets，包括 OAuth 令牌、项目 API 令牌、SSH 密钥等（有关更多详细信息，请参阅博客文章或讨论文章）。
 
-We recommended that all customers rotate their secrets, including OAuth tokens, Project API Tokens, SSH keys, and more (see blog post or Discuss post for more details).
+此披露启动了与我们客户的积极和持续的沟通期。我们要感谢我们的客户对这一事件的一致响应，以及帮助我们找到机会为您提供额外的工具。我们接受了这些反馈，并作为回应构建并发布了新工具并修改了我们现有的工具，以通过以下方式为客户加快修复速度：
 
-This disclosure initiated an active and ongoing period of communication with our customers. We would like to thank our customers both for your concerted response to this incident as well as for helping us to identify opportunities to provide you with additional tooling. We took this feedback and in response built and released new tools and amended our existing tools to speed remediation for customers via the following:
+* [秘密发现脚本](https://github.com/CircleCI-Public/CircleCI-Env-Inspector) 以创建可操作的秘密轮换列表。
+* CircleCI API 的两个关键变化：
+     * 返回结帐密钥的 SHA-256 签名的新功能，以便更好地匹配 GitHub UI。
+     * `updated_at` 字段已添加到 Contexts API 中，以便客户可以验证这些变量是否已成功轮换。
+* 免费和付费计划的所有客户都可以访问审计日志，以帮助客户审查 CircleCI 平台活动。
 
-* A [script for secret finding](https://github.com/CircleCI-Public/CircleCI-Env-Inspector) in order to create an actionable list for secrets rotation.
-* Two key changes to the CircleCI API:
-    * New functionality to return SHA-256 signatures for checkout keys in order to better match the GitHub UI.
-    * The `updated_at` field was added to the Contexts API so that customers can verify the successful rotation of these variables.
-* Audit logs were made accessible to all customers on both free and paid plans to help customers review CircleCI platform activity.
+我们感谢客户就我们可以改进沟通的地方提供的所有反馈，包括让事件在我们的渠道中更加明显的机会。
 
-We appreciate all feedback from customers about where we could improve our communications including opportunities to make the incident more visible across our channels.
+## 我怎么知道我是否受到了影响？
 
+### 我的数据有风险吗？
 
-## How do I know if I was impacted?
+在此事件中，未经授权的行为者于 2022 年 12 月 22 日窃取了客户信息，其中包括第三方系统的环境变量、密钥和令牌。如果您在此期间将机密信息存储在我们的平台上，请假设它们已被访问并采取建议的缓解措施。我们建议您从 2022 年 12 月 16 日开始调查系统中的可疑活动，并在我们于 2023 年 1 月 4 日披露后完成机密修改之日结束。2023 年 1 月 5 日之后进入系统的任何内容都可以被认为是安全的。
 
-### Is my data at risk?
+### 是否有未经授权的行为者使用该数据访问我的任何系统？
 
-In this incident, the unauthorized actor exfiltrated customer information on December 22, 2022, which included environment variables, keys, and tokens for third-party systems. If you stored secrets on our platform during this time period, assume they have been accessed and take the recommended mitigation steps. We recommend you investigate for suspicious activity in your system starting on December 16, 2022 and ending on the date you completed your secrets rotation after our disclosure on January 4, 2023. Anything entered into the system after January 5, 2023 can be considered secure.
+由于此事件涉及第三方系统的密钥和令牌外泄，我们无法知道您的 secret 是否被用于未经授权访问这些第三方系统。 我们在下面提供了一些详细信息，以帮助客户进行调查。
 
-### Did an unauthorized actor use that data to access any of my systems?
+**在发布时，只有不到 5 位客户通知我们由于此事件而未经授权访问第三方系统。**
 
-Because this incident involved the exfiltration of keys and tokens for third-party systems, there is no way for us to know if your secrets were used for unauthorized access to those third-party systems. We have provided some details below to aid customers in their investigations.
+## 可能有助于您的团队进行内部调查的详细信息
 
-**At the time of publishing, fewer than 5 customers have informed us of unauthorized access to third-party systems as a result of this incident.**
+在第三方取证调查员的帮助下，我们最近确认了可能有助于客户进行审计和调查的更多详细信息。
 
+### 影响日期：
 
-## Details that may help your team with internal investigations
+* 我们在 2022 年 12 月 19 日看到未经授权的第三方访问，数据泄露发生在 2022 年 12 月 22 日。
+* 我们没有证据表明 2022 年 12 月 19 日之前有影响客户的活动。出于谨慎考虑，我们建议您调查从 2022 年 12 月 16 日事件开始到 1 月之后修改 secret 之间的这段时间系统中存在异常活动。
 
-With the help of third-party forensic investigators, we have recently confirmed additional details that may help customers in their audits and investigations.
-
-### Dates of impact:
-
-* We see unauthorized third-party access on December 19, 2022, with exfiltration of data occurring on December 22, 2022.
-* We have no evidence of customer-impacting activity prior to December 19, 2022. Out of an abundance of caution, we recommend you investigate the period between the date of corruption on December 16, 2022 through the date when you rotated your secrets following January 4, 2023 for unusual activity in your systems.
-
-### IP addresses identified as being used by the threat actor:
+### 识别为被威胁行为者使用的 IP 地址：
 
 * 178.249.214.10
 * 89.36.78.75
@@ -119,6 +116,8 @@ With the help of third-party forensic investigators, we have recently confirmed 
 
 ### Data centers and VPN providers identified as being used by the threat actor:
 
+### 数据中心和 VPN 提供商被识别为被威胁行为者使用：
+
 * Datacamp Limited
 * Globalaxs Quebec Noc
 * Handy Networks, LLC
@@ -126,50 +125,52 @@ With the help of third-party forensic investigators, we have recently confirmed 
 
 ### Malicious files to search for and remove:
 
+### 搜索和删除的恶意文件：
+
 * /private/tmp/.svx856.log
 * /private/tmp/.ptslog
 * PTX-Player.dmg (SHA256: 8913e38592228adc067d82f66c150d87004ec946e579d4a00c53b61444ff35bf)
 * PTX.app
 
-### Block the following domain:
+### 拦截以下域名
 
 * potrax[.]com
 
-### Review GitHub audit log files for unexpected commands such as:
+### 查看 GitHub 审核日志文件以查找意外命令，例如：
 
 * repo.download_zip
 
-## What we learned from this incident and what we will do next
+## 我们从这次事件中学到了什么以及我们接下来要做什么
 
-**We learned: While we have the tools in place to deter and detect attacks, there is always opportunity to strengthen our security posture.**
+**我们了解到：虽然我们有适当的工具来阻止和检测攻击，但总有机会加强我们的安全态势。**
 
-The authentication, security, and tracing tools we had in place allowed us to comprehensively diagnose and remediate the issue. As the sophistication of malicious actors increases, we are continuously evolving our security standards and pushing best practices to stay ahead of future threats. We will be increasingly aggressive in our use of security tools. Going forward, to support a more conservative stance and preclude bad actors from improperly accessing our systems, we will be optimizing the configuration of our existing tools to create additional layers of defense.
+我们拥有的身份验证、安全和跟踪工具使我们能够全面诊断和修复问题。随着恶意攻击者越来越复杂，我们正在不断改进我们的安全标准并推动最佳实践以保持领先于未来的威胁。我们将越来越积极地使用安全工具。展望未来，为了支持更保守的立场并防止攻击者不当访问我们的系统，我们将优化现有工具的配置以创建额外的防御层。
 
-### Our plan:
+### 我们的计划：
 
-To start, we will initiate periodic automatic OAuth token rotation for all customers. Our plans also include a shift from OAuth to GitHub apps, enabling us to enforce more granular permissions within tokens. We also plan to complete a comprehensive analysis of all of our tooling configurations, including a third-party review. We’re continuing to take additional steps including expanding alerting, reducing session trust, adding additional authentication factors, and performing more regular access rotations. Finally, we will be making our system permissions more ephemeral, severely restricting the target value of any tokens gained from a similar incident.
+首先，我们将为所有客户启动定期自动 OAuth 令牌轮换。 我们的计划还包括从 OAuth 到 GitHub 应用程序的转变，使我们能够在令牌中实施更精细的权限。我们还计划完成对我们所有工具配置的全面分析，包括第三方审查。我们将继续采取其他措施，包括扩大告警范围、减少会话信任、添加额外的身份验证因素以及执行更定期的访问轮换。最后，我们将使我们的系统权限更加短暂，严格限制从类似事件中获得的任何令牌的目标值。
 
-### We learned: We can make it easier for customers to adopt our most advanced security features.
+### 我们学习到：我们可以让客户更轻松地采用我们最先进的安全功能。
 
-Through the evolution of CircleCI, we have continued to introduce features to improve the security of our customers’ build pipelines. While advanced security features are available to customers, we can do more to improve adoption of those features.
+通过 CircleCI 的发展，我们不断引入功能来提高客户构建管道的安全性。虽然客户可以使用高级安全功能，但我们可以做更多工作来提高这些功能的采用率。
 
-### Our plan:
+### 我们的计划：
 
-It must be easier for customers to seamlessly adopt the latest and most advanced security features available, including OIDC and IP ranges. There are also additional proactive steps we are exploring, for example, automatic token expiration and notifications for unused secrets. We will make it simpler and more convenient for our customers to create and maintain highly secure pipelines, enabling every advantage of the cloud while smartly managing risk.
+客户必须更容易无缝地采用可用的最新和最先进的安全功能，包括 OIDC 和 IP 范围。我们还在探索其他主动步骤，例如，自动令牌过期和未使用 secret 的通知。我们将使我们的客户更简单、更方便地创建和维护高度安全的管道，在智能管理风险的同时实现云的每一个优势。
 
-## A note on employee responsibility vs. systems safeguards
+## 关于员工责任与系统保障措施的说明
 
-We want to be clear. While one employee’s laptop was exploited through this sophisticated attack, a security incident is a systems failure. Our responsibility as an organization is to build layers of safeguards that protect against all attack vectors.
+我们想说清楚。虽然一名员工的笔记本电脑通过这种复杂的攻击被利用，但安全事件是系统故障。作为一个组织，我们的责任是建立多层防护措施来抵御所有攻击向量。
 
-## Security best practices
+## 安全最佳实践
 
-Given the increasing presence of highly sophisticated and motivated bad actors, we are committed to sharing best practices with our customers in order to strengthen our collective defense against inevitable future attempts. Here are recommendations customers can take to increase pipeline security:
+鉴于成熟和有动机的攻击者越来越多，我们致力于与我们的客户分享最佳实践，以加强我们对未来不可避免的尝试的集体防御。以下是客户可以用来提高管道安全性的建议：
 
-* Use [OIDC tokens](https://circleci.com/docs/openid-connect-tokens/) wherever possible to avoid storing long-lived credentials in CircleCI.
-* Take advantage of [IP ranges](https://circleci.com/docs/ip-ranges/) to limit inbound connections to your systems to only known IP addresses.
-* Use [Contexts](https://circleci.com/docs/contexts/) to consolidate shared secrets and restrict access to secrets to specific projects, which can then be [rotated automatically via API](https://circleci.com/docs/contexts/#rotating-environment-variables).
-* For privileged access and additional controls, you may choose to use [runners](https://circleci.com/docs/runner-overview/#circleci-runner-use-cases), which allow you to connect the CircleCI platform to your own compute and environments, including IP restrictions and IAM management.
+* 尽可能使用 [OIDC 令牌](https://circleci.com/docs/openid-connect-tokens/) 以避免在 CircleCI 中存储长期存在的凭据。
+* 利用 [IP 范围](https://circleci.com/docs/ip-ranges/) 将您系统的入站连接限制为仅已知 IP 地址。
+* 使用 [Contexts](https://circleci.com/docs/contexts/) 合并共享机密并将对机密的访问限制为特定项目，然后可以[通过 API 自动轮换](https://circleci.com /docs/contexts/#rotating-environment-variables）。
+* 对于特权访问和其他控制，您可以选择使用 [runners](https://circleci.com/docs/runner-overview/#circleci-runner-use-cases)，它允许您将 CircleCI 平台连接到 您自己的计算和环境，包括 IP 限制和 IAM 管理。
 
-## Closing thoughts
+## 结语
 
-We know there is no convenient time to respond to a security incident on a critical system, and we want to sincerely thank all of our customers who immediately took action following this incident. It is through this collective action that we will be in a stronger position to combat future threats. We also witnessed firsthand the strength and generosity of our customer community, with many of you heading to our Discuss forum to share knowledge and help one another. Thank you for your support and patience as we worked to resolve this incident.
+我们知道没有合适的时间来响应关键系统上的安全事件，我们要衷心感谢所有在事件发生后立即采取行动的客户。正是通过这种集体行动，我们将能够更有力地应对未来的威胁。我们还亲眼目睹了我们客户社区的力量和慷慨，你们中的许多人前往我们的讨论论坛分享知识并互相帮助。感谢您在我们努力解决此事件时的支持和耐心。
