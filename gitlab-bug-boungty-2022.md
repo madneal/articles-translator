@@ -1,6 +1,6 @@
-# Why 2022 was a record-breaking year in bug bounty awards
+# 为什么 2022 年是漏洞赏金奖破纪录的一年
 
->原文：[CircleCI incident report for January 4, 2023 security incident(https://circleci.com/blog/jan-4-2023-incident-report/)
+>原文：[Why 2022 was a record-breaking year in bug bounty awards](https://about.gitlab.com/blog/2022/12/19/why-2022-was-a-record-breaking-year-in-bug-bounty-awards/)
 >
 >译者：[madneal](https://github.com/madneal)
 >
