@@ -51,6 +51,7 @@ Moreover, for the export of blogs in Medium, I will suggest the Chrome extension
 * [火眼红队工具遭窃](https://github.com/madneal/articles-translator/blob/master/%E6%9C%AA%E6%8E%88%E6%9D%83%E8%AE%BF%E9%97%AE%E7%81%AB%E7%9C%BC%E7%BA%A2%E9%98%9F%E5%B7%A5%E5%85%B7.md)
 * [微软开源对于 Solorigate 活动捕获的开源 CodeQL 查询](https://github.com/madneal/articles-translator/blob/master/mst-codeql.md) 
 * [CircleCI 20230104 安全事件报告](https://github.com/madneal/articles-translator/blob/master/circleci-incident.md)
+* [如何使用 Git 撤消（几乎）任何操作](https://github.com/madneal/articles-translator/blob/master/git-undo.md)
 
 ## Articles need translation
 
