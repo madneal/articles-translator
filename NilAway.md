@@ -26,10 +26,9 @@ nil panic 是指程序尝试解引用一个 nil 指针时发生的运行时 pani
 
 ![Figure 2: Fix commit from golang/go fixing a nil panic in its net package (PR #60823). The nil panic is caused by calling method String() on the return of RemoteAddr() on L1859, which can be a nil interface value (as shown in Figure 3)](https://blog.uber-cdn.com/cdn-cgi/image/width=2048,quality=80,onerror=redirect,format=auto/wp-content/uploads/2023/11/figure_2.jpeg)
 
-<p align="center">图2：来自 <i>golang/go</i> 的修复提交，修复了其 <i>net/i> 包中的 nil panic（<a href="https://github.com/golang/go/pull/60823?uclick_id=620f1ca1-e871-4193-9f25-2bc76417cfa7">PR #60823</a>）。nil panic 是由于在 L1859 调用 <i>RemoteAddr()</i> 的返回值的 <i>String()</i> 方法引起的，该返回值可能是一个 nil 接口值（如图3所示）。</p>
+<p align="center">图2：来自 <i>golang/go</i> 的修复提交，修复了其 <i>net</i> 包中的 nil panic（<a href="https://github.com/golang/go/pull/60823?uclick_id=620f1ca1-e871-4193-9f25-2bc76417cfa7">PR #60823</a>）。nil panic 是由于在 L1859 调用 <i>RemoteAddr()</i> 的返回值的 <i>String()</i> 方法引起的，该返回值可能是一个 nil 接口值（如图3所示）。</p>
 
 ![Figure 3: Excerpt from net/net.go showing the net.Conn interface and the implementation of the RemoteAddr() method by the struct net.conn, which can return nil, if c.ok() is false](https://blog.uber-cdn.com/cdn-cgi/image/width=1877,quality=80,onerror=redirect,format=auto/wp-content/uploads/2023/11/figure_3.jpg)
-
 <p align="center">图3：<i>net/net.go</i> 的摘录，展示了 <i>net.Conn</i> 接口以及结构体 <i>net.conn</i> 对 <i>RemoteAddr()</i> 方法的实现，如果 <i>c.ok()</i> 为 false，则可以返回 nil。</p>
 
 在 Go 程序中，nil panic 是一种特别[普遍](https://github.com/search?q=repo%3Agolang%2Fgo+nil+panic&type=issues&uclick_id=6f537554-73b3-4559-9cd3-4ce624452b1f)的运行时错误。Uber 的 Go monorepo 也不例外，因为 nil panic 在生产中出现了几次运行时错误，导致程序错误以及应用程序中断，影响了 Uber 的客户。因此，为了最大限度地提高可靠性和代码质量，Uber 需要确保程序员能够在有问题的代码部署到生产环境之前，尽早检测和修复 nil panic。
