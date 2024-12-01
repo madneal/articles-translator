@@ -37,7 +37,7 @@ nil panic 还可能导致拒绝服务攻击。例如，[CVE-2020-29652](https://
 
 存在一个名为 [nilness](https://pkg.go.dev/golang.org/x/tools/go/analysis/passes/nilness?uclick_id=620f1ca1-e871-4193-9f25-2bc76417cfa7) 的自动化工具，由 Go 发行版提供，用于检测 nil panic。这个 nilness 检查器是一种轻量级静态分析技术，仅报告简单错误，例如明显的 nil 解引用位置（例如，*if x == nil { print(*x) }*）。然而，这种简单的检查无法捕捉到真实程序中复杂的 nil 流，如图2所示。因此，我们需要一种能够进行严格分析并在生产代码上有效的技术。
 
-为了处理 Java 中的空指针异常（NPE），Uber开发了 [NullAway](https://www.uber.com/blog/nullaway/?uclick_id=620f1ca1-e871-4193-9f25-2bc76417cfa7)。NullAwa 要求代码使用 `@Nullable` 注解进行标注，以保证在编译时不出现 NPE。这限制了我们直接改编类似 `NullAway` 技术的可行性，因为与 Java 不同，Go 语言并不支持注解。此外，为大型代码库（例如，Uber 的 Go 单体库，包含 9000 万行代码）添加注解是一项繁琐的任务。此外，Go语言的各种独特特性和特有习惯也带来了独特的挑战。
+为了处理 Java 中的空指针异常（NPE），Uber开发了 [NullAway](https://www.uber.com/blog/nullaway/?uclick_id=620f1ca1-e871-4193-9f25-2bc76417cfa7)。NullAway 要求代码使用 `@Nullable` 注解进行标注，以保证在编译时不出现 NPE。这限制了我们直接改编类似 `NullAway` 技术的可行性，因为与 Java 不同，Go 语言并不支持注解。此外，为大型代码库（例如，Uber 的 Go 单体库，包含 9000 万行代码）添加注解是一项繁琐的任务。此外，Go语言的各种独特特性和特有习惯也带来了独特的挑战。
 
 我们克服这些限制的答案是？**NilAway**。
 
@@ -101,8 +101,6 @@ NilAway 在 Go 单体库中集中部署，与 Bazel+Nogo 框架紧密集成，�
 ![Figure 7: Simplified and redacted code excerpt from an internal Uber service logging 3000+ nil panics per day in production.](https://blog.uber-cdn.com/cdn-cgi/image/width=1955,quality=80,onerror=redirect,format=auto/wp-content/uploads/2023/11/figure_7.jpg)
 
 <p align="center">图7：来自内部Uber服务的简化和删减代码摘录，显示在生产环境中每天记录超过3000个nil panic。</p>
-
-The fix for this problem is to properly guard the receive from a closed channel, either using the ok construct of Go (e.g., if a, ok := <-t.s.foo(…); ok { … }) or by a nilness check on the result variable a (e.g., if a != nil { … }) before the dereference on L17. Our developers applied the nilness check fix right after NilAway reported this error, and the impact was remarkable: the service went from logging 3,000+ nil panics daily to 0, as shown in Figure 8.
 
 解决此问题的方法是正确地防止从关闭的通道接收数据，可以使用 Go 的 ok 结构（例如，*if a, ok := <-t.s.foo(…); ok { … }*）或在结果变量 a 上进行 nil 检查（例如，在 L17 解引用之前，*if a != nil { … }*）。我们的开发人员在 NilAway 报告此错误后立即应用了 nil 检查修复，效果显著：服务的每日 nil panic 日志从 3000+ 降至 0，如图 8 所示。
 
