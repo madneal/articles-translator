@@ -33,12 +33,18 @@ Nil panics are found to be an especially pervasive form of runtime errors in Go 
 
 Nil panics can also cause denial of service attacks. For example, CVE-2020-29652 is due to a nil pointer dereference in the golang.org/x/crypto/ssh that allows remote attackers to cause a denial of service against SSH servers.
 
-在 Go 程序中，nil panic 是一种特别[普遍](https://github.com/search?q=repo%3Agolang%2Fgo+nil+panic&type=issues&uclick_id=6f537554-73b3-4559-9cd3-4ce624452b1f)的运行时错误。Uber 的 Go monorepo 也不例外，因为 nil panic 在生产中出现了几次运行时错误，导致程序行为不正确以及应用程序中断，影响了 Uber 的客户。因此，为了最大限度地提高可靠性和代码质量，Uber至关重要的是让程序员能够在错误代码部署到生产环境之前，尽早检测和修复nil恐慌。
-nil恐慌还可能导致拒绝服务攻击。例如，CVE-2020-29652就是由于在golang.org/x/crypto/ssh中的nil指针解引用，允许远程攻击者对SSH服务器发动拒绝服务攻击。
+
+在 Go 程序中，nil panic 是一种特别[普遍](https://github.com/search?q=repo%3Agolang%2Fgo+nil+panic&type=issues&uclick_id=6f537554-73b3-4559-9cd3-4ce624452b1f)的运行时错误。Uber 的 Go monorepo 也不例外，因为 nil panic 在生产中出现了几次运行时错误，导致程序错误以及应用程序中断，影响了 Uber 的客户。因此，为了最大限度地提高可靠性和代码质量，Uber 需要确保程序员能够在有问题的代码部署到生产环境之前，尽早检测和修复 nil panic。
+
+nil panic 还可能导致拒绝服务攻击。例如，CVE-2020-29652 就是由于在 golang.org/x/crypto/ssh 中的 nil 指针解引用，允许远程攻击者对 SSH 服务器发动拒绝服务攻击。
 
 There exists an automated tool, nilness, offered by the Go distribution for detecting nil panics. This nilness checker is a lightweight static analysis technique that reports only simple errors, such as obvious sites of nil dereferences (e.g., if x == nil { print(*x) }). However, such simple checks fail to capture the complex nil flows in real programs, such as the one shown in Figure 2. Therefore, we need a technique that performs rigorous analysis and is effective on production code.
 
 To deal with NullPointerExceptions (NPEs) in Java, Uber has developed NullAway. NullAway requires the code to be annotated with @Nullable annotations to guarantee NPE freedom during compile time. This limits the feasibility of directly adapting a NullAway-like technique for our purpose, since, unlike Java, Go does not have language support for annotations. Moreover, annotating a large codebase (e.g., Uber’s Go monorepo with 90 million lines of code) is a cumbersome task. Besides, Go’s various unique features and idiosyncrasies present their own unique challenges.
+
+存在一个名为 nilness 的自动化工具，由 Go 发行版提供，用于检测 nil panic。这个 nilness 检查器是一种轻量级静态分析技术，仅报告简单错误，例如明显的nil解引用位置（例如，如果x == nil { print(*x) }）。然而，这种简单的检查无法捕捉到真实程序中复杂的nil流，如图2所示。因此，我们需要一种能够进行严格分析并在生产代码上有效的技术。
+
+为了处理Java中的空指针异常（NPE），Uber开发了NullAway。NullAway要求代码使用@Nullable注解进行标注，以保证在编译时不出现NPE。这限制了我们直接改编类似NullAway技术的可行性，因为与Java不同，Go语言并不支持注解。此外，为大型代码库（例如，Uber的Go单体库，包含9000万行代码）添加注解是一项繁琐的任务。此外，Go语言的各种独特特性和特有习惯也带来了独特的
 
 Our answer to overcome these limitations? NilAway.
 
