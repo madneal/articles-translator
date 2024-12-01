@@ -1,4 +1,4 @@
-# Go 的漏洞管理
+# NilAway：实用的 Go Nil Panic 检测方式
 
 >原文：[NilAway: Practical Nil Panic Detection for Go](https://www.uber.com/en-NL/blog/nilaway-practical-nil-panic-detection-for-go/)
 >
