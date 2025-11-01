@@ -2,9 +2,9 @@
 
 > 原文：[Vue 2.5 released](https://medium.com/the-vue-point/vue-2-5-released-14bd65bf030b)
 >
-> 译者：[neal1991](https://github.com/neal1991)
+> 译者：[madneal](https://github.com/madneal)
 >
-> welcome to star my [articles-translator](https://github.com/neal1991/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+> welcome to star my [articles-translator](https://github.com/madneal/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
 >
 > LICENSE: [MIT](https://opensource.org/licenses/MIT)
 

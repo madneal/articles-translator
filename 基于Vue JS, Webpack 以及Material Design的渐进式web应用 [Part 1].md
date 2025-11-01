@@ -2,9 +2,9 @@
 
 > 原文：[基于Vue JS, Webpack 以及Material Design的渐进式web应用 [Part 1]](https://blog.sicara.com/a-progressive-web-application-with-vue-js-webpack-material-design-part-1-c243e2e6e402)
 >
-> 译者：[neal1991](https://github.com/neal1991)
+> 译者：[madneal](https://github.com/madneal)
 >
-> welcome to star my [articles-translator](https://github.com/neal1991/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+> welcome to star my [articles-translator](https://github.com/madneal/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
 >
 > LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
@@ -678,8 +678,8 @@ Git commit: [39360f251da153c780cd148dc3cf234348bb1e87](https://github.com/charle
 ![](http://p0.qhimg.com/t015f3ce37f416cf068.png)
 > 译者注：
 > 安利几个我之前翻译过的其它的关于PWA的文章以及我自己的PWA小应用：
-*   [Twitter Lite以及大规模的高性能React渐进式网络应用](https://github.com/neal1991/articles-translator/blob/master/Twitter%20Lite%E4%BB%A5%E5%8F%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BDReact%E6%B8%90%E8%BF%9B%E5%BC%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8.md)
-*   [Service worker介绍](https://github.com/neal1991/articles-translator/blob/master/Service%20worker%E4%BB%8B%E7%BB%8D.md)
-*   [weather app](https://neal1991.github.io/pwa/)
-*   [subway-shanghai](https://neal1991.github.io/subway-shanghai/)
+*   [Twitter Lite以及大规模的高性能React渐进式网络应用](https://github.com/madneal/articles-translator/blob/master/Twitter%20Lite%E4%BB%A5%E5%8F%8A%E5%A4%A7%E8%A7%84%E6%A8%A1%E7%9A%84%E9%AB%98%E6%80%A7%E8%83%BDReact%E6%B8%90%E8%BF%9B%E5%BC%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8.md)
+*   [Service worker介绍](https://github.com/madneal/articles-translator/blob/master/Service%20worker%E4%BB%8B%E7%BB%8D.md)
+*   [weather app](https://madneal.github.io/pwa/)
+*   [subway-shanghai](https://madneal.github.io/subway-shanghai/)
     ​              

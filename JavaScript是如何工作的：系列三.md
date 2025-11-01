@@ -2,15 +2,15 @@
 
 >  原文：[How JavaScript works: memory management + how to handle 4 common memory leaks](https://blog.sessionstack.com/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks-3f28b94cfbec)
 >
->  译者：[neal1991](https://github.com/neal1991)
+>  译者：[madneal](https://github.com/madneal)
 >
->  welcome to star my [articles-translator](https://github.com/neal1991/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>  welcome to star my [articles-translator](https://github.com/madneal/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
 >
 >  LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
 几个礼拜之前我们开始一系列对于JavaScript以及其本质工作原理的深入挖掘：我们认为通过了解 JavaScript 的构建方式以及它们是如何共同合作的，你就能够写出更好的代码以及应用。
 
-这个系列的第一篇博客专注于介绍[对于引擎，运行时以及调用栈的概述](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)（译者注：[第一篇博客翻译版](https://github.com/neal1991/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%EF%BC%9A%E7%B3%BB%E5%88%97%E4%B8%80.md)）。[第二篇博客近距离地检测了Google V8 引擎的内部](https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12)并且提供了一些如何写出更好的 JavaScript 代码的建议。
+这个系列的第一篇博客专注于介绍[对于引擎，运行时以及调用栈的概述](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)（译者注：[第一篇博客翻译版](https://github.com/madneal/articles-translator/blob/master/JavaScript%E6%98%AF%E5%A6%82%E4%BD%95%E5%B7%A5%E4%BD%9C%EF%BC%9A%E7%B3%BB%E5%88%97%E4%B8%80.md)）。[第二篇博客近距离地检测了Google V8 引擎的内部](https://blog.sessionstack.com/how-javascript-works-inside-the-v8-engine-5-tips-on-how-to-write-optimized-code-ac089e62b12)并且提供了一些如何写出更好的 JavaScript 代码的建议。
 
 在第三篇博客中，我们将会讨论另外一个关键的话题。这个话题由于随着编程语言的逐渐成熟和复杂化，越来越被开发者所忽视，这个话题就是在日常工作中使用到的——内存管理。我们还将提供一些有关如何处理我们在[SessionStack](https://www.sessionstack.com/)中的 JavaScript 中的内存泄漏的建议，因为我们需要确保SessionStack 不会导致内存泄漏或者增加我们集成的 Web 应用程序的内存消耗。
 

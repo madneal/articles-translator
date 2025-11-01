@@ -2,9 +2,9 @@
 
 > 原文：[GitHub Pages and Single-Page Apps](https://dev.to/_evansalter/github-pages-and-single-page-apps)
 >
-> 译者：[neal1991](https://github.com/neal1991)
+> 译者：[madneal](https://github.com/madneal)
 >
-> welcome to star my [articles-translator](https://github.com/neal1991/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+> welcome to star my [articles-translator](https://github.com/madneal/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
 >
 > LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
@@ -119,7 +119,7 @@ app.listen(PORT);
 
 有两种Pages。第一种是组织/个人page。它们存在于一个叫做`<YOUR_USERNAME>.github.io`的仓库中，并且具有一个匹配仓库名称的URL。这对于一个个人或者组织来说是一个通用的页面。这个网站的代码存在于这个项目之中。
 
-另外一种，是一个项目page，大多数存在于`gh-pages`分支中，或者是在一个`master`分支中的`/docs`文件夹中。然后你就可以通过`<YOUR_USERNAME>.github.io/<PROJECT_NAME>`来访问页面。它允许你在一个地方保存所有的代码。我认为这很方便。（译者注：其实现在可以直接在master分支中直接托管你的page了，可参见我的另外一篇[文章](http://blog.csdn.net/neal1991/article/details/53535914)）
+另外一种，是一个项目page，大多数存在于`gh-pages`分支中，或者是在一个`master`分支中的`/docs`文件夹中。然后你就可以通过`<YOUR_USERNAME>.github.io/<PROJECT_NAME>`来访问页面。它允许你在一个地方保存所有的代码。我认为这很方便。（译者注：其实现在可以直接在master分支中直接托管你的page了，可参见我的另外一篇[文章](http://blog.csdn.net/madneal/article/details/53535914)）
 
 基于本文的目的，我将主要讨论个人的page。
 

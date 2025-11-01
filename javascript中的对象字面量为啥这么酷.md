@@ -1,9 +1,9 @@
 # javascript中的对象字面量为啥这么酷
 >原文：[Why object literals in JavaScript are cool](https://rainsoft.io/why-object-literals-in-javascript-are-cool/)
 >
->译者：[neal1991](https://github.com/neal1991)
+>译者：[madneal](https://github.com/madneal)
 >
->welcome to star my [articles-translator](https://github.com/neal1991/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>welcome to star my [articles-translator](https://github.com/madneal/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
 >
 >LICENSE: [MIT](https://opensource.org/licenses/MIT)
 

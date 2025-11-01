@@ -4,7 +4,7 @@
 >
 >译者：[madneal](https://github.com/madneal)
 >
->welcome to star my [articles-translator](https://github.com/neal1991/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
+>welcome to star my [articles-translator](https://github.com/madneal/articles-translator/), providing you advanced articles translation. Any suggestion, please issue or contact [me](mailto:bing@stu.ecnu.edu.cn)
 >
 >LICENSE: [MIT](https://opensource.org/licenses/MIT)
 
