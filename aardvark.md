@@ -1,6 +1,6 @@
 # 介绍 Aardvark：OpenAI 智能体安全研究员
 
->原文：[3 parameters to measure SAST testing](https://openai.com/index/introducing-aardvark/)
+>原文：[绍 Aardvark：OpenAI 智能体安全研究员](https://openai.com/index/introducing-aardvark/)
 >
 >译者：[madneal](https://github.com/madneal)
 >
